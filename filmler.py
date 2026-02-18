@@ -12,7 +12,7 @@ import html
 # --- AYARLAR ---
 BASE_URL = "https://dizipal.cx" # Çalışan domain (değişirse buradan güncelle)
 PLATFORM_SLUG = "filmler"
-OUTPUT_FILE = "mfl.json"
+OUTPUT_FILE = "filmler.json"
 
 def get_chrome_version():
     """Chrome versiyonunu tespit eder (Linux/GitHub Actions için önemli)"""
