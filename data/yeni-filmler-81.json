@@ -1,56 +1,8 @@
 [
     {
-        "title": "Devrim",
-        "link": "https://www.fullhdfilmizlesene.live/film/devrim-2",
-        "imdb": "7.0",
-        "year": "2024",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/devrim-3-1563.jpg"
-    },
-    {
-        "title": "Ibelin",
-        "link": "https://www.fullhdfilmizlesene.live/film/ibelin",
-        "imdb": "8.5",
-        "year": "2024",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/ibelin-3189.jpg"
-    },
-    {
-        "title": "Don't Move",
-        "link": "https://www.fullhdfilmizlesene.live/film/don-t-move",
-        "imdb": "5.9",
-        "year": "2024",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/don-t-move-415.jpg"
-    },
-    {
-        "title": "Jackie Chan Efsanesi",
-        "link": "https://www.fullhdfilmizlesene.live/film/jackie-chan-efsanesi",
-        "imdb": "4.7",
-        "year": "2024",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/jackie-chan-efsanesi-chuan-shuo-18143.jpg"
-    },
-    {
-        "title": "Et la fête continue !",
-        "link": "https://www.fullhdfilmizlesene.live/film/et-la-fete-continue-2",
-        "imdb": "6.4",
-        "year": "2023",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/et-la-fete-continue--21255.jpg"
-    },
-    {
-        "title": "Fruitcake",
-        "link": "https://www.fullhdfilmizlesene.live/film/fruitcake",
-        "imdb": "7.0",
-        "year": "2024",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/fruitcake-8147.jpg"
-    },
-    {
-        "title": "Sharkers",
-        "link": "https://www.fullhdfilmizlesene.live/film/sharkers",
-        "imdb": "3.9",
-        "year": "2024",
-        "image": "https://img.fullhdfilmizlesene.live/poster/film/sharkers-86547.jpg"
-    },
-    {
         "title": "Estado de Silencio",
         "link": "https://www.fullhdfilmizlesene.live/film/estado-de-silencio",
+        "rapid_link": "",
         "imdb": "6.5",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/estado-de-silencio-50113.jpg"
@@ -58,6 +10,7 @@
     {
         "title": "The Front Room",
         "link": "https://www.fullhdfilmizlesene.live/film/the-front-room",
+        "rapid_link": "",
         "imdb": "4.7",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/the-front-room-80612.jpg"
@@ -65,6 +18,7 @@
     {
         "title": "El salto",
         "link": "https://www.fullhdfilmizlesene.live/film/el-salto",
+        "rapid_link": "",
         "imdb": "5.6",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/el-salto-49294.jpg"
@@ -72,6 +26,7 @@
     {
         "title": "Restoring Grace",
         "link": "https://www.fullhdfilmizlesene.live/film/restoring-grace",
+        "rapid_link": "",
         "imdb": "2.2",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/restoring-grace-14281.jpg"
@@ -79,6 +34,7 @@
     {
         "title": "Haunted Universities 3",
         "link": "https://www.fullhdfilmizlesene.live/film/haunted-universities-3",
+        "rapid_link": "",
         "imdb": "5.6",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/haunted-universities-3-24918.jpg"
@@ -86,6 +42,7 @@
     {
         "title": "Seven Cemeteries",
         "link": "https://www.fullhdfilmizlesene.live/film/seven-cemeteries",
+        "rapid_link": "",
         "imdb": "4.5",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/seven-cemeteries-49267.jpg"
@@ -93,6 +50,7 @@
     {
         "title": "Una historia y ya...",
         "link": "https://www.fullhdfilmizlesene.live/film/una-historia-y-ya",
+        "rapid_link": "",
         "imdb": "4.8",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/una-historia-y-ya-13492.jpg"
@@ -100,6 +58,7 @@
     {
         "title": "Trapped in the Rocky Mountains",
         "link": "https://www.fullhdfilmizlesene.live/film/trapped-in-the-rocky-mountains",
+        "rapid_link": "",
         "imdb": "4.4",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/trapped-in-the-rocky-mountains-97051.jpg"
@@ -107,6 +66,7 @@
     {
         "title": "Le dernier jaguar",
         "link": "https://www.fullhdfilmizlesene.live/film/le-dernier-jaguar",
+        "rapid_link": "",
         "imdb": "5.6",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/le-dernier-jaguar-75540.jpg"
@@ -114,6 +74,7 @@
     {
         "title": "Greatest Cartoons of the Golden Era Vol. 3",
         "link": "https://www.fullhdfilmizlesene.live/film/greatest-cartoons-of-the-golden-era-vol-3-2",
+        "rapid_link": "",
         "imdb": "6.6",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/greatest-cartoons-of-the-golden-era-vol-3-2-1807.jpg"
@@ -121,8 +82,65 @@
     {
         "title": "Kurt Adamlar",
         "link": "https://www.fullhdfilmizlesene.live/film/kurt-adamlar-2",
+        "rapid_link": "",
         "imdb": "0",
         "year": "2024",
         "image": "https://img.fullhdfilmizlesene.live/poster/film/kurt-adamlar-loups-garous-54444.jpg"
+    },
+    {
+        "title": "Sing: Thriller",
+        "link": "https://www.fullhdfilmizlesene.live/film/sing-thriller",
+        "rapid_link": "",
+        "imdb": "6.6",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/sing-thriller-73677.jpg"
+    },
+    {
+        "title": "Aserb: The Squadron",
+        "link": "https://www.fullhdfilmizlesene.live/film/aserb-the-squadron",
+        "rapid_link": "",
+        "imdb": "5.2",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/aserb-the-squadron-30892.jpg"
+    },
+    {
+        "title": "A Radical Act: Renee Montgomery",
+        "link": "https://www.fullhdfilmizlesene.live/film/a-radical-act-renee-montgomery",
+        "rapid_link": "",
+        "imdb": "5.1",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/a-radical-act-renee-montgomery-75476.jpg"
+    },
+    {
+        "title": "Midnight Oil: The Hardest Line",
+        "link": "https://www.fullhdfilmizlesene.live/film/midnight-oil-the-hardest-line-2",
+        "rapid_link": "",
+        "imdb": "7.7",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/midnight-oil-the-hardest-line-2-65463.jpg"
+    },
+    {
+        "title": "Los Iniciados 2",
+        "link": "https://www.fullhdfilmizlesene.live/film/los-iniciados-2-2",
+        "rapid_link": "",
+        "imdb": "6.0",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/los-iniciados-2-2-730.jpg"
+    },
+    {
+        "title": "Sapien",
+        "link": "https://www.fullhdfilmizlesene.live/film/sapien",
+        "rapid_link": "",
+        "imdb": "2.5",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/sapien-69872.jpg"
+    },
+    {
+        "title": "Führer und Verführer",
+        "link": "https://www.fullhdfilmizlesene.live/film/fuhrer-und-verfuhrer-2",
+        "rapid_link": "",
+        "imdb": "6.7",
+        "year": "2024",
+        "image": "https://img.fullhdfilmizlesene.live/poster/film/fuhrer-und-verfuhrer-2-44444.jpg"
     }
 ]
