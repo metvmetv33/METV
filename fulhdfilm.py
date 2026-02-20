@@ -4,24 +4,24 @@ import json
 import os
 import time
 
-# Dosyaların saklanacağı klasör
+# Klasör kontrolü
 if not os.path.exists('data'):
     os.makedirs('data')
 
-def sayfa_cek_ve_kaydet(page_num):
-    base_url = f"https://www.fullhdfilmizlesene.live/yeni-filmler/{page_num}"
-    if page_num == 1:
-        base_url = "https://www.fullhdfilmizlesene.live/yeni-filmler/"
+def sayfa_cek(page_num):
+    # Sayfa 1 için özel link yapısı, diğerleri için /sayfa_no
+    url = "https://www.fullhdfilmizlesene.live/yeni-filmler/"
+    if page_num > 1:
+        url = f"https://www.fullhdfilmizlesene.live/yeni-filmler/{page_num}"
 
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
         'Referer': 'https://www.google.com/'
     }
 
     try:
-        response = requests.get(base_url, headers=headers, timeout=20)
+        response = requests.get(url, headers=headers, timeout=15)
         if response.status_code != 200:
-            print(f"Sayfa {page_num} hatası: {response.status_code}")
             return False
 
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -44,24 +44,31 @@ def sayfa_cek_ve_kaydet(page_num):
             with open(f'data/yeni-filmler-{page_num}.json', 'w', encoding='utf-8') as f:
                 json.dump(movie_data, f, ensure_ascii=False, indent=4)
             return True
-    except Exception as e:
-        print(f"Hata oluştu: {e}")
+    except:
+        return False
     return False
 
 def main():
-    # 1113 sayfa çok uzun sürebilir, ilk etapta 50-100 sayfa ile test etmeni öneririm
-    # Tümünü çekmek istersen 1114 yapabilirsin
-    hedef_sayfa = 100 
+    # 1'den 1113'e kadar döngü
+    baslangic = 1
+    bitis = 1113 
     
-    for p in range(1, hedef_sayfa + 1):
-        print(f"Sayfa {p} işleniyor...")
-        success = sayfa_cek_ve_kaydet(p)
+    for p in range(baslangic, bitis + 1):
+        # Eğer dosya zaten varsa çekme (Hız kazandırır ve sunucuyu yormaz)
+        if os.path.exists(f'data/yeni-filmler-{p}.json'):
+            continue
+            
+        print(f"İşleniyor: Sayfa {p} / {bitis}")
+        success = sayfa_cek(p)
+        
         if not success:
-            print("Sayfa çekilemedi, durduruluyor.")
-            break
-        # Cloudflare'e yakalanmamak için kısa bir mola
-        if p % 5 == 0:
-            time.sleep(1)
+            print(f"Sayfa {p} çekilemedi. Bir mola veriliyor...")
+            time.sleep(5) # Hata alınca biraz daha uzun bekle
+            continue
+            
+        # Her 10 sayfada bir GitHub'ın limitlerine takılmamak için kısa bekleme
+        if p % 10 == 0:
+            time.sleep(2)
 
 if __name__ == "__main__":
     main()
