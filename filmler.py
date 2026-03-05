@@ -14,7 +14,6 @@ TARGET_PATH = "/filmler/"
 OUTPUT_FILE = "filmler.json"
 
 def get_chrome_version():
-    """Sistemdeki Chrome versiyonunu tespit eder"""
     try:
         output = subprocess.check_output(['google-chrome', '--version']).decode('utf-8')
         version = re.search(r'Google Chrome (\d+)', output).group(1)
@@ -23,21 +22,21 @@ def get_chrome_version():
         return None
 
 def scrape_filmler():
-    # Chrome versiyonunu al ve sürücüyü ona göre başlat
     chrome_version = get_chrome_version()
     print(f"Tespit edilen Chrome Versiyonu: {chrome_version}")
 
     options = uc.ChromeOptions()
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--headless') # GitHub Actions için şart
+    # Pencere boyutu Cloudflare için önemlidir
+    options.add_argument('--window-size=1920,1080')
+    options.add_argument('--start-maximized')
 
-    # UYUMSUZLUK BURADA ÇÖZÜLÜYOR: version_main eklendi
     try:
-        driver = uc.Chrome(options=options, version_main=chrome_version)
+        driver = uc.Chrome(options=options, version_main=chrome_version, headless=False) # xvfb kullanıldığı için headless=False daha güvenli
     except Exception as e:
-        print(f"Sürücü başlatılamadı, alternatif deneniyor: {e}")
-        driver = uc.Chrome(options=options) # Hata olursa varsayılanı dene
+        print(f"Sürücü hatası: {e}")
+        return
 
     results = {}
     if os.path.exists(OUTPUT_FILE):
@@ -47,81 +46,88 @@ def scrape_filmler():
         except: pass
 
     try:
-        print("Giriş yapılıyor...")
+        print("Giriş yapılıyor ve Cloudflare bekleniyor...")
         driver.get(BASE_URL)
-        time.sleep(12) # Cloudflare için geniş süre
+        time.sleep(15) # Ana sayfada iyice bekle
 
         page_num = 1
         while page_num <= 50:
             current_url = f"{BASE_URL}{TARGET_PATH}" if page_num == 1 else f"{BASE_URL}{TARGET_PATH}page/{page_num}/"
-            print(f"\n--- Sayfa {page_num} Taranıyor: {current_url} ---")
+            print(f"\n--- Sayfa {page_num} Taranıyor ---")
             
             driver.get(current_url)
-            time.sleep(5)
+            time.sleep(7)
 
-            items = driver.find_elements(By.CLASS_NAME, "post-item")
+            # ESNEK SEÇİCİ: 'post-item' bulamazsa link içeren article veya div'leri dene
+            items = driver.find_elements(By.CSS_SELECTOR, ".post-item, article, .video-block")
+            
             if not items:
-                print("Sayfa boş. İşlem bitti.")
+                # Sayfa kaynağını kontrol et (Hata ayıklama için)
+                if "Cloudflare" in driver.page_source:
+                    print("Hala Cloudflare engelindeyiz, süre uzatılıyor...")
+                    time.sleep(20)
+                    continue
+                print("İçerik bulunamadı. Yapı değişmiş olabilir.")
                 break
 
-            for i in range(len(items)):
-                # Sayfa her değiştiğinde listeyi tazele (StaleElement önlemi)
-                fresh_items = driver.find_elements(By.CLASS_NAME, "post-item")
-                item = fresh_items[i]
-                
+            found_links = []
+            for item in items:
                 try:
                     anchor = item.find_element(By.TAG_NAME, "a")
-                    title = anchor.get_attribute("title")
                     link = anchor.get_attribute("href")
-                    
-                    # Key oluşturma
-                    key = title.replace(" ", "-").replace(":", "").replace("'", "")
+                    title = anchor.get_attribute("title") or anchor.text
+                    if link and "/film/" in link or f"{BASE_URL}/" in link:
+                        found_links.append({"title": title, "url": link})
+                except: continue
 
-                    if key in results and results[key].get("link"):
-                        continue
+            # Tekilleştir
+            unique_links = {v['url']: v for v in found_links}.values()
+            print(f"Bulunan film sayısı: {len(unique_links)}")
 
-                    print(f"  > İşleniyor: {title}")
-                    
-                    # Detay sayfasına git (Aynı sekmede gitmek daha az RAM harcar)
-                    driver.get(link)
-                    time.sleep(4)
+            for content in unique_links:
+                key = content['url'].split('/')[-2]
+                if key in results: continue
 
-                    # --- TIKLAMA MANTIĞI ---
-                    # Player yüklenmesi için tıklanması gereken butonları bul
+                try:
+                    print(f"  > Detay çekiliyor: {content['title']}")
+                    driver.get(content['url'])
+                    time.sleep(5)
+
+                    # Sayfayı biraz aşağı kaydır (Tetikleme için)
+                    driver.execute_script("window.scrollTo(0, 500);")
+                    time.sleep(2)
+
+                    # Player Butonuna Tıkla
                     try:
-                        # Siteye göre bu selector değişebilir (Genelde .play-button veya #video-yükle)
-                        click_targets = driver.find_elements(By.CSS_SELECTOR, ".play-button, .player-trigger, [id*='play']")
-                        if click_targets:
-                            click_targets[0].click()
+                        # Farklı buton tiplerini dene
+                        btns = driver.find_elements(By.CSS_SELECTOR, "div.play-button, .player-trigger, #play-video")
+                        if btns:
+                            driver.execute_script("arguments[0].click();", btns[0])
                             time.sleep(3)
                     except: pass
 
-                    # Embed iframe yakala
-                    try:
-                        iframe = WebDriverWait(driver, 15).until(
-                            EC.presence_of_element_located((By.TAG_NAME, "iframe"))
-                        )
-                        embed_src = iframe.get_attribute("src")
-
+                    # Iframe'i Yakala
+                    iframes = driver.find_elements(By.TAG_NAME, "iframe")
+                    embed_src = ""
+                    for f in iframes:
+                        src = f.get_attribute("src")
+                        if "embed" in src or "player" in src or "m3u8" in src:
+                            embed_src = src
+                            break
+                    
+                    if embed_src:
                         results[key] = {
-                            "isim": title,
-                            "link": embed_src
+                            "isim": content['title'],
+                            "link": embed_src,
+                            "kaynak": content['url']
                         }
-
-                        # Anlık kaydet
                         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                             json.dump(results, f, ensure_ascii=False, indent=2)
-                    except:
-                        print(f"    ! Iframe bulunamadı: {title}")
-
-                    # Listeye geri dön
-                    driver.back()
-                    time.sleep(3)
+                    else:
+                        print("    ! Embed bulunamadı.")
 
                 except Exception as e:
                     print(f"    ! Hata: {e}")
-                    driver.get(current_url) # Hata olursa sayfayı yenile
-                    time.sleep(3)
 
             page_num += 1
 
