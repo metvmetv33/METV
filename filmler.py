@@ -4,44 +4,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import json
-import re
-import subprocess
 import os
-import html
 
 # --- AYARLAR ---
 BASE_URL = "https://dizipal.bar"
-PLATFORM_SLUG = "filmler"
+# Burayı değiştirdik: Site yapısına göre doğrudan /filmler/ kullanıyoruz
+TARGET_PATH = "/filmler/" 
 OUTPUT_FILE = "filmler.json"
 
-def get_chrome_version():
-    try:
-        output = subprocess.check_output(['google-chrome', '--version']).decode('utf-8')
-        version = re.search(r'Google Chrome (\d+)', output).group(1)
-        return int(version)
-    except:
-        return None
-
-def clean_key(text):
-    text = html.unescape(text)
-    text = re.sub(r'[\s\:\,\'’"”]+', '-', text)
-    text = re.sub(r'-+', '-', text)
-    return text.strip('-')
-
-def get_full_res_image(srcset):
-    if not srcset: return ""
-    links = [s.strip().split(' ')[0] for s in srcset.split(',')]
-    return links[-1] if links else ""
-
-def scrape_hbomax():
-    version = get_chrome_version()
-    print(f"Sistem Chrome Versiyonu: {version}")
-
+def scrape_filmler():
     options = uc.ChromeOptions()
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--disable-gpu')
-    options.add_argument('--lang=tr')
+    options.add_argument('--headless') # GitHub Actions için headless önemli
 
     results = {}
     if os.path.exists(OUTPUT_FILE):
@@ -50,77 +25,91 @@ def scrape_hbomax():
                 results = json.load(f)
         except: pass
 
-    driver = uc.Chrome(options=options, version_main=version)
+    driver = uc.Chrome(options=options)
 
     try:
-        print("Cloudflare geçişi bekleniyor...")
+        print("Giriş yapılıyor...")
         driver.get(BASE_URL)
-        time.sleep(10) 
+        time.sleep(10) # CF Geçişi
 
         page_num = 1
-        while True:
-            platform_url = f"{BASE_URL}/platform/{PLATFORM_SLUG}/page/{page_num}/"
-            print(f"\n--- Sayfa {page_num} Taranıyor ---")
-            driver.get(platform_url)
-            time.sleep(4)
+        max_pages = 50 # Güvenlik sınırı
 
-            if "Sayfa bulunamadı" in driver.title or len(driver.find_elements(By.CLASS_NAME, "post-item")) == 0:
-                print("İşlem tamamlandı.")
+        while page_num <= max_pages:
+            # URL Oluşturma: 1. sayfa farklı, sonrakiler farklı yapıda olabilir
+            if page_num == 1:
+                current_url = f"{BASE_URL}{TARGET_PATH}"
+            else:
+                current_url = f"{BASE_URL}{TARGET_PATH}page/{page_num}/"
+
+            print(f"\n--- Sayfa {page_num} Taranıyor: {current_url} ---")
+            driver.get(current_url)
+            time.sleep(5)
+
+            # Sayfada film var mı kontrolü
+            items = driver.find_elements(By.CLASS_NAME, "post-item")
+            if not items:
+                print("Bu sayfada içerik bulunamadı veya site bitti.")
                 break
 
-            items = driver.find_elements(By.CLASS_NAME, "post-item")
-            page_contents = []
-            
-            for item in items:
+            # Sayfadaki her filmi işle
+            for i in range(len(items)):
+                # Sayfa yenilendiği için elementleri her seferinde tekrar bulmalıyız (StaleElement hatası almamak için)
+                current_items = driver.find_elements(By.CLASS_NAME, "post-item")
+                item = current_items[i]
+                
                 try:
                     anchor = item.find_element(By.TAG_NAME, "a")
-                    img = item.find_element(By.TAG_NAME, "img")
                     title = anchor.get_attribute("title")
-                    key = clean_key(title)
+                    link = anchor.get_attribute("href")
+                    
+                    # Başlık temizleme ve kontrol
+                    from filmler import clean_key # Eğer fonksiyonu buraya taşıdıysan
+                    key = title.replace(" ", "-") # Basit key
 
-                    if key in results and results[key].get("link"):
+                    if key in results:
                         continue
 
-                    page_contents.append({
-                        "title": title,
-                        "url": anchor.get_attribute("href"),
-                        "img": get_full_res_image(img.get_attribute("srcset")) or img.get_attribute("src"),
-                        "key": key
-                    })
-                except: continue
-            
-            for content in page_contents:
-                try:
-                    print(f"> Çekiliyor: {content['title']}")
-                    driver.get(content['url'])
+                    print(f"  > Detay: {title}")
+                    
+                    # Detay sayfasına git
+                    driver.execute_script("window.open('');") # Yeni sekme aç
+                    driver.switch_to.window(driver.window_handles[1])
+                    driver.get(link)
                     time.sleep(3)
 
-                    # --- TIKLAMA VE EMBED YAKALAMA ---
-                    # Eğer player üzerinde 'tıkla' uyarısı varsa butona tıkla
+                    # Player'ı tetikle (Tıklama gerekiyorsa)
                     try:
-                        # Video yükleme butonuna benzeyen elementleri ara
-                        play_button = driver.find_element(By.CSS_SELECTOR, ".play-button, .player-loader, #video-yükle")
-                        play_button.click()
+                        # Bazı sitelerde iframe direkt gelmez, play butonuna basmak gerekir
+                        play_btn = driver.find_element(By.CSS_SELECTOR, ".play-button, .player-trigger")
+                        play_btn.click()
                         time.sleep(2)
-                    except:
-                        pass # Buton yoksa veya zaten yüklüyse devam et
+                    except: pass
 
-                    # Iframe'i bekle ve çek
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "iframe")))
-                    iframe = driver.find_element(By.TAG_NAME, "iframe")
-                    embed_link = iframe.get_attribute("src")
+                    # Embed linkini (iframe) yakala
+                    iframe = WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.TAG_NAME, "iframe"))
+                    )
+                    embed_src = iframe.get_attribute("src")
 
-                    results[content['key']] = {
-                        "isim": content['title'],
-                        "resim": content['img'],
-                        "link": embed_link
+                    results[key] = {
+                        "isim": title,
+                        "link": embed_src
                     }
 
+                    # Dosyayı her başarılı çekimde güncelle
                     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                         json.dump(results, f, ensure_ascii=False, indent=2)
 
+                    # Sekmeyi kapat ve ana sayfaya dön
+                    driver.close()
+                    driver.switch_to.window(driver.window_handles[0])
+
                 except Exception as e:
-                    print(f"Hata: {content['title']} -> {e}")
+                    if len(driver.window_handles) > 1:
+                        driver.close()
+                        driver.switch_to.window(driver.window_handles[0])
+                    print(f"Hata: {e}")
 
             page_num += 1
 
@@ -128,4 +117,4 @@ def scrape_hbomax():
         driver.quit()
 
 if __name__ == "__main__":
-    scrape_hbomax()
+    scrape_filmler()
