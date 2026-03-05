@@ -70,7 +70,7 @@ def scrape_hbomax():
         page_num = 1
         
         while True:
-            platform_url = f"{BASE_URL}/platform/{PLATFORM_SLUG}/page/{page_num}/"
+            platform_url = f"{BASE_URL}/{PLATFORM_SLUG}/page/{page_num}/"
             print(f"\n--- Sayfa {page_num} Taranıyor: {platform_url} ---")
             
             driver.get(platform_url)
