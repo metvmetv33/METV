@@ -69,12 +69,7 @@ def scrape_hbomax():
 
         page_num = 1
         
-        while True:
-            platform_url = f"{BASE_URL}/{PLATFORM_SLUG}/page/{page_num}/"
-            print(f"\n--- Sayfa {page_num} Taranıyor: {platform_url} ---")
-            
-            driver.get(platform_url)
-            time.sleep(3)
+
 
             # Sayfa boş mu veya bitti mi kontrolü
             if "Sayfa bulunamadı" in driver.title or len(driver.find_elements(By.CLASS_NAME, "post-item")) == 0:
