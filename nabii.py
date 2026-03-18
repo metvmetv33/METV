@@ -7,13 +7,34 @@ drmSchema=clear olan HLS URL'yi alır (token gerektirmez)
 import requests
 import json
 
+import os
+
 SESSION = requests.Session()
+
+# Token GitHub Secret'tan okunur: TABII_TOKEN
+TABII_TOKEN = os.environ.get("TABII_TOKEN", "")
+
 SESSION.headers.update({
-    "User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Referer":         "https://www.tabii.com/",
-    "Origin":          "https://www.tabii.com",
-    "Accept":          "application/json",
-    "Accept-Language": "tr-TR,tr;q=0.9",
+    "User-Agent":              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Referer":                 "https://www.tabii.com/",
+    "Origin":                  "https://www.tabii.com",
+    "Accept":                  "application/json",
+    "Accept-Language":         "tr-TR,tr;q=0.9",
+    "Authorization":           f"Bearer {TABII_TOKEN}",
+    "device-brand":            "Windows",
+    "device-connection-type":  "Unknown",
+    "device-id":               "1765315083944_424844",
+    "device-language":         "tr-TR",
+    "device-model":            "Windows NT 10.0 - Chrome",
+    "device-name":             "Windows NT 10.0 - Chrome",
+    "device-network":          "4g",
+    "device-orientation":      "Landscape",
+    "device-os-name":          "Windows",
+    "device-os-version":       "NT 10.0",
+    "device-resolution":       "1920x1080",
+    "device-timezone":         "Europe/Istanbul",
+    "device-type":             "WEBDesktop",
+    "platform":                "Web",
 })
 
 CHANNELS = [
