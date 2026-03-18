@@ -89,20 +89,17 @@ CHANNELS = [
 ]
 
 def get_stream_from_tvguide(slug):
-    """
-    tv-guide API'sinden drmSchema=clear olan HLS URL'yi al
-    Örnek: https://eu1.tabii.com/apigateway/live/v1/tv-guide/tabiispor
-    """
     api_url = f"https://eu1.tabii.com/apigateway/live/v1/tv-guide/{slug}"
     try:
         r = SESSION.get(api_url, timeout=10)
         if r.status_code != 200:
+            print(f"  HTTP {r.status_code}", end=" ")
             return None
         data = r.json()
         items = data.get("data", [])
         if not items:
+            print(f"  data boş", end=" ")
             return None
-        # İlk broadcast'in media listesinden drmSchema=clear + type=hls URL'sini al
         for item in items:
             media_list = item.get("media", [])
             for media in media_list:
@@ -110,8 +107,9 @@ def get_stream_from_tvguide(slug):
                     url = media.get("url", "")
                     if url and "m3u8" in url:
                         return url
+        print(f"  clear HLS yok", end=" ")
     except Exception as e:
-        print(f"  API hatası: {e}")
+        print(f"  hata:{e}", end=" ")
     return None
 
 def main():
