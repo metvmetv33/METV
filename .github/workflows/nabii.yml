@@ -24,6 +24,8 @@ jobs:
           python -m playwright install-deps chromium
 
       - name: tabii.m3u oluştur
+        env:
+          TABII_TOKEN: ${{ secrets.TABII_TOKEN }}
         run: python nabii.py
 
       - name: Değişiklikleri commit et
