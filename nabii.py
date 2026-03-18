@@ -1,87 +1,74 @@
-import os
-import shutil
 import requests
-import re
+import time
 
-# Tüm Tabii kanallarını içeren genişletilmiş sözlük
-source_urls = {
-    "trt1": "https://www.tabii.com/tr/watch/live/trt1?trackId=150002",
-    "trt2": "https://www.tabii.com/tr/watch/live/trt2?trackId=150007",
-    "trtspor": "https://www.tabii.com/tr/watch/live/trtspor?trackId=150022",
-    "trthaber": "https://www.tabii.com/tr/watch/live/trthaber?trackId=150017",
-    "trtsporyildiz": "https://www.tabii.com/tr/watch/live/trtsporyildiz?trackId=150028",
-    "trtcocuk": "https://www.tabii.com/tr/watch/live/trtcocuk?trackId=150038",
-    "trtworld": "https://www.tabii.com/tr/watch/live/trtworld?trackId=150063",
-    "trtbelgesel": "https://www.tabii.com/tr/watch/live/trtbelgesel?trackId=150012",
-    "trtmuzik": "https://www.tabii.com/tr/watch/live/trtmuzik?trackId=150033",
-    "trtturk": "https://www.tabii.com/tr/watch/live/trtturk?trackId=150043",
-    "trtkurdi": "https://www.tabii.com/tr/watch/live/trtkurdi?trackId=150053",
-    "trtarabi": "https://www.tabii.com/tr/watch/live/trtarabi?trackId=150058",
-    "trtavaz": "https://www.tabii.com/tr/watch/live/trtavaz?trackId=150048",
-    "trtgenc": "https://www.tabii.com/tr/watch/live/trtgenc?trackId=606324",
-    "trteba": "https://www.tabii.com/tr/watch/live/trteba?trackId=293389",
-    "trtdiyanetcocuk": "https://www.tabii.com/tr/watch/live/trtdiyanetcocuk?trackId=171018",
-    "tabiispor": "https://www.tabii.com/tr/watch/live/tabiispor?trackId=419561",
-    "tabiispor1": "https://www.tabii.com/tr/watch/live/tabiispor1?trackId=401207",
-    "tabiispor2": "https://www.tabii.com/tr/watch/live/tabiispor2?trackId=404583",
-    "tabiispor3": "https://www.tabii.com/tr/watch/live/tabiispor3?trackId=404630",
-    "tabiispor4": "https://www.tabii.com/tr/watch/live/tabiispor4?trackId=404637",
-    "tabiispor5": "https://www.tabii.com/tr/watch/live/tabiispor5?trackId=404646",
-    "tabiispor6": "https://www.tabii.com/tr/watch/live/tabiispor6?trackId=404666",
-    "tabiitv": "https://www.tabii.com/tr/watch/live/tabiitv?trackId=383911",
-    "tabiicocuk": "https://www.tabii.com/tr/watch/live/tabii-cocuk?trackId=516992"
-}
+WORKER_BASE = "https://tabii.metvmetv33.workers.dev/?id="
 
-stream_folder = "stream"
+CHANNELS = [
+    {"id": "trt1",          "name": "TRT 1",           "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/TRT_1_logo_%282021%29.svg/200px-TRT_1_logo_%282021%29.svg.png"},
+    {"id": "trt2",          "name": "TRT 2",           "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/TRT_2_logo_%282021%29.svg/200px-TRT_2_logo_%282021%29.svg.png"},
+    {"id": "trtspor",       "name": "TRT Spor",        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "trthaber",      "name": "TRT Haber",       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/TRT_Haber_logo_%282021%29.svg/200px-TRT_Haber_logo_%282021%29.svg.png"},
+    {"id": "trtsporyildiz", "name": "TRT Spor Yıldız", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "trtcocuk",      "name": "TRT Çocuk",       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/TRT_%C3%87ocuk_logo_%282021%29.svg/200px-TRT_%C3%87ocuk_logo_%282021%29.svg.png"},
+    {"id": "trtmuzik",      "name": "TRT Müzik",       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/TRT_M%C3%BCzik_logo_%282021%29.svg/200px-TRT_M%C3%BCzik_logo_%282021%29.svg.png"},
+    {"id": "trtkurdi",      "name": "TRT Kurdî",       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/TRT_logo.svg/200px-TRT_logo.svg.png"},
+    {"id": "tabiispor",     "name": "Tabii Spor",      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiispor1",    "name": "Tabii Spor 1",    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiispor2",    "name": "Tabii Spor 2",    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiispor3",    "name": "Tabii Spor 3",    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiispor4",    "name": "Tabii Spor 4",    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiispor5",    "name": "Tabii Spor 5",    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiispor6",    "name": "Tabii Spor 6",    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/TRT_Spor_logo_%282021%29.svg/200px-TRT_Spor_logo_%282021%29.svg.png"},
+    {"id": "tabiitv",       "name": "Tabii TV",        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/TRT_logo.svg/200px-TRT_logo.svg.png"},
+]
 
-# Klasör yönetimi
-if os.path.exists(stream_folder):
-    shutil.rmtree(stream_folder)
-os.makedirs(stream_folder)
-
-def extract_m3u8(url):
-    """Web sayfasından .m3u8 linkini çekmeye çalışır."""
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        'Referer': 'https://www.tabii.com/'
-    }
+def get_m3u8(channel_id):
+    """Worker 302 redirect yapar — Location header'dan m3u8 URL'sini al"""
+    url = WORKER_BASE + channel_id
     try:
-        response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
-        text = response.text
-
-        # Hem standart hem de kaçış karakterli (backslash) m3u8 linklerini yakalar
-        matches = re.findall(r'https?[:\\/]+[^\s\'"]+\.m3u8[^\s\'"]*', text)
-        
-        if matches:
-            # Kaçış karakterlerini temizle (\/ -> /)
-            clean_url = matches[0].replace('\\/', '/')
-            return clean_url
-        return None
+        # allow_redirects=False → 302 redirect URL'sini yakala
+        r = requests.get(url, allow_redirects=False, timeout=15)
+        if r.status_code in (301, 302, 303, 307, 308):
+            loc = r.headers.get("Location", "")
+            return loc
+        elif r.status_code == 200:
+            # Direkt içerik dönmüşse URL'yi kullan
+            return url
+        else:
+            print(f"  HTTP {r.status_code}: {r.text[:100]}")
+            return ""
     except Exception as e:
-        print(f"[HATA] {url} -> {e}")
-        return None
+        print(f"  Hata: {e}")
+        return ""
 
-def write_multi_variant_m3u8(filename, url):
-    content = (
-        "#EXTM3U\n"
-        "#EXT-X-VERSION:3\n"
-        f"#EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1920x1080\n"
-        f"{url}\n"
-    )
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write(content)
+def main():
+    m3u_lines = ["#EXTM3U\n"]
+    success = 0
+    fail    = 0
+
+    for ch in CHANNELS:
+        print(f"[+] {ch['name']} çekiliyor...", end=" ", flush=True)
+        stream_url = get_m3u8(ch["id"])
+
+        if stream_url and "m3u8" in stream_url:
+            line = (
+                f'#EXTINF:-1 tvg-id="{ch["id"]}" tvg-name="{ch["name"]}" '
+                f'tvg-logo="{ch["logo"]}" group-title="TABİİ",{ch["name"]}\n'
+                f'{stream_url}\n'
+            )
+            m3u_lines.append(line)
+            print(f"✓  {stream_url[:70]}")
+            success += 1
+        else:
+            print("✗  bulunamadı")
+            fail += 1
+
+        time.sleep(0.3)
+
+    with open("tabii.m3u", "w", encoding="utf-8") as f:
+        f.writelines(m3u_lines)
+
+    print(f"\n[*] {success} başarılı, {fail} başarısız → tabii.m3u kaydedildi")
 
 if __name__ == "__main__":
-    for name, page_url in source_urls.items():
-        print(f"[+] {name} işleniyor...")
-        m3u8_link = extract_m3u8(page_url)
-        
-        if m3u8_link:
-            file_path = os.path.join(stream_folder, f"{name}.m3u8")
-            write_multi_variant_m3u8(file_path, m3u8_link)
-            print(f"[✓] {name}.m3u8 oluşturuldu.")
-        else:
-            print(f"[X] {name} için link bulunamadı.")
-
-print("\n[*] İşlem tamamlandı.")
+    main()
