@@ -10,32 +10,23 @@ import json
 import os
 
 SESSION = requests.Session()
-
-# Token GitHub Secret'tan okunur: TABII_TOKEN
-TABII_TOKEN = os.environ.get("TABII_TOKEN", "")
-
 SESSION.headers.update({
-    "User-Agent":              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Referer":                 "https://www.tabii.com/",
-    "Origin":                  "https://www.tabii.com",
-    "Accept":                  "application/json",
-    "Accept-Language":         "tr-TR,tr;q=0.9",
-    "Authorization":           f"Bearer {TABII_TOKEN}",
-    "device-brand":            "Windows",
-    "device-connection-type":  "Unknown",
-    "device-id":               "1765315083944_424844",
-    "device-language":         "tr-TR",
-    "device-model":            "Windows NT 10.0 - Chrome",
-    "device-name":             "Windows NT 10.0 - Chrome",
-    "device-network":          "4g",
-    "device-orientation":      "Landscape",
-    "device-os-name":          "Windows",
-    "device-os-version":       "NT 10.0",
-    "device-resolution":       "1920x1080",
-    "device-timezone":         "Europe/Istanbul",
-    "device-type":             "WEBDesktop",
-    "platform":                "Web",
+    "User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Referer":         "https://www.tabii.com/",
+    "Origin":          "https://www.tabii.com",
+    "Accept":          "application/json",
+    "Accept-Language": "tr-TR,tr;q=0.9",
+    "platform":        "Web",
+    "device-type":     "WEBDesktop",
+    "device-timezone": "Europe/Istanbul",
+    "device-language": "tr-TR",
 })
+
+# Tabii Spor kanallarının direkt m3u8 URL formatı
+# Format: https://{hash}.medya.trt.com.tr/master.m3u8
+# Bu URL'ler tv-guide API'sinden geliyor ama auth gerektiriyor
+# Çözüm: withered-shape worker gibi bir CORS proxy kullanarak çek
+TABII_WORKER = "https://withered-shape-3305.vadimkantorov.workers.dev"
 
 CHANNELS = [
     # ── Sabit TRT kanalları (medya.trt.com.tr — değişmiyor) ──
@@ -110,9 +101,11 @@ CHANNELS = [
 ]
 
 def get_stream_from_tvguide(slug):
+    # Worker üzerinden tv-guide API'sine eriş — auth bypass
     api_url = f"https://eu1.tabii.com/apigateway/live/v1/tv-guide/{slug}"
+    worker_url = f"{TABII_WORKER}/?{api_url}"
     try:
-        r = SESSION.get(api_url, timeout=10)
+        r = SESSION.get(worker_url, timeout=10)
         if r.status_code != 200:
             print(f"  HTTP {r.status_code}", end=" ")
             return None
@@ -122,8 +115,7 @@ def get_stream_from_tvguide(slug):
             print(f"  data boş", end=" ")
             return None
         for item in items:
-            media_list = item.get("media", [])
-            for media in media_list:
+            for media in item.get("media", []):
                 if media.get("drmSchema") == "clear" and media.get("type") == "hls":
                     url = media.get("url", "")
                     if url and "m3u8" in url:
