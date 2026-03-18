@@ -1,36 +1,35 @@
-name: nabii Stream Updater
+name: Tabii M3U Güncelle
 
 on:
   schedule:
-    # Her 6 saatte bir otomatik çalışır
-    - cron: '0 */6 * * *'
-  workflow_dispatch: # Manuel olarak başlatma butonu ekler
+    - cron: '0 3 * * *'   # Her gün 03:00 UTC
+  workflow_dispatch:        # Manuel çalıştırma
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Python kur
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Bağımlılıkları yükle
         run: |
-          python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install playwright
+          playwright install chromium
+          playwright install-deps chromium
 
-      - name: Run Stream Updater
-        run: python nabii.py # Script dosyanın adı update_tabii.py olmalı
+      - name: tabii.m3u oluştur
+        run: python nabii.py
 
-      - name: Commit and Push changes
+      - name: Değişiklikleri commit et
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add stream/*.m3u8
-          git commit -m "Auto-update: Tabii m3u8 links" || echo "No changes to commit"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tabii.m3u
+          git diff --staged --quiet || git commit -m "tabii.m3u güncellendi"
           git push
