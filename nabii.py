@@ -1,22 +1,23 @@
 """
 nabii.py — Tabii/TRT kanallarından m3u8 URL çeker
-- Sabit kanallar: requests ile direkt
-- Hashli Tabii Spor kanalları: Playwright ile ağ isteği yakalama
+API: https://eu1.tabii.com/apigateway/live/v1/tv-guide/{slug}
+drmSchema=clear olan HLS URL'yi alır (token gerektirmez)
 """
 
-import asyncio
-import re
 import requests
-from playwright.async_api import async_playwright
+import json
 
 SESSION = requests.Session()
 SESSION.headers.update({
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Referer":    "https://www.tabii.com/",
+    "User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Referer":         "https://www.tabii.com/",
+    "Origin":          "https://www.tabii.com",
+    "Accept":          "application/json",
+    "Accept-Language": "tr-TR,tr;q=0.9",
 })
 
 CHANNELS = [
-    # ── Sabit URL'li TRT kanalları ───────────────────────────
+    # ── Sabit TRT kanalları (medya.trt.com.tr — değişmiyor) ──
     {"id": "trt1",           "name": "TRT 1",            "group": "TABİİ",
      "logo": "https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/80196fc2-f4f6-4e35-ae29-7925a5885a20.png",
      "static": "https://tv-trt1.medya.trt.com.tr/master.m3u8"},
@@ -66,103 +67,80 @@ CHANNELS = [
      "logo": "https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/02ef58a4-349a-49a6-8df2-82fb71c6554d.png",
      "static": "https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=clean"},
 
-    # ── Hashli Tabii Spor — Playwright ile çekilecek ─────────
-    {"id": "tabiispor",  "name": "Tabii Spor",   "group": "TABİİ Spor", "trackId": "419561",
+    # ── Hashli Tabii kanalları — tv-guide API ile çekilecek ──
+    {"id": "tabiispor",  "name": "Tabii Spor",   "group": "TABİİ Spor", "slug": "tabiispor",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43023.jpeg"},
-    {"id": "tabiispor1", "name": "Tabii Spor 1", "group": "TABİİ Spor", "trackId": "401207",
+    {"id": "tabiispor1", "name": "Tabii Spor 1", "group": "TABİİ Spor", "slug": "tabiispor1",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43005.jpeg"},
-    {"id": "tabiispor2", "name": "Tabii Spor 2", "group": "TABİİ Spor", "trackId": "404583",
+    {"id": "tabiispor2", "name": "Tabii Spor 2", "group": "TABİİ Spor", "slug": "tabiispor2",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43008.jpeg"},
-    {"id": "tabiispor3", "name": "Tabii Spor 3", "group": "TABİİ Spor", "trackId": "404630",
+    {"id": "tabiispor3", "name": "Tabii Spor 3", "group": "TABİİ Spor", "slug": "tabiispor3",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43011.jpeg"},
-    {"id": "tabiispor4", "name": "Tabii Spor 4", "group": "TABİİ Spor", "trackId": "404637",
+    {"id": "tabiispor4", "name": "Tabii Spor 4", "group": "TABİİ Spor", "slug": "tabiispor4",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43014.jpeg"},
-    {"id": "tabiispor5", "name": "Tabii Spor 5", "group": "TABİİ Spor", "trackId": "404646",
+    {"id": "tabiispor5", "name": "Tabii Spor 5", "group": "TABİİ Spor", "slug": "tabiispor5",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43017.jpeg"},
-    {"id": "tabiispor6", "name": "Tabii Spor 6", "group": "TABİİ Spor", "trackId": "404666",
+    {"id": "tabiispor6", "name": "Tabii Spor 6", "group": "TABİİ Spor", "slug": "tabiispor6",
      "logo": "https://cms-tabii-public-image.tabii.com/int/webp/w600/q84/43020.jpeg"},
-    {"id": "tabiitv",    "name": "Tabii TV",     "group": "TABİİ",      "trackId": "383911",
+    {"id": "tabiitv",    "name": "Tabii TV",     "group": "TABİİ",      "slug": "tabiitv",
      "logo": "https://cms-tabii-public-image.tabii.com/int/w300/45155_0-0-1919-1080.jpeg"},
+    {"id": "tabiicocuk", "name": "Tabii Çocuk",  "group": "TABİİ",      "slug": "tabii-cocuk",
+     "logo": "https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/3261c5eb-0e08-4c96-b8fc-58211e3da29c.png"},
 ]
 
-async def fetch_dynamic_urls(dynamic_channels):
-    """Playwright ile hashli URL'leri yakala"""
-    results = {}
-
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-        )
-
-        for ch in dynamic_channels:
-            print(f"[+] {ch['name']} çekiliyor...", end=" ", flush=True)
-            found = None
-
-            page = await context.new_page()
-
-            async def on_request(request):
-                nonlocal found
-                url = request.url
-                if found is None and ".m3u8" in url and "medya.trt.com.tr" in url:
-                    found = url.split("?")[0]  # query string temizle
-
-            page.on("request", on_request)
-
-            try:
-                page_url = f"https://www.tabii.com/tr/watch/live/{ch['id']}?trackId={ch['trackId']}"
-                await page.goto(page_url, wait_until="domcontentloaded", timeout=25000)
-                # Video player'ın stream URL'sini yüklemesi için bekle
-                await asyncio.sleep(5)
-            except Exception as e:
-                print(f"  sayfa hatası: {e}", end=" ")
-
-            await page.close()
-
-            if found:
-                results[ch["id"]] = found
-                print(f"✓ {found[:65]}")
-            else:
-                print("✗ bulunamadı")
-
-        await browser.close()
-
-    return results
+def get_stream_from_tvguide(slug):
+    """
+    tv-guide API'sinden drmSchema=clear olan HLS URL'yi al
+    Örnek: https://eu1.tabii.com/apigateway/live/v1/tv-guide/tabiispor
+    """
+    api_url = f"https://eu1.tabii.com/apigateway/live/v1/tv-guide/{slug}"
+    try:
+        r = SESSION.get(api_url, timeout=10)
+        if r.status_code != 200:
+            return None
+        data = r.json()
+        items = data.get("data", [])
+        if not items:
+            return None
+        # İlk broadcast'in media listesinden drmSchema=clear + type=hls URL'sini al
+        for item in items:
+            media_list = item.get("media", [])
+            for media in media_list:
+                if media.get("drmSchema") == "clear" and media.get("type") == "hls":
+                    url = media.get("url", "")
+                    if url and "m3u8" in url:
+                        return url
+    except Exception as e:
+        print(f"  API hatası: {e}")
+    return None
 
 def main():
-    static_channels  = [ch for ch in CHANNELS if ch.get("static")]
-    dynamic_channels = [ch for ch in CHANNELS if not ch.get("static")]
-
     m3u_lines = ["#EXTM3U\n"]
     success = 0
     fail    = 0
 
-    # Sabit kanalları ekle
-    for ch in static_channels:
-        print(f"[+] {ch['name']} çekiliyor... ✓ (sabit)")
+    for ch in CHANNELS:
+        print(f"[+] {ch['name']} çekiliyor...", end=" ", flush=True)
+
+        if ch.get("static"):
+            stream_url = ch["static"]
+            print("✓ (sabit)")
+        else:
+            stream_url = get_stream_from_tvguide(ch["slug"])
+            if stream_url:
+                print(f"✓ {stream_url[:70]}")
+            else:
+                print("✗ bulunamadı")
+                fail += 1
+                continue
+
         line = (
             f'#EXTINF:-1 tvg-id="{ch["id"]}" tvg-name="{ch["name"]}" '
             f'tvg-logo="{ch["logo"]}" group-title="{ch["group"]}",{ch["name"]}\n'
-            f'{ch["static"]}\n'
+            f'{stream_url}\n'
         )
         m3u_lines.append(line)
         success += 1
-
-    # Dinamik kanalları Playwright ile çek
-    if dynamic_channels:
-        dynamic_urls = asyncio.run(fetch_dynamic_urls(dynamic_channels))
-        for ch in dynamic_channels:
-            url = dynamic_urls.get(ch["id"])
-            if url:
-                line = (
-                    f'#EXTINF:-1 tvg-id="{ch["id"]}" tvg-name="{ch["name"]}" '
-                    f'tvg-logo="{ch["logo"]}" group-title="{ch["group"]}",{ch["name"]}\n'
-                    f'{url}\n'
-                )
-                m3u_lines.append(line)
-                success += 1
-            else:
-                fail += 1
 
     with open("tabii.m3u", "w", encoding="utf-8") as f:
         f.writelines(m3u_lines)
