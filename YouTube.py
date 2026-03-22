@@ -8,8 +8,8 @@ import time
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 live_id = "UC9TDTjbOjFB9jADmPhSAPsw"
-max_retries = 10
-wait_time = 15
+max_retries = 15
+wait_time = 25
 
 for attempt in range(1, max_retries + 1):
     print(f"Deneme {attempt}/{max_retries} başlatılıyor...")
