@@ -23,7 +23,7 @@ jobs:
         run: pip install requests urllib3
 
       - name: Script çalıştır
-        run: python scripts/get_manifest.py
+        run: python YouTube.py
 
       - name: Değişiklikleri commit et
         run: |
