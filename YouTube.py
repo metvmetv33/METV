@@ -48,7 +48,7 @@ for attempt in range(1, max_retries + 1):
 
             m3u8_content = "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n" + final_link
 
-            with open("kemal-sunal-filmleri.m3u8", "w", encoding="utf-8") as f:
+            with open("ytb.m3u8", "w", encoding="utf-8") as f:
                 f.write(m3u8_content)
             
             print("Başarılı! Link bulundu ve dosyaya kaydedildi.")
