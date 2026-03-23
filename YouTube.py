@@ -1,33 +1,48 @@
 import requests
 import re
 import sys
+import os
 import json
 
 CHANNEL_ID = "UCoIUysIrvGxoDw-GkdOGjRw"
 OUTPUT_FILE = "ytb.m3u8"
+COOKIES_FILE = "cookies.txt"
 
-def get_live_video_id(channel_id):
+def parse_cookies(cookie_file):
+    cookies = {}
+    try:
+        with open(cookie_file, "r") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                parts = line.split("\t")
+                if len(parts) >= 7:
+                    cookies[parts[5]] = parts[6]
+    except Exception as e:
+        print(f"Cookie parse hatasi: {e}")
+    return cookies
+
+def get_live_video_id(channel_id, cookies):
     url = f"https://www.youtube.com/channel/{channel_id}/live"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36",
         "Accept-Language": "tr-TR,tr;q=0.9",
     }
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, cookies=cookies)
     match = re.search(r'"videoId":"([^"]{11})"', r.text)
     if match:
         return match.group(1)
     return None
 
-def get_stream_url(video_id):
+def get_stream_url(video_id, cookies):
     clients = [
         {
-            "name": "ANDROID_TESTSUITE",
-            "clientName": "ANDROID_TESTSUITE",
-            "clientVersion": "1.9",
-            "androidSdkVersion": 30,
-            "userAgent": "com.google.android.youtube/1.9 (Linux; U; Android 11)",
-            "apiKey": "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
-            "clientNameId": "30",
+            "name": "WEB",
+            "clientName": "WEB",
+            "clientVersion": "2.20240101.00.00",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36",
+            "clientNameId": "1",
         },
         {
             "name": "ANDROID_VR",
@@ -35,19 +50,26 @@ def get_stream_url(video_id):
             "clientVersion": "1.57.29",
             "androidSdkVersion": 30,
             "userAgent": "com.google.android.apps.youtube.vr.oculus/1.57.29 (Linux; U; Android 11)",
-            "apiKey": "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
             "clientNameId": "28",
         },
         {
-            "name": "IOS",
-            "clientName": "IOS",
-            "clientVersion": "19.29.1",
-            "deviceModel": "iPhone16,2",
-            "userAgent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
-            "apiKey": "AIzaSyB-63vPrdThhKuerbB2N_l7Kvxy3HjsOXU",
-            "clientNameId": "5",
+            "name": "TV_EMBEDDED",
+            "clientName": "TVHTML5_SIMPLY_EMBEDDED_PLAYER",
+            "clientVersion": "2.0",
+            "userAgent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)",
+            "clientNameId": "85",
+        },
+        {
+            "name": "WEB_EMBEDDED",
+            "clientName": "WEB_EMBEDDED_PLAYER",
+            "clientVersion": "2.20240101.00.00",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36",
+            "clientNameId": "56",
         },
     ]
+
+    # Cookie string oluştur
+    cookie_str = "; ".join([f"{k}={v}" for k, v in cookies.items()])
 
     for client in clients:
         print(f"  Client deneniyor: {client['name']}...")
@@ -67,8 +89,6 @@ def get_stream_url(video_id):
 
             if "androidSdkVersion" in client:
                 payload["context"]["client"]["androidSdkVersion"] = client["androidSdkVersion"]
-            if "deviceModel" in client:
-                payload["context"]["client"]["deviceModel"] = client["deviceModel"]
 
             headers = {
                 "User-Agent": client["userAgent"],
@@ -76,36 +96,33 @@ def get_stream_url(video_id):
                 "X-YouTube-Client-Name": client["clientNameId"],
                 "X-YouTube-Client-Version": client["clientVersion"],
                 "Origin": "https://www.youtube.com",
+                "Referer": "https://www.youtube.com/",
+                "Cookie": cookie_str,
             }
 
             r = requests.post(
-                f"https://www.youtube.com/youtubei/v1/player?key={client['apiKey']}",
+                "https://www.youtube.com/youtubei/v1/player",
                 json=payload,
                 headers=headers,
                 timeout=15
             )
 
             data = r.json()
-
-            # Debug: playabilityStatus
             ps = data.get("playabilityStatus", {})
-            print(f"    playabilityStatus: {ps.get('status')} — {ps.get('reason', '')}")
+            print(f"    Status: {ps.get('status')} — {ps.get('reason', '')}")
 
             streaming = data.get("streamingData", {})
 
-            # HLS manifest (canlı yayın için en iyi)
             hls = streaming.get("hlsManifestUrl")
             if hls:
                 print(f"    HLS manifest bulundu!")
                 return hls
 
-            # DASH manifest
             dash = streaming.get("dashManifestUrl")
             if dash:
                 print(f"    DASH manifest bulundu!")
                 return dash
 
-            # Direkt URL
             formats = streaming.get("formats", []) + streaming.get("adaptiveFormats", [])
             for f in reversed(formats):
                 u = f.get("url", "")
@@ -113,15 +130,22 @@ def get_stream_url(video_id):
                     print(f"    Direkt URL bulundu!")
                     return u
 
-            print(f"    streamingData: {list(streaming.keys())}")
-
         except Exception as e:
             print(f"    Hata: {e}")
 
     return None
 
+# Cookie oku
+print("Cookie okunuyor...")
+if not os.path.exists(COOKIES_FILE):
+    print("Cookie dosyasi yok, bossz devam ediliyor...")
+    cookies = {}
+else:
+    cookies = parse_cookies(COOKIES_FILE)
+    print(f"{len(cookies)} cookie yuklendi.")
+
 print("Video ID aliniyor...")
-video_id = get_live_video_id(CHANNEL_ID)
+video_id = get_live_video_id(CHANNEL_ID, cookies)
 if not video_id:
     print("Hata: Video ID bulunamadi")
     sys.exit(1)
@@ -129,7 +153,7 @@ if not video_id:
 print(f"Video ID: {video_id}")
 print("Stream URL aliniyor...")
 
-stream_url = get_stream_url(video_id)
+stream_url = get_stream_url(video_id, cookies)
 if not stream_url:
     print("Hata: Stream URL bulunamadi")
     sys.exit(1)
