@@ -27,11 +27,11 @@ ydl_opts = {
     'cookiefile': COOKIES_FILE,
     'extractor_args': {
         'youtube': {
-            'player_client': ['web'],
+            'player_client': ['tv_embedded'],  # n challenge yok
         }
     },
     'http_headers': {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0) AppleWebKit/538.1 SAMSUNG/TV',
         'Accept-Language': 'tr-TR,tr;q=0.9',
     }
 }
