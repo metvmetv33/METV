@@ -6,19 +6,14 @@ import os
 import urllib.parse
 import urllib3
 import time
+import hashlib
+import base64
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 CHANNEL_ID = "UCoIUysIrvGxoDw-GkdOGjRw"
 OUTPUT_FILE = "ytb.m3u8"
 COOKIES_FILE = "cookies.txt"
-
-def get_video_id(channel_id):
-    url = f"https://www.youtube.com/channel/{channel_id}/live"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36"}
-    r = requests.get(url, headers=headers, timeout=15)
-    match = re.search(r'"videoId":"([^"]{11})"', r.text)
-    return match.group(1) if match else None
 
 def parse_cookies(cookie_file):
     cookies = {}
@@ -35,63 +30,33 @@ def parse_cookies(cookie_file):
         pass
     return cookies
 
-# =====================
-# YONTEM 1: ytdlp.online
-# =====================
-def yontem_ytdlp_online(channel_id, deneme_sayisi=5):
-    print("Yontem 1: ytdlp.online deneniyor...")
-    youtube_link = f"https://www.youtube.com/channel/{channel_id}/live"
-    
-    for attempt in range(1, deneme_sayisi + 1):
-        print(f"  Deneme {attempt}/{deneme_sayisi}...")
-        try:
-            headers1 = {"User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)"}
-            r1 = requests.get("https://ytdlp.online/", headers=headers1, verify=False, timeout=15)
-            
-            if "session" not in r1.cookies:
-                print("  Session alinamadi.")
-                time.sleep(10)
-                continue
-            
-            token = r1.cookies.get("session")
-            encoded = urllib.parse.quote(f"--get-url {youtube_link}")
-            stream_url = f"https://ytdlp.online/stream?command={encoded}"
-            
-            headers2 = {
-                "User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)",
-                "Accept": "text/event-stream",
-                "Referer": "https://ytdlp.online/",
-                "Cookie": f"session={token}"
-            }
-            r2 = requests.get(stream_url, headers=headers2, verify=False, timeout=30)
-            text = r2.text
-            
-            # manifest.googlevideo.com ara
-            match = re.search(r'data:\s*(https://manifest\.googlevideo\.com[^\s]+)', text)
-            if match:
-                print("  manifest.googlevideo.com bulundu!")
-                return match.group(1).strip()
-            
-            # Herhangi bir googlevideo URL ara
-            match2 = re.search(r'data:\s*(https://[^\s]*googlevideo[^\s]+)', text)
-            if match2:
-                print("  googlevideo URL bulundu!")
-                return match2.group(1).strip()
-            
-            print(f"  URL bulunamadi. Yanit: {text[:200]}")
-            time.sleep(10)
+def get_video_id(channel_id):
+    url = f"https://www.youtube.com/channel/{channel_id}/live"
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36"}
+    r = requests.get(url, headers=headers, timeout=15)
+    match = re.search(r'"videoId":"([^"]{11})"', r.text)
+    return match.group(1) if match else None
 
-        except Exception as e:
-            print(f"  Hata: {e}")
-            time.sleep(10)
-    
+def get_visitor_data(cookies):
+    """YouTube'dan visitor_data al"""
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36",
+            "Accept-Language": "tr-TR,tr;q=0.9",
+        }
+        r = requests.get("https://www.youtube.com", headers=headers, cookies=cookies, timeout=15)
+        match = re.search(r'"visitorData":"([^"]+)"', r.text)
+        if match:
+            return match.group(1)
+    except:
+        pass
     return None
 
-# =====================
-# YONTEM 2: InnerTube API + cookie
-# =====================
-def yontem_innertube(video_id, cookies):
-    print("Yontem 2: InnerTube API deneniyor...")
+def yontem_innertube_visitor(video_id, cookies):
+    print("Yontem: InnerTube + visitorData...")
+    
+    visitor_data = get_visitor_data(cookies)
+    print(f"  visitorData: {visitor_data[:30] if visitor_data else 'Alinamadi'}...")
     
     cookie_str = "; ".join([f"{k}={v}" for k, v in cookies.items()])
     
@@ -99,16 +64,9 @@ def yontem_innertube(video_id, cookies):
         {
             "name": "WEB",
             "clientName": "WEB",
-            "clientVersion": "2.20240101.00.00",
+            "clientVersion": "2.20240724.00.00",
             "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36",
             "clientNameId": "1",
-        },
-        {
-            "name": "TV_EMBEDDED",
-            "clientName": "TVHTML5_SIMPLY_EMBEDDED_PLAYER",
-            "clientVersion": "2.0",
-            "userAgent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)",
-            "clientNameId": "85",
         },
         {
             "name": "ANDROID_VR",
@@ -119,40 +77,48 @@ def yontem_innertube(video_id, cookies):
             "clientNameId": "28",
         },
         {
-            "name": "WEB_EMBEDDED",
-            "clientName": "WEB_EMBEDDED_PLAYER",
-            "clientVersion": "2.20240101.00.00",
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "clientNameId": "56",
+            "name": "WEB_CREATOR",
+            "clientName": "WEB_CREATOR",
+            "clientVersion": "1.20240724.03.00",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36",
+            "clientNameId": "62",
         },
     ]
 
     for client in clients:
         print(f"  Client: {client['name']}...")
         try:
+            client_ctx = {
+                "clientName": client["clientName"],
+                "clientVersion": client["clientVersion"],
+                "hl": "tr",
+                "gl": "TR",
+                "utcOffsetMinutes": 180,
+            }
+            if visitor_data:
+                client_ctx["visitorData"] = visitor_data
+            if "androidSdkVersion" in client:
+                client_ctx["androidSdkVersion"] = client["androidSdkVersion"]
+
             payload = {
                 "videoId": video_id,
                 "context": {
-                    "client": {
-                        "clientName": client["clientName"],
-                        "clientVersion": client["clientVersion"],
-                        "hl": "tr",
-                        "gl": "TR",
-                        "utcOffsetMinutes": 180,
-                    }
+                    "client": client_ctx,
+                    "user": {"lockedSafetyMode": False},
+                    "request": {"useSsl": True},
                 }
             }
-            if "androidSdkVersion" in client:
-                payload["context"]["client"]["androidSdkVersion"] = client["androidSdkVersion"]
 
             headers = {
                 "User-Agent": client["userAgent"],
                 "Content-Type": "application/json",
                 "X-YouTube-Client-Name": client["clientNameId"],
                 "X-YouTube-Client-Version": client["clientVersion"],
+                "X-Origin": "https://www.youtube.com",
                 "Origin": "https://www.youtube.com",
-                "Referer": "https://www.youtube.com/",
+                "Referer": f"https://www.youtube.com/watch?v={video_id}",
                 "Cookie": cookie_str,
+                "Accept-Language": "tr-TR,tr;q=0.9",
             }
 
             r = requests.post(
@@ -184,27 +150,71 @@ def yontem_innertube(video_id, cookies):
 
     return None
 
-# =====================
-# ANA AKIŞ
-# =====================
+def yontem_ytdlp_online(channel_id):
+    """ytdlp.online — farklı endpoint dene"""
+    print("Yontem: ytdlp.online (alternatif komut)...")
+    youtube_link = f"https://www.youtube.com/channel/{channel_id}/live"
+    
+    for attempt in range(1, 4):
+        print(f"  Deneme {attempt}/3...")
+        try:
+            headers1 = {"User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)"}
+            r1 = requests.get("https://ytdlp.online/", headers=headers1, verify=False, timeout=15)
+            
+            if "session" not in r1.cookies:
+                print("  Session alinamadi.")
+                time.sleep(15)
+                continue
+            
+            token = r1.cookies.get("session")
+            
+            # --get-url yerine farklı format dene
+            cmd = f"--get-url --format best {youtube_link}"
+            encoded = urllib.parse.quote(cmd)
+            
+            headers2 = {
+                "User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)",
+                "Accept": "text/event-stream",
+                "Referer": "https://ytdlp.online/",
+                "Cookie": f"session={token}"
+            }
+            r2 = requests.get(
+                f"https://ytdlp.online/stream?command={encoded}",
+                headers=headers2, verify=False, timeout=60
+            )
+            text = r2.text
+            print(f"  Tam yanit:\n{text[:500]}")
+            
+            for pattern in [
+                r'data:\s*(https://manifest\.googlevideo\.com[^\s<]+)',
+                r'data:\s*(https://[^\s<]*googlevideo[^\s<]+)',
+                r'(https://manifest\.googlevideo\.com[^\s<"]+)',
+            ]:
+                match = re.search(pattern, text)
+                if match:
+                    url = match.group(1).strip()
+                    print(f"  URL bulundu!")
+                    return url
+            
+            time.sleep(15)
 
-# Cookie yükle
+        except Exception as e:
+            print(f"  Hata: {e}")
+            time.sleep(15)
+    
+    return None
+
+# Ana akış
 cookies = parse_cookies(COOKIES_FILE) if os.path.exists(COOKIES_FILE) else {}
 print(f"{len(cookies)} cookie yuklendi.")
 
-# Video ID al
-print("Video ID aliniyor...")
 video_id = get_video_id(CHANNEL_ID)
 print(f"Video ID: {video_id}")
 
-stream_url = None
+stream_url = yontem_ytdlp_online(CHANNEL_ID)
 
-# Yöntem 1: ytdlp.online
-stream_url = yontem_ytdlp_online(CHANNEL_ID, deneme_sayisi=5)
-
-# Yöntem 2: InnerTube API
 if not stream_url and video_id:
-    stream_url = yontem_innertube(video_id, cookies)
+    stream_url = yontem_innertube_visitor(video_id, cookies)
 
 if not stream_url:
     print("Tum yontemler basarisiz.")
@@ -219,5 +229,4 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
         f"{stream_url}\n"
     )
-
 print(f"{OUTPUT_FILE} olusturuldu.")
