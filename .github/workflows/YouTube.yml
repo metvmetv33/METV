@@ -17,8 +17,15 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Node.js Kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Gereksinimleri Yukle
-        run: pip install requests urllib3 yt-dlp
+        run: |
+          pip install -U yt-dlp
+          npm install -g n_m3u8dl-re 2>/dev/null || true
 
       - name: Cookie dosyasini olustur
         env:
