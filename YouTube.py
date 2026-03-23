@@ -1,134 +1,67 @@
 import requests
 import re
 import sys
+import urllib.parse
+import urllib3
 import time
 
-CHANNEL_ID = "UCoIUysIrvGxoDw-GkdOGjRw"
-OUTPUT_FILE = "ytb.m3u8"
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Piped public instance listesi
-PIPED_INSTANCES = [
-    "https://pipedapi.kavin.rocks",
-    "https://piped-api.garudalinux.org",
-    "https://api.piped.projectsegfau.lt",
-    "https://piped.video/api",
-    "https://pipedapi.reallyaweso.me",
-    "https://pipedapi.coldforge.xyz",
-]
+live_id = "UCoIUysIrvGxoDw-GkdOGjRw"
+max_retries = 10
+wait_time = 15
 
-def get_video_id(channel_id):
-    url = f"https://www.youtube.com/channel/{channel_id}/live"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125.0.0.0 Safari/537.36"
-    }
+for attempt in range(1, max_retries + 1):
+    print(f"Deneme {attempt}/{max_retries} başlatılıyor...")
+    
     try:
-        r = requests.get(url, headers=headers, timeout=15)
-        match = re.search(r'"videoId":"([^"]{11})"', r.text)
-        if match:
-            return match.group(1)
+        headers1 = {
+            "User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)"
+        }
+        response1 = requests.get("https://ytdlp.online/", headers=headers1, verify=False, timeout=15)
+
+        if "session" not in response1.cookies:
+            print("Session alınamadı. Bekleniyor...")
+            time.sleep(wait_time)
+            continue
+
+        token = response1.cookies.get("session")
+
+        youtube_link = f"https://www.youtube.com/channel/{live_id}/live"
+        encoded_command = urllib.parse.quote(f"--get-url {youtube_link}")
+        stream_url = f"https://ytdlp.online/stream?command={encoded_command}"
+
+        headers2 = {
+            "User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)",
+            "Accept": "text/event-stream",
+            "Referer": "https://ytdlp.online/",
+            "Cookie": f"session={token}"
+        }
+
+        response2 = requests.get(stream_url, headers=headers2, verify=False, timeout=20)
+        text = response2.text
+
+        manifest_match = re.search(r'data:\s*(https://manifest\.googlevideo\.com[^\s]+)', text)
+
+        if manifest_match:
+            final_link = manifest_match.group(1).strip()
+
+            m3u8_content = "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n" + final_link
+
+            with open("kemal-sunal-filmleri.m3u8", "w", encoding="utf-8") as f:
+                f.write(m3u8_content)
+            
+            print("Başarılı! Link bulundu ve dosyaya kaydedildi.")
+            sys.exit(0)  # Link bulununca sistemi tamamen başarıyla kapatır
+        else:
+            print("Manifest linki bulunamadı. Bekleniyor...")
+
     except Exception as e:
-        print(f"  Video ID hatasi: {e}")
-    return None
+        print(f"Bir hata oluştu: {e}")
+    
+    # Eğer son deneme değilse bekle
+    if attempt < max_retries:
+        time.sleep(wait_time)
 
-def get_stream_from_piped(video_id):
-    for instance in PIPED_INSTANCES:
-        print(f"  Piped instance: {instance}...")
-        try:
-            url = f"{instance}/streams/{video_id}"
-            r = requests.get(url, timeout=15)
-            if r.status_code != 200:
-                print(f"    HTTP {r.status_code}")
-                continue
-            data = r.json()
-
-            # HLS stream ara
-            hls = data.get("hls")
-            if hls:
-                print(f"    HLS bulundu!")
-                return hls
-
-            # Audio/Video streams
-            streams = data.get("videoStreams", []) + data.get("audioStreams", [])
-            for s in reversed(streams):
-                u = s.get("url", "")
-                if u:
-                    print(f"    Stream URL bulundu!")
-                    return u
-
-            print(f"    Stream bulunamadi. Keys: {list(data.keys())}")
-
-        except Exception as e:
-            print(f"    Hata: {e}")
-        time.sleep(2)
-    return None
-
-def get_stream_from_invidious(video_id):
-    instances = [
-        "https://invidious.snopyta.org",
-        "https://vid.puffyan.us",
-        "https://invidious.kavin.rocks",
-        "https://y.com.sb",
-        "https://invidious.nerdvpn.de",
-    ]
-    for instance in instances:
-        print(f"  Invidious instance: {instance}...")
-        try:
-            url = f"{instance}/api/v1/videos/{video_id}"
-            r = requests.get(url, timeout=15)
-            if r.status_code != 200:
-                print(f"    HTTP {r.status_code}")
-                continue
-            data = r.json()
-
-            # Live stream
-            hls = data.get("hlsUrl")
-            if hls:
-                print(f"    HLS bulundu!")
-                return hls
-
-            # Format streams
-            formats = data.get("formatStreams", []) + data.get("adaptiveFormats", [])
-            for f in reversed(formats):
-                u = f.get("url", "")
-                if u:
-                    print(f"    Stream URL bulundu!")
-                    return u
-
-            print(f"    Stream bulunamadi.")
-
-        except Exception as e:
-            print(f"    Hata: {e}")
-        time.sleep(2)
-    return None
-
-# Ana akış
-print("Video ID aliniyor...")
-video_id = get_video_id(CHANNEL_ID)
-if not video_id:
-    print("Hata: Video ID alinamadi")
-    sys.exit(1)
-print(f"Video ID: {video_id}")
-
-stream_url = None
-
-print("\nYontem 1: Piped API...")
-stream_url = get_stream_from_piped(video_id)
-
-if not stream_url:
-    print("\nYontem 2: Invidious API...")
-    stream_url = get_stream_from_invidious(video_id)
-
-if not stream_url:
-    print("Tum yontemler basarisiz.")
-    sys.exit(1)
-
-print(f"\nBasarili! URL: {stream_url[:80]}...")
-
-with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    f.write(
-        "#EXTM3U\n"
-        "#EXT-X-VERSION:3\n"
-        "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
-        f"{stream_url}\n"
-    )
-print(f"{OUTPUT_FILE} olusturuldu.")
+# 10 denemenin sonunda hala bulamadıysa hata verip kapatır
+sys.exit("10 deneme yapıldı ancak manifest linki bulunamadı.")
