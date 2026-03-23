@@ -22,11 +22,11 @@ jobs:
 
       - name: Cookie dosyasini olustur
         env:
-          COOKIE_DATA: ${{ secrets.YOUTUBE_COOKIES }}
-        run: printf '%s' "$COOKIE_DATA" > cookies.txt
-
-      - name: Cookie formatini kontrol et
-        run: head -3 cookies.txt
+          COOKIE_DATA: ${{ secrets.YOUTUBE_COOKIES_B64 }}
+        run: |
+          echo "$COOKIE_DATA" | base64 -d > cookies.txt
+          echo "--- Cookie ilk 3 satir ---"
+          head -3 cookies.txt
 
       - name: Scripti Calistir
         run: python YouTube.py
