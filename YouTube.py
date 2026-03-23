@@ -19,48 +19,105 @@ def get_live_video_id(channel_id):
     return None
 
 def get_stream_url(video_id):
-    # YouTube InnerTube API
-    api_url = "https://www.youtube.com/youtubei/v1/player"
-    
-    payload = {
-        "videoId": video_id,
-        "context": {
-            "client": {
-                "clientName": "ANDROID_TESTSUITE",
-                "clientVersion": "1.9",
-                "androidSdkVersion": 30,
-                "hl": "tr",
-                "gl": "TR",
-                "utcOffsetMinutes": 180
+    clients = [
+        {
+            "name": "ANDROID_TESTSUITE",
+            "clientName": "ANDROID_TESTSUITE",
+            "clientVersion": "1.9",
+            "androidSdkVersion": 30,
+            "userAgent": "com.google.android.youtube/1.9 (Linux; U; Android 11)",
+            "apiKey": "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
+            "clientNameId": "30",
+        },
+        {
+            "name": "ANDROID_VR",
+            "clientName": "ANDROID_VR",
+            "clientVersion": "1.57.29",
+            "androidSdkVersion": 30,
+            "userAgent": "com.google.android.apps.youtube.vr.oculus/1.57.29 (Linux; U; Android 11)",
+            "apiKey": "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
+            "clientNameId": "28",
+        },
+        {
+            "name": "IOS",
+            "clientName": "IOS",
+            "clientVersion": "19.29.1",
+            "deviceModel": "iPhone16,2",
+            "userAgent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
+            "apiKey": "AIzaSyB-63vPrdThhKuerbB2N_l7Kvxy3HjsOXU",
+            "clientNameId": "5",
+        },
+    ]
+
+    for client in clients:
+        print(f"  Client deneniyor: {client['name']}...")
+        try:
+            payload = {
+                "videoId": video_id,
+                "context": {
+                    "client": {
+                        "clientName": client["clientName"],
+                        "clientVersion": client["clientVersion"],
+                        "hl": "tr",
+                        "gl": "TR",
+                        "utcOffsetMinutes": 180,
+                    }
+                }
             }
-        }
-    }
-    
-    headers = {
-        "User-Agent": "com.google.android.youtube/1.9 (Linux; U; Android 11)",
-        "Content-Type": "application/json",
-        "X-YouTube-Client-Name": "30",
-        "X-YouTube-Client-Version": "1.9",
-    }
-    
-    r = requests.post(api_url, json=payload, headers=headers)
-    data = r.json()
-    
-    # HLS manifest ara
-    streaming = data.get("streamingData", {})
-    
-    # Önce HLS manifest
-    hls_url = streaming.get("hlsManifestUrl")
-    if hls_url:
-        return hls_url
-    
-    # Sonra adaptive formats
-    formats = streaming.get("adaptiveFormats", []) + streaming.get("formats", [])
-    for f in reversed(formats):
-        u = f.get("url", "")
-        if u and "googlevideo.com" in u:
-            return u
-    
+
+            if "androidSdkVersion" in client:
+                payload["context"]["client"]["androidSdkVersion"] = client["androidSdkVersion"]
+            if "deviceModel" in client:
+                payload["context"]["client"]["deviceModel"] = client["deviceModel"]
+
+            headers = {
+                "User-Agent": client["userAgent"],
+                "Content-Type": "application/json",
+                "X-YouTube-Client-Name": client["clientNameId"],
+                "X-YouTube-Client-Version": client["clientVersion"],
+                "Origin": "https://www.youtube.com",
+            }
+
+            r = requests.post(
+                f"https://www.youtube.com/youtubei/v1/player?key={client['apiKey']}",
+                json=payload,
+                headers=headers,
+                timeout=15
+            )
+
+            data = r.json()
+
+            # Debug: playabilityStatus
+            ps = data.get("playabilityStatus", {})
+            print(f"    playabilityStatus: {ps.get('status')} — {ps.get('reason', '')}")
+
+            streaming = data.get("streamingData", {})
+
+            # HLS manifest (canlı yayın için en iyi)
+            hls = streaming.get("hlsManifestUrl")
+            if hls:
+                print(f"    HLS manifest bulundu!")
+                return hls
+
+            # DASH manifest
+            dash = streaming.get("dashManifestUrl")
+            if dash:
+                print(f"    DASH manifest bulundu!")
+                return dash
+
+            # Direkt URL
+            formats = streaming.get("formats", []) + streaming.get("adaptiveFormats", [])
+            for f in reversed(formats):
+                u = f.get("url", "")
+                if u:
+                    print(f"    Direkt URL bulundu!")
+                    return u
+
+            print(f"    streamingData: {list(streaming.keys())}")
+
+        except Exception as e:
+            print(f"    Hata: {e}")
+
     return None
 
 print("Video ID aliniyor...")
@@ -79,13 +136,12 @@ if not stream_url:
 
 print(f"Basarili! URL: {stream_url[:80]}...")
 
-# HLS manifest ise direkt yaz, değilse m3u8 sar
-if "manifest" in stream_url or ".m3u8" in stream_url:
-    content = f"#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=1280000\n{stream_url}\n"
-else:
-    content = f"#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n{stream_url}\n"
-
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    f.write(content)
+    f.write(
+        "#EXTM3U\n"
+        "#EXT-X-VERSION:3\n"
+        "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
+        f"{stream_url}\n"
+    )
 
 print(f"{OUTPUT_FILE} olusturuldu.")
