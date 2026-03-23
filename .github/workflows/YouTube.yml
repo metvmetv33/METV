@@ -18,7 +18,14 @@ jobs:
           python-version: '3.x'
 
       - name: Gereksinimleri Yukle
-        run: pip install requests
+        run: pip install requests urllib3
+
+      - name: Cookie dosyasini olustur
+        env:
+          COOKIE_DATA: ${{ secrets.YOUTUBE_COOKIES_B64 }}
+        run: |
+          echo "$COOKIE_DATA" | base64 -d > cookies.txt
+          head -3 cookies.txt
 
       - name: Scripti Calistir
         run: python YouTube.py
