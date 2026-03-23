@@ -26,8 +26,3 @@ jobs:
           git add ytb.m3u8
           git commit -m "M3U8 dosyasi guncellendi" || echo "Degisiklik yok"
           git push
-```
-
-Tek değişiklik bu satır:
-```
-pip install requests urllib3 yt-dlp
