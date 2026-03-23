@@ -8,7 +8,6 @@ COOKIES_FILE = "cookies.txt"
 
 url = f"https://www.youtube.com/channel/{CHANNEL_ID}/live"
 
-# Cookie dosyasini kontrol et
 if not os.path.exists(COOKIES_FILE):
     print(f"Hata: {COOKIES_FILE} bulunamadi")
     sys.exit(1)
@@ -16,7 +15,7 @@ if not os.path.exists(COOKIES_FILE):
 with open(COOKIES_FILE, "r") as f:
     ilk_satir = f.readline().strip()
     if "Netscape" not in ilk_satir:
-        print(f"Hata: Cookie formati yanlis. Ilk satir: {ilk_satir}")
+        print(f"Hata: Cookie formati yanlis. Ilk satir: '{ilk_satir}'")
         sys.exit(1)
 
 print("Cookie dosyasi gecerli.")
