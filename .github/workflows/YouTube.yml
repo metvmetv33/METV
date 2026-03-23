@@ -18,10 +18,9 @@ jobs:
           python-version: '3.x'
 
       - name: Gereksinimleri Yukle
-        run: pip install requests urllib3
+        run: pip install requests
 
       - name: Scripti Calistir
-        timeout-minutes: 25
         run: python YouTube.py
 
       - name: Degisiklikleri Kaydet ve Pushla
