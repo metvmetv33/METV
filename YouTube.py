@@ -1,7 +1,6 @@
 import yt_dlp
 import sys
 import os
-import subprocess
 
 CHANNEL_ID = "UCoIUysIrvGxoDw-GkdOGjRw"
 OUTPUT_FILE = "ytb.m3u8"
@@ -9,110 +8,66 @@ COOKIES_FILE = "cookies.txt"
 
 url = f"https://www.youtube.com/channel/{CHANNEL_ID}/live"
 
-print("Yontem 1: ios client (cookie yok)...")
-try:
-    result = subprocess.run(
-        [
-            "yt-dlp",
-            "--get-url",
-            "--format", "best",
-            "--extractor-args", "youtube:player_client=ios",
-            url
-        ],
-        capture_output=True,
-        text=True,
-        timeout=60
-    )
+if not os.path.exists(COOKIES_FILE):
+    print(f"Hata: {COOKIES_FILE} bulunamadi")
+    sys.exit(1)
 
-    if result.returncode == 0 and result.stdout.strip():
-        stream_url = result.stdout.strip().split('\n')[0]
-        print(f"Basarili! URL: {stream_url[:80]}...")
+CLIENTS = [
+    "web_creator",
+    "web_embedded",
+    "web_music",
+    "android",
+    "android_embedded",
+]
 
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(
-                "#EXTM3U\n"
-                "#EXT-X-VERSION:3\n"
-                "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
-                f"{stream_url}\n"
-            )
-        print(f"{OUTPUT_FILE} olusturuldu.")
-        sys.exit(0)
-    else:
-        print(f"Basarisiz: {result.stderr[-300:]}")
-
-except Exception as e:
-    print(f"Hata: {e}")
-
-print("Yontem 2: mweb client (cookie yok)...")
-try:
-    result = subprocess.run(
-        [
-            "yt-dlp",
-            "--get-url",
-            "--format", "best",
-            "--extractor-args", "youtube:player_client=mweb",
-            url
-        ],
-        capture_output=True,
-        text=True,
-        timeout=60
-    )
-
-    if result.returncode == 0 and result.stdout.strip():
-        stream_url = result.stdout.strip().split('\n')[0]
-        print(f"Basarili! URL: {stream_url[:80]}...")
-
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write(
-                "#EXTM3U\n"
-                "#EXT-X-VERSION:3\n"
-                "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
-                f"{stream_url}\n"
-            )
-        print(f"{OUTPUT_FILE} olusturuldu.")
-        sys.exit(0)
-    else:
-        print(f"Basarisiz: {result.stderr[-300:]}")
-
-except Exception as e:
-    print(f"Hata: {e}")
-
-print("Yontem 3: web client + cookie + node.js n challenge...")
-if os.path.exists(COOKIES_FILE):
+for client in CLIENTS:
+    print(f"Deneniyor: {client}...")
     try:
-        result = subprocess.run(
-            [
-                "yt-dlp",
-                "--cookies", COOKIES_FILE,
-                "--get-url",
-                "--format", "best",
-                "--extractor-args", "youtube:player_client=web",
-                url
-            ],
-            capture_output=True,
-            text=True,
-            timeout=60,
-            env={**os.environ, "PATH": os.environ["PATH"]}
-        )
+        ydl_opts = {
+            'format': 'best',
+            'quiet': True,
+            'no_warnings': True,
+            'cookiefile': COOKIES_FILE,
+            'extractor_args': {
+                'youtube': {
+                    'player_client': [client],
+                }
+            },
+        }
 
-        if result.returncode == 0 and result.stdout.strip():
-            stream_url = result.stdout.strip().split('\n')[0]
-            print(f"Basarili! URL: {stream_url[:80]}...")
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False)
 
-            with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-                f.write(
-                    "#EXTM3U\n"
-                    "#EXT-X-VERSION:3\n"
-                    "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
-                    f"{stream_url}\n"
-                )
-            print(f"{OUTPUT_FILE} olusturuldu.")
-            sys.exit(0)
-        else:
-            print(f"Basarisiz: {result.stderr[-300:]}")
+            stream_url = None
+            if 'url' in info:
+                stream_url = info['url']
+            elif 'formats' in info and info['formats']:
+                for f in reversed(info['formats']):
+                    u = f.get('url', '')
+                    if u and 'googlevideo.com' in u:
+                        stream_url = u
+                        break
+                if not stream_url:
+                    stream_url = info['formats'][-1].get('url')
+
+            if stream_url:
+                print(f"Basarili! Client: {client}")
+                print(f"URL: {stream_url[:80]}...")
+
+                with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+                    f.write(
+                        "#EXTM3U\n"
+                        "#EXT-X-VERSION:3\n"
+                        "#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n"
+                        f"{stream_url}\n"
+                    )
+                print(f"{OUTPUT_FILE} olusturuldu.")
+                sys.exit(0)
+            else:
+                print(f"  URL bulunamadi.")
 
     except Exception as e:
-        print(f"Hata: {e}")
+        print(f"  Hata: {str(e)[-150:]}")
 
-print("Tum yontemler basarisiz.")
+print("Tum clientlar basarisiz.")
 sys.exit(1)
