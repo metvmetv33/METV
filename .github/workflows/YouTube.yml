@@ -1,13 +1,16 @@
 name: YouTube M3U8 Guncelleme
+
 on:
   schedule:
     - cron: '*/45 * * * *'
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Depoyu Klonla
         uses: actions/checkout@v4
@@ -18,7 +21,7 @@ jobs:
           python-version: '3.x'
 
       - name: Gereksinimleri Yukle
-        run: pip install requests
+        run: pip install requests urllib3
 
       - name: Scripti Calistir
         run: python YouTube.py
@@ -27,6 +30,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f ytb.m3u8 || echo "Dosya bulunamadi"
-          git diff --staged --quiet || git commit -m "M3U8 dosyasi guncellendi"
+          git add kemal-sunal-filmleri.m3u8
+          git commit -m "M3U8 dosyasi guncellendi" || echo "Degisiklik yok"
           git push
+          
