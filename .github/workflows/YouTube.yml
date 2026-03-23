@@ -25,14 +25,20 @@ jobs:
       - name: Gereksinimleri Yukle
         run: |
           pip install -U yt-dlp
-          npm install -g n_m3u8dl-re 2>/dev/null || true
+          npm install -g yt-dlp-gui 2>/dev/null || true
+          node --version
+          yt-dlp --version
+
+      - name: yt-dlp JavaScript destegini kur
+        run: |
+          pip install -U yt-dlp[default]
+          yt-dlp --version
 
       - name: Cookie dosyasini olustur
         env:
           COOKIE_DATA: ${{ secrets.YOUTUBE_COOKIES_B64 }}
         run: |
           echo "$COOKIE_DATA" | base64 -d > cookies.txt
-          echo "--- Cookie ilk 3 satir ---"
           head -3 cookies.txt
 
       - name: Scripti Calistir
