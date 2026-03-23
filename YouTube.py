@@ -31,6 +31,6 @@ def get_live_url(channel_id):
 
 stream_url = get_live_url("UCoIUysIrvGxoDw-GkdOGjRw")
 if stream_url:
-    with open("kemal-sunal-filmleri.m3u8", "w") as f:
+    with open("ytb.m3u8", "w") as f:
         f.write(f"#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1280000\n{stream_url}\n")
     print("Kaydedildi.")
