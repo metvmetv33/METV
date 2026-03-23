@@ -21,7 +21,12 @@ jobs:
         run: pip install requests urllib3 yt-dlp
 
       - name: Cookie dosyasini olustur
-        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > cookies.txt
+        env:
+          COOKIE_DATA: ${{ secrets.YOUTUBE_COOKIES }}
+        run: printf '%s' "$COOKIE_DATA" > cookies.txt
+
+      - name: Cookie formatini kontrol et
+        run: head -3 cookies.txt
 
       - name: Scripti Calistir
         run: python YouTube.py
