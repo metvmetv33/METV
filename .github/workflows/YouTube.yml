@@ -11,18 +11,25 @@ jobs:
     steps:
       - name: Depoyu Klonla
         uses: actions/checkout@v4
+
       - name: Python Kur
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Gereksinimleri Yukle
-        run: pip install requests urllib3 yt-dlp   # ← yt-dlp eklendi
+        run: pip install requests urllib3 yt-dlp
+
+      - name: Cookie dosyasini olustur
+        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > cookies.txt
+
       - name: Scripti Calistir
         run: python YouTube.py
+
       - name: Degisiklikleri Kaydet ve Pushla
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add ytb.m3u8
-          git commit -m "M3U8 dosyasi guncellendi" || echo "Degisiklik yok"
+          git add -f ytb.m3u8 || echo "Dosya bulunamadi"
+          git diff --staged --quiet || git commit -m "M3U8 dosyasi guncellendi"
           git push
