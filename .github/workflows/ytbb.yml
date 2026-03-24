@@ -2,8 +2,8 @@ name: YouTube Live Stream Updater
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *' # 6 saatte bir çalışır
+  workflow_dispatch: # Manuel çalıştırma butonu
 
 jobs:
   build:
@@ -26,17 +26,23 @@ jobs:
         run: pip install requests urllib3
 
       - name: Kanal Linklerini Güncelle
-        run: python youtubee.py  # Dosya isminin doğru olduğundan emin olun
+        run: python youtubee.py
 
       - name: Değişiklikleri Kaydet ve Pushla
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .
+          
+          # Sadece metv klasörünü ve scripti takip et, 
+          # Eskiden kalan klasörler varsa onları temizlemek için 'add -A' kullanıyoruz
+          git add -A
+          
           if ! git diff --cached --quiet; then
-            git commit -m "Otomatik Güncelleme: $(date)"
+            git commit -m "METV Klasörü Güncellendi: $(date +'%d-%m-%Y %H:%M')"
+            # Önce uzak depodaki değişiklikleri al (rebase)
             git pull --rebase origin main
+            # Sonra gönder
             git push origin main
           else
-            echo "Kaydedilecek yeni bir değişiklik yok."
+            echo "Herhangi bir değişiklik bulunamadı."
           fi
