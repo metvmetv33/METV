@@ -2,20 +2,20 @@ name: YouTube Live Stream Updater
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # 6 saatte bir çalışır
-  workflow_dispatch: # Manuel çalıştırma butonu
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Yazma izni kritik
+      contents: write
 
     steps:
       - name: Depoyu Kontrol Et
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Tüm geçmişi çek (pull hatasını önlemek için)
+          fetch-depth: 0
 
       - name: Python Kurulumu
         uses: actions/setup-python@v4
@@ -23,26 +23,20 @@ jobs:
           python-version: '3.9'
 
       - name: Bağımlılıkları Yükle
-        run: |
-          pip install requests urllib3
+        run: pip install requests urllib3
 
       - name: Kanal Linklerini Güncelle
-        run: |
-          python youtubee.py
+        run: python youtubee.py  # Dosya isminin doğru olduğundan emin olun
 
       - name: Değişiklikleri Kaydet ve Pushla
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          
           git add .
-          
-          # Eğer değişiklik varsa commit yap ve pushla
           if ! git diff --cached --quiet; then
-            git commit -m "Kanal listesi güncellendi: $(date +'%Y-%m-%d %H:%M:%S')"
-            # Çakışmaları önlemek için rebase yaparak çek ve pushla
+            git commit -m "Otomatik Güncelleme: $(date)"
             git pull --rebase origin main
             git push origin main
           else
-            echo "Değişiklik bulunamadı, işlem sonlandırılıyor."
+            echo "Kaydedilecek yeni bir değişiklik yok."
           fi
