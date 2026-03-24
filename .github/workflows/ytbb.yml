@@ -1,0 +1,35 @@
+name: YouTube Live Stream Updater
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Her 6 saatte bir otomatik çalışır
+  workflow_dispatch: # Manuel olarak başlatma butonu ekler
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Depoyu Kontrol Et
+        uses: actions/checkout@v3
+
+      - name: Python Kurulumu
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Bağımlılıkları Yükle
+        run: |
+          pip install requests urllib3
+
+      - name: Kanal Linklerini Güncelle
+        run: |
+          python youtubee.py
+
+      - name: Değişiklikleri Kaydet ve Pushla
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Kanal listesi güncellendi: $(date)" || echo "Değişiklik yok"
+          git push
