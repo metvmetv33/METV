@@ -1,0 +1,33 @@
+name: Generate M3U
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"  # 6 saatte bir
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v3
+
+      - name: Python kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Kütüphane kur
+        run: pip install requests
+
+      - name: Script çalıştır
+        run: python vavoo.py
+
+      - name: Commit & Push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add *.m3u
+          git commit -m "M3U güncellendi" || echo "Değişiklik yok"
+          git push
