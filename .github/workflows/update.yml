@@ -10,30 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-    - name: Install dependencies
-      run: pip install requests
+      - name: Install dependencies
+        run: pip install requests
 
-- name: Run script
-      run: python tivibu_gen.py
+      - name: Run script
+        run: python tivibu_gen.py
 
-    - name: Commit and Push changes
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        # Sadece dosya varsa işlem yap
-        if [ -f tbu.m3u ]; then
-          git add tbu.m3u
-          git commit -m "Update tbu.m3u" || echo "No changes to commit"
-          git push
-        else
-          echo "Dosya oluşturulamadı, push işlemi atlanıyor."
-          exit 1
-        fi
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          # Dosyanın varlığını kontrol et
+          if [ -f tbu.m3u ]; then
+            git add tbu.m3u
+            git commit -m "Update tbu.m3u" || echo "No changes to commit"
+            git push
+          else
+            echo "HATA: tbu.m3u dosyası oluşturulamadı. Script çıktısını kontrol edin."
+            exit 1
+          fi
