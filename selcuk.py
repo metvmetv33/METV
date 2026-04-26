@@ -94,7 +94,7 @@ def process_channels():
             m3u_content.append(final_link)
 
     # Dosyaya kaydet
-    with open("me_tv_selcuk.m3u", "w", encoding="utf-8") as f:
+    with open("selcuk.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_content))
     
     print("\n✅ İşlem tamamlandı! 'me_tv_selcuk.m3u' dosyası oluşturuldu.")
