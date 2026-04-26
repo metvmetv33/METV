@@ -1,103 +1,59 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+import urllib3
 
-# Global ayarlar
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Referer": "https://www.selcuksportshd.is/"
 }
 
-def find_active_domain(start=680, end=750):
-    """Sayısal olarak değişen aktif giriş domainini bulur."""
-    print("🔍 Aktif domain taranıyor...")
-    for i in range(start, end + 1):
-        # Genellikle selcuksportshd + rastgele karakterler/sayılar + .xyz formatındadır
-        # Örneğinizdeki 688829a7bd yapısı için geniş bir arama gerekebilir. 
-        # Eğer statik bir listeniz varsa oradan devam edilebilir.
-        url = f"https://www.selcuksportshd{i}.xyz/" 
+def find_active_domain():
+    # Güncel giriş adresleri buraya eklenebilir
+    test_urls = ["https://www.selcuksportshd688829a7bd.xyz/", "https://www.selcuksportshd.is/"]
+    for url in test_urls:
         try:
-            # Örnekte verdiğiniz tam URL'yi deniyoruz
-            test_url = "https://www.selcuksportshd688829a7bd.xyz/"
-            response = requests.get(test_url, headers=HEADERS, timeout=5)
-            if response.status_code == 200 and "uxsyplayer" in response.text:
-                return test_url, response.text
-        except:
-            continue
+            res = requests.get(url, headers=HEADERS, timeout=10, verify=False)
+            if res.status_code == 200 and "data-url" in res.text:
+                return url, res.text
+        except: continue
     return None, None
 
-def get_m3u8_from_player(player_url, main_referer):
-    """Player sayfasından baseStreamUrl'i çekip final m3u8 adresini oluşturur."""
+def get_m3u8(player_url, referer):
     try:
-        # Player sayfası için referer ana site olmalıdır
-        res = requests.get(player_url, headers={"User-Agent": HEADERS["User-Agent"], "Referer": main_referer}, timeout=7)
-        html = res.text
+        res = requests.get(player_url, headers={"User-Agent": HEADERS["User-Agent"], "Referer": referer}, timeout=10, verify=False)
+        base_url = re.search(r'this\.baseStreamUrl\s*=\s*["\']([^"\']+)["\']', res.text)
+        stream_id = re.search(r"id=([a-zA-Z0-9_-]+)", player_url)
+        if base_url and stream_id:
+            return f"{base_url.group(1).rstrip('/')}/{stream_id.group(1)}/playlist.m3u8"
+    except: return None
+    return None
 
-        # baseStreamUrl desenini ara
-        pattern = r'this\.baseStreamUrl\s*=\s*["\']([^"\']+)["\']'
-        match = re.search(pattern, html)
-        
-        if not match:
-            return None
-
-        base_url = match.group(1).rstrip('/') + '/'
-        
-        # ID parametresini URL'den çek (id=selcukbeinsports1 gibi)
-        stream_id_match = re.search(r"id=([a-zA-Z0-9_-]+)", player_url)
-        if not stream_id_match:
-            return None
-            
-        stream_id = stream_id_match.group(1)
-        return f"{base_url}{stream_id}/playlist.m3u8"
-
-    except Exception as e:
-        return None
-
-def process_channels():
+def run():
     domain, html = find_active_domain()
-    if not domain:
-        print("❌ Aktif kaynak bulunamadı.")
-        return
-
+    if not domain: return
+    
     soup = BeautifulSoup(html, "html.parser")
-    # Sadece futbol tabını (tab1) değil, tüm kanalları çekelim
-    channel_links = soup.find_all("a", attrs={"data-url": True})
+    items = soup.find_all("a", attrs={"data-url": True})
+    m3u = ["#EXTM3U"]
     
-    print(f"📺 {len(channel_links)} kanal işleniyor...")
-    
-    m3u_content = ["#EXTM3U"]
-
-    for a in channel_links:
-        raw_url = a["data-url"]
-        # 'gecersiz' olanları veya boş olanları atla
-        if "gecersiz" in raw_url or not raw_url.startswith("http"):
-            continue
-
-        name_tag = a.find("div", class_="name")
-        time_tag = a.find("time", class_="time")
+    for item in items:
+        raw_url = item["data-url"]
+        if "gecersiz" in raw_url or not raw_url.startswith("http"): continue
         
-        # Kanal adını temizle
-        channel_name = name_tag.text.strip() if name_tag else "Bilinmeyen Kanal"
-        if time_tag and time_tag.text.strip():
-            channel_name = f"{channel_name} ({time_tag.text.strip()})"
-
-        print(f"🔄 Bağlantı çözülüyor: {channel_name}")
+        name = item.find("div", class_="name").get_text(strip=True) if item.find("div", class_="name") else "Kanal"
+        link = get_m3u8(raw_url, domain)
         
-        final_link = get_m3u8_from_player(raw_url, domain)
-        
-        if final_link:
-            # ME TV için m3u formatı
-            m3u_content.append(f'#EXTINF:-1, {channel_name}')
-            # SelcukSports m3u8'leri Referer ve User-Agent kontrolü yapar, VLC/IPTV Player'da bunlar eklenmeli
-            m3u_content.append(f'#EXTVLCOPT:http-referrer={domain}')
-            m3u_content.append(f'#EXTVLCOPT:http-user-agent={HEADERS["User-Agent"]}')
-            m3u_content.append(final_link)
-
-    # Dosyaya kaydet
-    with open("selcuk.m3u", "w", encoding="utf-8") as f:
-        f.write("\n".join(m3u_content))
-    
-    print("\n✅ İşlem tamamlandı! 'me_tv_selcuk.m3u' dosyası oluşturuldu.")
+        if link:
+            m3u.append(f'#EXTINF:-1, {name}')
+            m3u.append(f'#EXTVLCOPT:http-referrer={domain}')
+            m3u.append(f'#EXTVLCOPT:http-user-agent={HEADERS["User-Agent"]}')
+            m3u.append(link)
+            
+    with open("selcukk.m3u", "w", encoding="utf-8") as f:
+        f.write("\n".join(m3u))
+    print(f"Bitti: {len(m3u)//4} kanal eklendi.")
 
 if __name__ == "__main__":
-    process_channels()
+    run()
