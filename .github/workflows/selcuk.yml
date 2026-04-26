@@ -1,52 +1,40 @@
-name: Selcuk Kontrol ve Güncelleme
-
-# Çakışmaları önlemek için aynı anda birden fazla işin çalışmasını engeller
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+name: Selcuk Otomatik Guncelleme
 
 on:
-  workflow_dispatch: # Manuel başlatma butonu
+  workflow_dispatch:
   schedule:
-    - cron: '*/10 * * * *' # Her 10 dakikada bir çalışır
+    - cron: '*/10 * * * *'
 
 jobs:
-  GuncellemeIslemi:
+  build:
     runs-on: ubuntu-latest
-    
     permissions:
-      contents: write # Dosyaları commit/push edebilmek için gerekli izin
-
+      contents: write
     steps:
-      - name: Depoyu Klonla
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Python 3.11 Kur
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          
-      - name: Gerekli Kütüphaneleri Yükle
-        run: |
-          python -m pip install --upgrade pip
-          # bs4 hatasını çözmek için beautifulsoup4 eklendi
-          pip install requests beautifulsoup4 urllib3
 
-      - name: Selcuk Scriptini Çalıştır
+      - name: Install Libs
+        run: pip install requests beautifulsoup4 urllib3
+
+      - name: Run Script
         run: python selcuk.py
 
-      - name: Değişiklikleri Kontrol Et
-        id: check_changes
-        run: |
-          git add selcuk.m3u
-          # Değişiklik varsa 'changed' çıktısını true yap
-          git diff --quiet && git diff --staged --quiet || echo "changed=true" >> $GITHUB_OUTPUT
-
-      - name: Güncellemeleri Commit ve Push Et
-        if: steps.check_changes.outputs.changed == 'true'
+      - name: Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
-          git commit -m "🔄 Selcuk M3U Güncellendi: $(date +'%d-%m-%Y %H:%M')"
-          git push
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add selcukk.m3u
+          # Sadece değişiklik varsa devam et
+          if ! git diff --cached --quiet; then
+            git commit -m "🔄 Liste Guncellendi"
+            git pull --rebase origin main
+            git push
+          else
+            echo "Değişiklik yok, atlanıyor."
+          fi
