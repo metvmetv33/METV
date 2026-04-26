@@ -38,7 +38,7 @@ jobs:
       - name: Değişiklikleri Kontrol Et
         id: check_changes
         run: |
-          git add selcukk.m3u
+          git add selcuk.m3u
           # Değişiklik varsa 'changed' çıktısını true yap
           git diff --quiet && git diff --staged --quiet || echo "changed=true" >> $GITHUB_OUTPUT
 
