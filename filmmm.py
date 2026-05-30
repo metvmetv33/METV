@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Gereksinim: pip install requests
+# Gereksinim: pip install requests curl_cffi
 # Calistir (GUI): python sinewix_gui.py
 # Calistir (CLI): python sinewix_gui.py --cli
 
@@ -8,23 +8,24 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading, requests, time, os, sys
 
+# Cloudflare geçişi için CLI modunda curl_cffi kullanıyoruz
+try:
+    from curl_cffi import requests as requests_cffi
+except ImportError:
+    requests_cffi = None
+
 # ─── API ──────────────────────────────────────────────────────────────────────
 API_BASE  = "https://ydfvfdizipanel.ru/public/api"
 API_KEY   = "9iQNC5HQwPlaFuJDkhncJ5XTJ8feGXOJatAA"
 SIGNATURE = "3082058830820370a00302010202145bbfbba9791db758ad12295636e094ab4b07dc24300d06092a864886f70d01010b05003074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e06035504031307416e64726f69643020170d3231313231353232303433335a180f32303531313231353232303433335a3074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e06035504031307416e64726f696430820222300d06092a864886f70d01010105000382020f003082020a0282020100a5106a24bb3f9c0aaf3a2b228f794b5eaf1757ba758b19736a39d1bdc73fc983a7237b8d5ca5156cfa999c1dab3418bbc2be0920e0ee001c8aa4812d1dae75d080f09e91e0abda83ff9a76e8384a4429f4849248069a59505b12ac2c14ba2e4d1a13afcdaf54e508697ff928a9f738e6f4a6fc27409c55329eb149b5ff89c5a2d7c06bf9e62086f955cad17d7be2623ee9d5ec56068eadc23cb0965a13ff97d49fe10ef41afc6eeca36b4ace9582097faff89f590bc831cdb3a69eec5d15b67c3f2cad49e37ed053733e3d2d400c47755b932bdbe15d749fd6ad1dce30ba5e66094dfb6ee6f64cafb807e11b19a990c5d078c6d6701cda0bdeb21e99404ff166074f4c89b04c418f4e7940db5c78647c475bcfb85d4c4e836ee7d7c1d53e9e736b5d96d4b4d8b98209064b729ac6a682d55a6a930e518d849898bb28329ca0aaa133b5e5270a9d5940cac6af4802a57fd971efda91abb602882dd6aa6ce2b236b57b52ee2481498f0cacbcc2c36c238bc84becad7eaaf1125b9a1ca9ded6c79f3f283a52050377809b2a9995d66e1636b0ed426fdd8685c47cb18e82077f4aefcc07887e1dc58b4d64be1632f0e7b4625da6f40c65a8512a6454a4b96963e7f876136e6c0069a519a79ad632078ed965aa12482458060c030ed50db706d854f88cb004630b49285d8af8b471ff8f6070687826412287b50049bcb7d1b6b62ef90203010001a310300e300c0603551d13040530030101ff300d06092a864886f70d01010b0500038202010051c0b7bd793181dc29ca777d3773f928a366c8469ecf2fa3cfb076e8831970d19bb2b96e44e8ccc647cf0696bb824ac61c23d958525d283cab26037b04d58aa79bf92192db843adf5c26a980f081d2f0e14f759fc5ff4c5bb3dce0860299bfe7b349a8155a2efaf731ba25ce796a80c1442c7bf80f8c1a7912ff0b6f6592264315337251a846460194fa594f81f38f9e5233a63201e931ad9cab5bf119f24025613f307194eaa6eb39a83f3c05a49ba34455b1aff7c6839bbb657d9392ffdf397432af6e56ba9534a8b07d7060fe09691c6cf07cb5324f67b3cc0871a8c621d81fe71d71085c55206a4f57e25f774fd4b979b299e8bb076b50fca42fa57da2d519fd35a4a7c0137babaed4345f8031b63b6a71f5e8268f709d658ccd7c2a58849379d25bfa598c3f4a2c3d9b7d89285fefeb7f0ec65137d38b08ce432a15688b624a179e6a4a505ebc3bcdfbc4d4330508ee2d8d0f016924dcec21a6838ef7d834c6f43bde4a5201ed0b3bb4e9bd377b470e36bcf5bc3d56169dbd8e39567aa7dce4d1a8a8a54a5e1aa6fb1a8aab0062669a966f96e15ccce6fe12ea5e6a8b8c8823bdc94988ca39759fd1cc8fd8ae5c3d74db50b174cf7d77655016c075c91d439ed01cc0a9f695c99fad3b5495fb6cb1e01a5fa020cc6022a85c07ec55f9eba89719f86e49d34ab5bd208c5f70cced2b7b7963c014f8404432979b506de29e"
 
 HEADERS = {
-    "Host":             "ydfvfdizipanel.ru",
     "Accept":           "application/json, text/plain, */*",
-    "Accept-Language":  "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Accept-Encoding":  "gzip, deflate, br",
-    "Cache-Control":    "no-cache",
-    "Pragma":           "no-cache",
+    "Accept-Language":  "tr-TR,tr;q=0.9",
     "hash256":          "711bff4afeb47f07ab08a0b07e85d3835e739295e8a6361db77eebd93d96306b",
     "signature":        SIGNATURE,
     "User-Agent":       "EasyPlex (Android 14; SM-A546B; Samsung Galaxy A54 5G; tr)",
-    "X-Requested-With": "com.anywheresoftware.b4a",
-    "Connection":       "keep-alive"
+    "X-Requested-With": "com.anywheresoftware.b4a"
 }
 
 # ─── Renkler ──────────────────────────────────────────────────────────────────
@@ -41,22 +42,29 @@ BORDER  = "#2e3248"
 PAGE_OPTIONS = ["5", "10", "20", "50", "100", "Hepsi"]
 
 # ─── API Yardimcilari ─────────────────────────────────────────────────────────
-session = requests.Session()
+is_cli = "--cli" in sys.argv
+
+# CLI modundaysak ve kütüphane mevcutsa tarayıcı taklidi yapan session kullanıyoruz
+if is_cli and requests_cffi:
+    session = requests_cffi.Session(impersonate="chrome")
+else:
+    session = requests.Session()
 
 def api_get(path, retries=3):
     url = API_BASE + path
     for attempt in range(retries):
         try:
-            r = session.get(url, headers=HEADERS, timeout=25)
+            r = session.get(url, headers=HEADERS, timeout=30)
             if r.status_code == 200:
                 return r.json()
             else:
-                if "--cli" in sys.argv:
-                    print(f"  [!] API Uyari: {path} istek durum kodu: {r.status_code} (Deneme {attempt+1}/{retries})")
+                if is_cli:
+                    print(f"  [!] API Durum Kodu: {r.status_code} (Yeniden deneniyor {attempt+1}/{retries})")
+                time.sleep(2)
         except Exception as e:
-            if "--cli" in sys.argv:
-                print(f"  [!] Hata: {str(e)}")
-            time.sleep(1.5)
+            if is_cli:
+                print(f"  [!] Baglanti Hatasi: {str(e)}")
+            time.sleep(2)
     return None
 
 def safe_url(url):
@@ -88,11 +96,6 @@ def get_pages(path, max_pages, log_fn, stop_ev):
         log_fn(f"  -> Sayfa {page} cekiliyor...\n", "dim")
         raw_response = api_get(f"{path}?page={page}")
         
-        if "--cli" in sys.argv and page == 1:
-            print(f"  [*] API Ham Yanit Tipi: {type(raw_response)}")
-            if isinstance(raw_response, dict):
-                print(f"  [*] Anahtarlar (Keys): {list(raw_response.keys())}")
-                
         items, has_next = extract_items(raw_response)
         if not items:
             break
@@ -101,17 +104,24 @@ def get_pages(path, max_pages, log_fn, stop_ev):
         if not has_next:
             break
         page += 1
-        time.sleep(0.4 if "--cli" in sys.argv else 0.1)
+        time.sleep(0.5 if is_cli else 0.1)
     return all_items
 
 def m3u_entry(name, group, logo, url):
     logo_attr = f' tvg-logo="{logo}"' if logo else ""
     return f'#EXTINF:-1 group-title="{group}"{logo_attr},{name}\n{url}\n'
 
-# ─── Çekirdek İş Motoru (GUI ve CLI Ortak Kullanır) ───────────────────────────
+# ─── Is mantigi ────────────────────────────────────────────────────────────
 def core_scraper(fetch_film, fetch_dizi, fetch_anime, max_pages, delay, outfile, log_fn, stat_fn, stop_ev, finish_fn):
     entries = []
     total = 0
+
+    # GitHub Actions'da 'pathspec' hatası vermemesi için dosyayı en baştan boş olarak hazır bulunduruyoruz
+    try:
+        with open(outfile, "w", encoding="utf-8") as f:
+            f.write("#EXTM3U\n")
+    except Exception as e:
+        log_fn(f"Baslangic dosya yazma hatasi: {e}\n", "acc")
 
     # ── FILMLER ──────────────────────────────────────────────────────────
     if fetch_film and not stop_ev.is_set():
@@ -211,7 +221,7 @@ def core_scraper(fetch_film, fetch_dizi, fetch_anime, max_pages, delay, outfile,
                 log_fn(f"  [{i}/{len(items)}] {sname}  —  stream yok\n", "dim")
             time.sleep(delay)
 
-    # ── KAYDET ───────────────────────────────────────────────────────────
+    # ── DOSYAYI NİHAİLEŞTİR ───────────────────────────────────────────────
     if entries:
         try:
             with open(outfile, "w", encoding="utf-8") as f:
@@ -220,13 +230,13 @@ def core_scraper(fetch_film, fetch_dizi, fetch_anime, max_pages, delay, outfile,
                     f.write(e)
             finish_fn(total, outfile)
         except Exception as ex:
-            log_fn(f"\nDosya hatasi: {ex}\n", "acc")
-            finish_fn(0, "")
+            log_fn(f"\nDosya yazma hatasi: {ex}\n", "acc")
+            finish_fn(0, outfile)
     else:
-        log_fn("\nHic stream bulunamadi.\n", "wrn")
-        finish_fn(0, "")
+        log_fn("\nHic yeni stream eklenemedi veya liste bos.\n", "wrn")
+        finish_fn(0, outfile)
 
-# ─── GUI Sınıfı ───────────────────────────────────────────────────────────────
+# ─── Uygulama Arayüzü (GUI) ───────────────────────────────────────────────────
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -365,11 +375,15 @@ class App(tk.Tk):
             self._set_stat(f"Tamamlandi — {total} stream", SUCCESS)
             self._log(f"\nTAMAMLANDI! {total} stream -> {path}\n", "ok")
         else:
-            self._set_stat("Stream bulunamadi", WARNING)
+            self._set_stat("Yayın bulunamadı veya boş dosya oluşturuldu", WARNING)
 
-# ─── CLI Çalıştırma Mantığı (GitHub Actions İçin) ────────────────────────────
+# ─── GitHub Actions / CLI Modu Çalışma Mantığı ────────────────────────────────
 def run_cli():
     print("[*] SineWix M3U Guncelleyici CLI Modu Baslatildi.")
+    if not requests_cffi:
+        print("[!] UYARI: 'curl_cffi' kütüphanesi yüklü değil! Cloudflare engeline takılabilirsiniz.")
+        print("[*] Lütfen workflow dosyanıza 'pip install curl_cffi' adımını ekleyin.")
+    
     stop_ev = threading.Event()
     output_path = "./sinewix.m3u"
     
@@ -381,18 +395,18 @@ def run_cli():
         if total:
             print(f"\n[+] BAŞARILI: {total} adet yayin '{path}' dosyasina kaydedildi.")
         else:
-            print("\n[-] BAŞARISIZ: Hic yayin bulunamadi.")
+            print(f"\n[!] YAYIN BULUNAMADI: Ancak 'fatal' hata vermemesi için boş m3u şablonu oluşturuldu -> {path}")
 
-    # CLI modunda varsayılan olarak Filmler ve Dizilerden ilk 3 sayfayı hızlıca tarar
+    # GitHub Actions üzerinde çok agresif yüklenmemek adına delay'i 0.4 yapıyoruz
     core_scraper(
         fetch_film=True, fetch_dizi=True, fetch_anime=False,
-        max_pages=3, delay=0.3, outfile=output_path,
+        max_pages=2, delay=0.4, outfile=output_path,
         log_fn=cli_log, stat_fn=print, stop_ev=stop_ev, finish_fn=cli_finish
     )
 
 # ─── Ana Giriş Noktası ────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    if "--cli" in sys.argv:
+    if is_cli:
         run_cli()
     else:
         App().mainloop()
