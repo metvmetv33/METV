@@ -45,7 +45,13 @@ def api_get(path, retries=3):
             r = requests.get(url, headers=HEADERS, timeout=20)
             if r.status_code == 200:
                 return r.json()
-        except Exception:
+            else:
+                # CLI modunda çalışırken hata kodunu terminale basmak için:
+                if "--cli" in sys.argv:
+                    print(f"  [!] API Uyari: {path} istek durum kodu: {r.status_code}")
+        except Exception as e:
+            if "--cli" in sys.argv:
+                print(f"  [!] Hata olustu: {str(e)}")
             time.sleep(1)
     return None
 
@@ -76,7 +82,15 @@ def get_pages(path, max_pages, log_fn, stop_ev):
         if max_pages and page > max_pages:
             break
         log_fn(f"  -> Sayfa {page} cekiliyor...\n", "dim")
-        items, has_next = extract_items(api_get(f"{path}?page={page}"))
+        raw_response = api_get(f"{path}?page={page}")
+        
+        # Detaylı loglama (Veri merkezinde ne döndüğünü anlamak için)
+        if "--cli" in sys.argv and page == 1:
+            print(f"  [*] API Ham Yanit Tipi: {type(raw_response)}")
+            if isinstance(raw_response, dict):
+                print(f"  [*] Anahtarlar (Keys): {list(raw_response.keys())}")
+                
+        items, has_next = extract_items(raw_response)
         if not items:
             break
         all_items.extend(items)
@@ -257,7 +271,6 @@ class App(tk.Tk):
         row_f.grid(row=1, column=1, sticky="ew", padx=(14,0), pady=(10,0))
         row_f.columnconfigure(0, weight=1)
         self.out_var = tk.StringVar(value=os.path.join(os.path.expanduser("~"), "sinewix.m3u"))
-        tk.Text(row_f) # Dummy touch
         tk.Entry(row_f, textvariable=self.out_var, font=("Courier New", 10), bg=BG3, fg=TEXT, insertbackground=TEXT, relief="flat", highlightbackground=BORDER, highlightthickness=1).grid(row=0, column=0, sticky="ew", ipady=5)
         tk.Button(row_f, text=" ... ", font=("Courier New", 10, "bold"), bg=BG3, fg=TEXT, relief="flat", cursor="hand2", command=self._browse).grid(row=0, column=1, padx=(6,0))
 
@@ -296,7 +309,7 @@ class App(tk.Tk):
         return tk.Frame(o, bg=BG2, padx=16, pady=12)
 
     def _browse(self):
-        p = filedialog.asksavesasfilename(defaultextension=".m3u", filetypes=[("M3U Listesi", "*.m3u")], initialfile="sinewix.m3u")
+        p = filedialog.asksaveasfilename(defaultextension=".m3u", filetypes=[("M3U Listesi", "*.m3u")], initialfile="sinewix.m3u")
         if p: self.out_var.set(p)
 
     def _log(self, msg, tag="dim"):
@@ -353,8 +366,6 @@ class App(tk.Tk):
 def run_cli():
     print("[*] SineWix M3U Guncelleyici CLI Modu Baslatildi.")
     stop_ev = threading.Event()
-    
-    # Reponun kök dizinine kaydetmesi için çıktı yolunu ayarlıyoruz
     output_path = "./sinewix.m3u"
     
     def cli_log(msg, tag=None):
@@ -363,14 +374,14 @@ def run_cli():
 
     def cli_finish(total, path):
         if total:
-            print(f"\n[+] BAŞARILI: {total} adet yayın '{path}' dosyasına kaydedildi.")
+            print(f"\n[+] BAŞARILI: {total} adet yayin '{path}' dosyasina kaydedildi.")
         else:
-            print("\n[-] BAŞARISIZ: Hiç yayın bulunamadı.")
+            print("\n[-] BAŞARISIZ: Hic yayin bulunamadi.")
 
-    # CLI Ayarları: Filmler ve Diziler aktif, ilk 10 sayfa, 0.1sn gecikme
+    # CLI Ayarları: Sayfa sayısını test için 2 yapalım, hızlıca yanıtları görelim
     core_scraper(
         fetch_film=True, fetch_dizi=True, fetch_anime=False,
-        max_pages=10, delay=0.1, outfile=output_path,
+        max_pages=2, delay=0.1, outfile=output_path,
         log_fn=cli_log, stat_fn=print, stop_ev=stop_ev, finish_fn=cli_finish
     )
 
