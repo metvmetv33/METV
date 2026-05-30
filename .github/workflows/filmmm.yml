@@ -1,0 +1,45 @@
+name: SineWix Otomatik M3U Yenileyici
+
+on:
+  schedule:
+    # Her gece 03:00'da otomatik çalışır (UTC)
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    # GitHub paneli üzerinden manuel (elle) çalıştırma butonu açar
+
+permissions:
+  contents: write
+
+jobs:
+  scrape_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Depoyu Klonla
+      uses: actions/checkout@v4
+
+    - name: Python Kurulumu
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Gereksinimleri Yukle
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Verileri Kazı ve Listeyi Yenile
+      run: |
+        # Scripti GUI olmadan doğrudan terminal modunda tetikliyoruz
+        python filmmm.py --cli
+
+    - name: Guncel M3U Listesini Repoya Yukle
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Eğer yeni veya değişen dosya varsa ekle ve pushla
+        git add sinewix.m3u || true
+        git commit -m "Güncel Oynatma Listesi Yenilendi [Otomatik]" || true
+        git push || true
