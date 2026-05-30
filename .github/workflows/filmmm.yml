@@ -22,7 +22,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-        cache: 'pip'
+        # Hata veren 'cache: pip' satırı kaldırıldı.
 
     - name: Gereksinimleri Yukle
       run: |
@@ -31,7 +31,7 @@ jobs:
 
     - name: Verileri Kazı ve Listeyi Yenile
       run: |
-        # Scripti GUI olmadan doğrudan terminal modunda tetikliyoruz
+        # Scripti GUI olmadan doğrudan terminal (CLI) modunda tetikliyoruz
         python filmmm.py --cli
 
     - name: Guncel M3U Listesini Repoya Yukle
