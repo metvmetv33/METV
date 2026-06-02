@@ -180,8 +180,8 @@ def main():
             fail_count += 1
             failed_names.append(name)
 
-    # ─── Birleşik liste oluşturma (_METV2_COMBINED.m3u) ───
-    combined_path = os.path.join(OUTPUT_FOLDER, "_METV2_COMBINED.m3u")
+    # ─── Birleşik liste oluşturma (_METV_COMBINED.m3u) ───
+    combined_path = os.path.join(OUTPUT_FOLDER, "_METV_COMBINED.m3u")
     header = "#EXTM3U\n"
     entries = []
 
