@@ -1,4 +1,4 @@
-name: YouTube Live Stream Updater
+name: youtbee.py Live Stream Updater
 
 on:
   schedule:
