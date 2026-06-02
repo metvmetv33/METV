@@ -9,11 +9,8 @@ JSON_URL = (
     "https://raw.githubusercontent.com/metvmetv33/METV/refs/heads/main/muomube.json"
 )
 OUTPUT_FOLDER = "metv2"
-MAX_RETRIES = 3
-WAIT_TIME = 2
-
-# ytdlp.online servisinin gerçek arka plan API mimarisi
-YTDLP_ONLINE_API = "https://backend.ytdlp.online/api/graphql"  # Sitenin istekleri gönderdiği ana API havuzu
+MAX_RETRIES = 2
+WAIT_TIME = 3
 # ───────────────────────────────────────────────────────────
 
 
@@ -30,81 +27,96 @@ def get_channels():
         return []
 
 
-def get_stream_url_from_ytdlp_online(channel_url):
+def get_stream_url_via_worker_logic(channel_url):
     # type: (str) -> Optional[str]
-    """ytdlp.online sitesinin backend motoruna doğrudan bağlanarak
+    """Cloudflare Worker kodundaki session ve text/event-stream mantığını
 
-    reklam ve embed engellerine takılmayan ham m3u8 linkini çeker.
+    kullanarak ytdlp.online üzerinden kesin link üretir.
     """
-    clean_url = channel_url.strip()
+    # 1. Kanal URL'sinden Kanal ID'sini temizle ve ayıkla
+    # Örn: https://www.youtube.com/channel/UCV6zcRug6Hqp1UX_FdyUeBg/live -> UCV6zcRug6Hqp1UX_FdyUeBg
+    channel_id_match = re.search(r"channel/(UC[a-zA-Z0-9_\-]+)", channel_url)
+    if not channel_id_match:
+        # Eğer link zaten doğrudan sadece kanal ID'siyse veya farklı formatta ise koru
+        channel_id = channel_url.strip().split("/")[-1].replace("/live", "")
+    else:
+        channel_id = channel_id_match.group(1)
 
-    # Sitenin sunucusuna gönderilen evrensel veri şeması
-    payload = {
-        "url": clean_url,
-        "options": {
-            "format": "best",
-            "no_playlist": True,
-            "extractor_args": "youtube:skip=hls,dash",
-        },
+    shared_headers = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
     }
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        "Origin": "https://ytdlp.online",
-        "Referer": "https://ytdlp.online/",
-    }
+    session = requests.Session()
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            # ytdlp.online API'sine POST isteği gönderiyoruz
-            # (Eğer ana sunucu yoğunsa sitenin diğer açık CDN/ayna adreslerine istek yönlendirilir)
-            response = requests.post(
-                "https://ytdlp.online/api/info",
-                json=payload,
-                headers=headers,
-                timeout=25,
+            # ADIM 1: Ana sayfaya istek atıp 'set-cookie' içindeki session'ı yakala
+            home_resp = session.get(
+                "https://ytdlp.online/tr/", headers=shared_headers, timeout=15
+            )
+            cookies_dict = home_resp.cookies.get_dict()
+
+            # Session çerezini kontrol et
+            session_cookie = cookies_dict.get("session")
+            if not session_cookie:
+                # Çerez dict içinde doğrudan yoksa header metninden ara
+                set_cookie_header = home_resp.headers.get("set-cookie", "")
+                session_match = re.search(
+                    r"session=([^;]+)", set_cookie_header, re.IGNORECASE
+                )
+                if session_match:
+                    session_cookie = session_match.group(1)
+
+            if not session_cookie:
+                print(
+                    "    Deneme {}/{}: [Hata] Siteden Session alınamadı".format(
+                        attempt, MAX_RETRIES
+                    )
+                )
+                continue
+
+            # ADIM 2: Komutu hazırla ve API URL'sini oluştur
+            command = "--get-url https://m.youtube.com/channel/{}/live".format(
+                channel_id
+            )
+            encoded_command = requests.utils.quote(command)
+            api_url = "https://ytdlp.online/api/v1/stream?command={}".format(
+                encoded_command
             )
 
-            if response.status_code == 200:
-                res_data = response.json()
+            # ADIM 3: Event-Stream header'ları ile API'ye istek gönder
+            stream_headers = {
+                "accept": "text/event-stream",
+                "cookie": "session={}".format(session_cookie),
+                "referer": "https://ytdlp.online/tr/",
+                "user-agent": shared_headers["user-agent"],
+            }
 
-                # Sitenin JSON çıktısından doğrudan m3u8 akış adresini avlayalım
-                # ytdlp çıktısında genellikle 'url', 'formats' veya 'stream' altında yer alır
-                stream_url = None
-                if "url" in res_data:
-                    stream_url = res_data["url"]
-                elif "formats" in res_data and len(res_data["formats"]) > 0:
-                    # En yüksek kaliteli (best) formata ait URL'yi seç
-                    stream_url = res_data["formats"][-1].get("url")
-
-                if stream_url and "googlevideo.com" in stream_url:
-                    return stream_url
-
-            # Alternatif İstek Geçidi (Sitenin proxy/mirror motoru devreye girer)
-            alt_response = requests.post(
-                "https://api.ytdlp.online/v1/process",
-                json={"video_url": clean_url},
-                headers=headers,
-                timeout=20,
+            stream_resp = session.get(
+                api_url, headers=stream_headers, timeout=30
             )
-            if alt_response.status_code == 200:
-                alt_data = alt_response.json()
-                url = alt_data.get("url") or alt_data.get("data", {}).get("url")
-                if url:
-                    return url
+
+            if stream_resp.status_code == 200:
+                response_text = stream_resp.text
+
+                # ADIM 4: Dönen metin akışından manifest.googlevideo.com linkini regex ile ayıkla
+                manifest_match = re.search(
+                    r"https://manifest\.googlevideo\.com/[^\s\"'<>]+",
+                    response_text,
+                )
+                if manifest_match:
+                    return manifest_match.group(0)
 
             print(
-                "    Deneme {}/{}: ytdlp.online sunucusu meşgul (Kod: {})".format(
-                    attempt, MAX_RETRIES, response.status_code
+                "    Deneme {}/{}: Akış yanıtı boş döndü veya çözülemedi (Durum: {})".format(
+                    attempt, MAX_RETRIES, stream_resp.status_code
                 )
             )
 
         except Exception as e:
             print(
-                "    Deneme {}/{}: Siteden yanıt alınamadı — {}".format(
-                    attempt, MAX_RETRIES, str(e)[:60]
+                "    Deneme {}/{}: İstek sırasında hata oluştu — {}".format(
+                    attempt, MAX_RETRIES, str(e)[:70]
                 )
             )
 
@@ -152,20 +164,19 @@ def main():
             continue
 
         print("[{}/{}] {}".format(i, len(channels), name))
-        print("    Hedef: {}".format(target_url))
 
-        # Doğrudan ytdlp.online kullanarak link çözüyoruz
-        stream_url = get_stream_url_from_ytdlp_online(target_url)
+        # Paylaştığın worker algoritması devrede
+        stream_url = get_stream_url_via_worker_logic(target_url)
 
         if stream_url:
             file_path = os.path.join(
                 OUTPUT_FOLDER, "{}.m3u8".format(sanitize(name))
             )
             save_m3u8(file_path, stream_url, name, logo_url)
-            print("    [OK] -> Ham Canlı Yayın Linki Yakalandı")
+            print("    [OK] -> Orijinal Manifest URL Başarıyla Yakalandı")
             success_count += 1
         else:
-            print("    [FAIL] ytdlp.online bu kanalı çözemedi -> {}".format(name))
+            print("    [FAIL] ytdlp.online linki üretemedi -> {}".format(name))
             fail_count += 1
             failed_names.append(name)
 
