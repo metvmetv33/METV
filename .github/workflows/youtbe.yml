@@ -2,8 +2,8 @@ name: youtbee.py Live Stream Updater
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # 6 saatte bir çalışır
-  workflow_dispatch: # Manuel çalıştırma butonu
+    - cron: '0 */6 * * *'   # 6 saatte bir çalışır
+  workflow_dispatch:          # Manuel çalıştırma butonu
 
 jobs:
   build:
@@ -20,10 +20,10 @@ jobs:
       - name: Python Kurulumu
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.9'   # youtbee.py 3.9 ile uyumlu
 
       - name: Bağımlılıkları Yükle
-        run: pip install requests urllib3
+        run: pip install requests urllib3 yt-dlp   # yt-dlp eklendi!
 
       - name: Kanal Linklerini Güncelle
         run: python youtbee.py
@@ -32,16 +32,12 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          
-          # Sadece metv klasörünü ve scripti takip et, 
-          # Eskiden kalan klasörler varsa onları temizlemek için 'add -A' kullanıyoruz
+
           git add -A
-          
+
           if ! git diff --cached --quiet; then
-            git commit -m "METV Klasörü Güncellendi: $(date +'%d-%m-%Y %H:%M')"
-            # Önce uzak depodaki değişiklikleri al (rebase)
+            git commit -m "METV2 Klasörü Güncellendi: $(date +'%d-%m-%Y %H:%M')"
             git pull --rebase origin main
-            # Sonra gönder
             git push origin main
           else
             echo "Herhangi bir değişiklik bulunamadı."
