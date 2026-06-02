@@ -1,9 +1,9 @@
-name: youtbee.py Live Stream Updater
+name: METV2 Live Stream Updater
 
 on:
   schedule:
-    - cron: '0 */6 * * *'   # 6 saatte bir çalışır
-  workflow_dispatch:          # Manuel çalıştırma butonu
+    - cron: '0 */6 * * *'   # 6 saatte bir
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,25 +20,42 @@ jobs:
       - name: Python Kurulumu
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'   # youtbee.py 3.9 ile uyumlu
+          python-version: '3.9'
 
-      - name: Bağımlılıkları Yükle
-        run: pip install requests urllib3 yt-dlp   # yt-dlp eklendi!
+      - name: Bagımlılıkları Yukle
+        run: pip install requests urllib3 yt-dlp
 
-      - name: Kanal Linklerini Güncelle
+      # GitHub Secret'tan cookies.txt oluştur
+      # Repo ayarları > Secrets > YT_COOKIES içine cookies.txt içeriğini yapıştır
+      - name: Cookies Dosyasını Oluştur
+        env:
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+        run: |
+          if [ -n "$YT_COOKIES" ]; then
+            echo "$YT_COOKIES" > cookies.txt
+            echo "[+] cookies.txt olusturuldu ($(wc -l < cookies.txt) satir)"
+          else
+            echo "[!] YT_COOKIES secret bulunamadi — bot koruması asılamayabilir"
+          fi
+
+      - name: Kanal Linklerini Guncelle
+        env:
+          YT_COOKIES_FILE: cookies.txt
         run: python youtbee.py
 
-      - name: Değişiklikleri Kaydet ve Pushla
+      - name: Cookies Dosyasını Sil (guvenlik)
+        if: always()
+        run: rm -f cookies.txt
+
+      - name: Degisiklikleri Kaydet ve Pushla
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-
           git add -A
-
           if ! git diff --cached --quiet; then
-            git commit -m "METV2 Klasörü Güncellendi: $(date +'%d-%m-%Y %H:%M')"
+            git commit -m "METV2 Guncellendi: $(date +'%d-%m-%Y %H:%M')"
             git pull --rebase origin main
             git push origin main
           else
-            echo "Herhangi bir değişiklik bulunamadı."
+            echo "Degisiklik bulunamadi."
           fi
