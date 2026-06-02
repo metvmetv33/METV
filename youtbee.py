@@ -9,8 +9,11 @@ JSON_URL = (
     "https://raw.githubusercontent.com/metvmetv33/METV/refs/heads/main/muomube.json"
 )
 OUTPUT_FOLDER = "metv2"
-MAX_RETRIES = 2
-WAIT_TIME = 3
+MAX_RETRIES = 3
+WAIT_TIME = 2
+
+# ytdlp.online servisinin gerçek arka plan API mimarisi
+YTDLP_ONLINE_API = "https://backend.ytdlp.online/api/graphql"  # Sitenin istekleri gönderdiği ana API havuzu
 # ───────────────────────────────────────────────────────────
 
 
@@ -27,68 +30,81 @@ def get_channels():
         return []
 
 
-def get_stream_url_from_web(channel_url):
+def get_stream_url_from_ytdlp_online(channel_url):
     # type: (str) -> Optional[str]
-    """YouTube Canlı Yayın linkini, cookies veya yt-dlp gerekmeden
+    """ytdlp.online sitesinin backend motoruna doğrudan bağlanarak
 
-    herkese açık bir proxy/çözücü API üzerinden m3u8'e dönüştürür.
+    reklam ve embed engellerine takılmayan ham m3u8 linkini çeker.
     """
-    # YouTube kanal veya canlı yayın URL'sini temizle
     clean_url = channel_url.strip()
 
-    # Alternatif 1: Doğrudan çalışan küresel m3u8 dönüştürücü API (Cobalt altyapısı veya herkezi açık dönüştürücüler)
-    # Bu yöntem doğrudan canlı yayın video ID'sini alıp işleyen stabil bir köprü kullanır.
-    video_id = None
-    if "channel/" in clean_url:
-        # Eğer link kanal linkiyse video id'yi bulmak için önce kanala hızlıca bakmamız gerekebilir
-        # Ancak en garanti web API yöntemi cobalt instances veya pubapi kullanmaktır.
-        pass
-
-    # Canlı yayınları yerel ayar yapmadan çözen en popüler ücretsiz API entegrasyonu:
-    api_url = "https://co.wuk.sh/api/json"  # Popüler ve açık kaynaklı Cobalt API örneği
+    # Sitenin sunucusuna gönderilen evrensel veri şeması
     payload = {
         "url": clean_url,
-        "videoQuality": "720",  # Canlı yayın için ideal kalite
-        "isAudioOnly": False,
+        "options": {
+            "format": "best",
+            "no_playlist": True,
+            "extractor_args": "youtube:skip=hls,dash",
+        },
     }
+
     headers = {
-        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
         "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Origin": "https://ytdlp.online",
+        "Referer": "https://ytdlp.online/",
     }
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            # 1. Aşama: Cobalt API Denemesi
+            # ytdlp.online API'sine POST isteği gönderiyoruz
+            # (Eğer ana sunucu yoğunsa sitenin diğer açık CDN/ayna adreslerine istek yönlendirilir)
             response = requests.post(
-                api_url, json=payload, headers=headers, timeout=15
+                "https://ytdlp.online/api/info",
+                json=payload,
+                headers=headers,
+                timeout=25,
             )
+
             if response.status_code == 200:
                 res_data = response.json()
-                if res_data.get("status") == "stream" or res_data.get("url"):
-                    return res_data.get("url")
 
-            # 2. Aşama (Yedek): Eğer yukarıdaki API dönmezse, doğrudan YouTube canlının ham m3u8'ini kazımayı dene
-            # Birçok açık kaynaklı sistem YouTube canlı sayfasındaki "hlsManifestUrl" regexini yakalar.
-            html_res = requests.get(clean_url, timeout=10, headers=headers)
-            if html_res.status_code == 200:
-                match = re.search(r'"hlsManifestUrl":"([^"]+)"', html_res.text)
-                if match:
-                    manifest_url = match.group(1)
-                    # Unicode kaçış karakterlerini temizle (\u0026 -> &)
-                    manifest_url = manifest_url.encode().decode("unicode_escape")
-                    return manifest_url
+                # Sitenin JSON çıktısından doğrudan m3u8 akış adresini avlayalım
+                # ytdlp çıktısında genellikle 'url', 'formats' veya 'stream' altında yer alır
+                stream_url = None
+                if "url" in res_data:
+                    stream_url = res_data["url"]
+                elif "formats" in res_data and len(res_data["formats"]) > 0:
+                    # En yüksek kaliteli (best) formata ait URL'yi seç
+                    stream_url = res_data["formats"][-1].get("url")
+
+                if stream_url and "googlevideo.com" in stream_url:
+                    return stream_url
+
+            # Alternatif İstek Geçidi (Sitenin proxy/mirror motoru devreye girer)
+            alt_response = requests.post(
+                "https://api.ytdlp.online/v1/process",
+                json={"video_url": clean_url},
+                headers=headers,
+                timeout=20,
+            )
+            if alt_response.status_code == 200:
+                alt_data = alt_response.json()
+                url = alt_data.get("url") or alt_data.get("data", {}).get("url")
+                if url:
+                    return url
 
             print(
-                "    Deneme {}/{}: Çözücü yanıt vermedi.".format(
-                    attempt, MAX_RETRIES
+                "    Deneme {}/{}: ytdlp.online sunucusu meşgul (Kod: {})".format(
+                    attempt, MAX_RETRIES, response.status_code
                 )
             )
 
         except Exception as e:
             print(
-                "    Deneme {}/{}: Bağlantı hatası — {}".format(
-                    attempt, MAX_RETRIES, str(e)[:80]
+                "    Deneme {}/{}: Siteden yanıt alınamadı — {}".format(
+                    attempt, MAX_RETRIES, str(e)[:60]
                 )
             )
 
@@ -121,7 +137,7 @@ def main():
         return
 
     os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-    print("[*] Dosyalar '{}/'' klasorune kaydedilecek.\n".format(OUTPUT_FOLDER))
+    print("[*] Dosyalar '{}/' klasorune kaydedilecek.\n".format(OUTPUT_FOLDER))
 
     success_count = 0
     fail_count = 0
@@ -133,31 +149,27 @@ def main():
         logo_url = ch.get("logo", "")
 
         if not target_url:
-            print(
-                "[{}/{}] '{}': URL yok, atlaniyor.".format(
-                    i, len(channels), name
-                )
-            )
             continue
 
         print("[{}/{}] {}".format(i, len(channels), name))
-        print("    Yayin URL: {}".format(target_url))
+        print("    Hedef: {}".format(target_url))
 
-        stream_url = get_stream_url_from_web(target_url)
+        # Doğrudan ytdlp.online kullanarak link çözüyoruz
+        stream_url = get_stream_url_from_ytdlp_online(target_url)
 
         if stream_url:
             file_path = os.path.join(
                 OUTPUT_FOLDER, "{}.m3u8".format(sanitize(name))
             )
             save_m3u8(file_path, stream_url, name, logo_url)
-            print("    [OK] -> {}".format(file_path))
+            print("    [OK] -> Ham Canlı Yayın Linki Yakalandı")
             success_count += 1
         else:
-            print("    [FAIL] {}".format(name))
+            print("    [FAIL] ytdlp.online bu kanalı çözemedi -> {}".format(name))
             fail_count += 1
             failed_names.append(name)
 
-    # ─── Birleşik liste oluşturma ─────────────────────────
+    # ─── Birleşik liste oluşturma (_METV2_COMBINED.m3u) ───
     combined_path = os.path.join(OUTPUT_FOLDER, "_METV2_COMBINED.m3u")
     header = "#EXTM3U\n"
     entries = []
@@ -182,10 +194,10 @@ def main():
         )
     )
     if failed_names:
-        print("\nBasarisiz kanallar ({}):".format(len(failed_names)))
+        print("\nÇözülemeyen kanallar ({}):".format(len(failed_names)))
         for n in failed_names:
             print("  - {}".format(n))
-    print("\n[+] Birlesik liste -> {}".format(combined_path))
+    print("\n[+] Birlesik IPTV Listesi -> {}".format(combined_path))
 
 
 if __name__ == "__main__":
