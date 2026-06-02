@@ -1,102 +1,215 @@
-import requests
-import re
 import os
-import urllib.parse
-import urllib3
+import re
 import time
-import json
+from typing import Optional
+import requests
 
-# Güvenlik uyarılarını kapat
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+# ─── Ayarlar ───────────────────────────────────────────────
+JSON_URL = (
+    "https://raw.githubusercontent.com/metvmetv33/METV/refs/heads/main/muomube.json"
+)
+OUTPUT_FOLDER = "metv2"
+MAX_RETRIES = 2
+WAIT_TIME = 3
+# ───────────────────────────────────────────────────────────
 
-# Ayarlar
-JSON_URL = "https://raw.githubusercontent.com/metvmetv33/METV/refs/heads/main/muomube.json"
-OUTPUT_FOLDER = "metv"  # Tüm dosyaların toplanacağı klasör
-MAX_RETRIES = 5
-WAIT_TIME = 10
 
 def get_channels():
+    print("[*] Kanal listesi cekiliyor: {}".format(JSON_URL))
     try:
-        print(f"Liste çekiliyor: {JSON_URL}")
-        response = requests.get(JSON_URL, timeout=20)
-        text = response.text.strip()
-        try:
-            return json.loads(text)
-        except json.JSONDecodeError:
-            print("JSON bozuk görünüyor, tamir edilmeye çalışılıyor...")
-            # Sondaki olası fazla virgülleri temizle
-            fixed_text = re.sub(r',\s*\]', ']', text) 
-            return json.loads(fixed_text)
+        r = requests.get(JSON_URL, timeout=20)
+        r.raise_for_status()
+        data = r.json()
+        print("[+] {} kanal bulundu.".format(len(data)))
+        return data
     except Exception as e:
-        print(f"Liste okuma hatası: {e}")
-        return None
+        print("[!] Liste alinamadi: {}".format(e))
+        return []
+
+
+def get_stream_url_via_worker_logic(channel_url):
+    # type: (str) -> Optional[str]
+    """Cloudflare Worker kodundaki session ve text/event-stream mantığını
+
+    kullanarak ytdlp.online üzerinden kesin link üretir.
+    """
+    # 1. Kanal URL'sinden Kanal ID'sini temizle ve ayıkla
+    # Örn: https://www.youtube.com/channel/UCV6zcRug6Hqp1UX_FdyUeBg/live -> UCV6zcRug6Hqp1UX_FdyUeBg
+    channel_id_match = re.search(r"channel/(UC[a-zA-Z0-9_\-]+)", channel_url)
+    if not channel_id_match:
+        # Eğer link zaten doğrudan sadece kanal ID'siyse veya farklı formatta ise koru
+        channel_id = channel_url.strip().split("/")[-1].replace("/live", "")
+    else:
+        channel_id = channel_id_match.group(1)
+
+    shared_headers = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+    }
+
+    session = requests.Session()
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            # ADIM 1: Ana sayfaya istek atıp 'set-cookie' içindeki session'ı yakala
+            home_resp = session.get(
+                "https://ytdlp.online/tr/", headers=shared_headers, timeout=15
+            )
+            cookies_dict = home_resp.cookies.get_dict()
+
+            # Session çerezini kontrol et
+            session_cookie = cookies_dict.get("session")
+            if not session_cookie:
+                # Çerez dict içinde doğrudan yoksa header metninden ara
+                set_cookie_header = home_resp.headers.get("set-cookie", "")
+                session_match = re.search(
+                    r"session=([^;]+)", set_cookie_header, re.IGNORECASE
+                )
+                if session_match:
+                    session_cookie = session_match.group(1)
+
+            if not session_cookie:
+                print(
+                    "    Deneme {}/{}: [Hata] Siteden Session alınamadı".format(
+                        attempt, MAX_RETRIES
+                    )
+                )
+                continue
+
+            # ADIM 2: Komutu hazırla ve API URL'sini oluştur
+            command = "--get-url https://m.youtube.com/channel/{}/live".format(
+                channel_id
+            )
+            encoded_command = requests.utils.quote(command)
+            api_url = "https://ytdlp.online/api/v1/stream?command={}".format(
+                encoded_command
+            )
+
+            # ADIM 3: Event-Stream header'ları ile API'ye istek gönder
+            stream_headers = {
+                "accept": "text/event-stream",
+                "cookie": "session={}".format(session_cookie),
+                "referer": "https://ytdlp.online/tr/",
+                "user-agent": shared_headers["user-agent"],
+            }
+
+            stream_resp = session.get(
+                api_url, headers=stream_headers, timeout=30
+            )
+
+            if stream_resp.status_code == 200:
+                response_text = stream_resp.text
+
+                # ADIM 4: Dönen metin akışından manifest.googlevideo.com linkini regex ile ayıkla
+                manifest_match = re.search(
+                    r"https://manifest\.googlevideo\.com/[^\s\"'<>]+",
+                    response_text,
+                )
+                if manifest_match:
+                    return manifest_match.group(0)
+
+            print(
+                "    Deneme {}/{}: Akış yanıtı boş döndü veya çözülemedi (Durum: {})".format(
+                    attempt, MAX_RETRIES, stream_resp.status_code
+                )
+            )
+
+        except Exception as e:
+            print(
+                "    Deneme {}/{}: İstek sırasında hata oluştu — {}".format(
+                    attempt, MAX_RETRIES, str(e)[:70]
+                )
+            )
+
+        if attempt < MAX_RETRIES:
+            time.sleep(WAIT_TIME)
+
+    return None
+
+
+def sanitize(name):
+    return re.sub(r"[^\w\s\-]", "", name).strip().replace(" ", "_")
+
+
+def save_m3u8(file_path, stream_url, channel_name, logo_url=""):
+    tvg_logo = ' tvg-logo="{}"'.format(logo_url) if logo_url else ""
+    content = (
+        "#EXTM3U\n"
+        "#EXT-X-VERSION:3\n"
+        '#EXTINF:-1 tvg-name="{name}"{logo},{name}\n'
+        "{url}\n"
+    ).format(name=channel_name, logo=tvg_logo, url=stream_url)
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
 
 def main():
     channels = get_channels()
     if not channels:
-        print("Kanal listesi boş veya alınamadı.")
+        print("[!] Kanal listesi bos, cikiliyor.")
         return
 
-    # Ana metv klasörünü oluştur (varsa dokunma)
-    if not os.path.exists(OUTPUT_FOLDER):
-        os.makedirs(OUTPUT_FOLDER)
-        print(f"'{OUTPUT_FOLDER}' klasörü oluşturuldu.")
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+    print("[*] Dosyalar '{}/' klasorune kaydedilecek.\n".format(OUTPUT_FOLDER))
 
-    for channel in channels:
-        raw_name = channel.get("name", "Bilinmeyen")
-        # Dosya ismi için geçersiz karakterleri temizle
-        clean_name = re.sub(r'[^\w\s-]', '', raw_name).strip().replace(" ", "_")
-        target_url = channel.get("url", "").strip()
+    success_count = 0
+    fail_count = 0
+    failed_names = []
+
+    for i, ch in enumerate(channels, 1):
+        name = ch.get("name", "Kanal_{}".format(i))
+        target_url = ch.get("url", "").strip()
+        logo_url = ch.get("logo", "")
 
         if not target_url:
             continue
 
-        print(f"\n--- {clean_name} İşleniyor ---")
-        
-        success = False
-        for attempt in range(1, MAX_RETRIES + 1):
-            try:
-                headers = {"User-Agent": "Mozilla/5.0 (SMART-TV; LINUX; Tizen 6.0)"}
-                
-                # 1. Aşama: Oturum Al
-                res1 = requests.get("https://ytdlp.online/", headers=headers, verify=False, timeout=15)
-                token = res1.cookies.get("session")
+        print("[{}/{}] {}".format(i, len(channels), name))
 
-                if not token:
-                    time.sleep(WAIT_TIME)
-                    continue
+        # Paylaştığın worker algoritması devrede
+        stream_url = get_stream_url_via_worker_logic(target_url)
 
-                # 2. Aşama: Linki Çek
-                encoded_cmd = urllib.parse.quote(f"--get-url {target_url}")
-                stream_api = f"https://ytdlp.online/stream?command={encoded_cmd}"
-                
-                headers.update({
-                    "Cookie": f"session={token}",
-                    "Referer": "https://ytdlp.online/",
-                    "Accept": "text/event-stream"
-                })
+        if stream_url:
+            file_path = os.path.join(
+                OUTPUT_FOLDER, "{}.m3u8".format(sanitize(name))
+            )
+            save_m3u8(file_path, stream_url, name, logo_url)
+            print("    [OK] -> Orijinal Manifest URL Başarıyla Yakalandı")
+            success_count += 1
+        else:
+            print("    [FAIL] ytdlp.online linki üretemedi -> {}".format(name))
+            fail_count += 1
+            failed_names.append(name)
 
-                res2 = requests.get(stream_api, headers=headers, verify=False, timeout=25)
-                match = re.search(r'data:\s*(https://manifest\.googlevideo\.com[^\s]+)', res2.text)
+    # ─── Birleşik liste oluşturma (_METV2_COMBINED.m3u) ───
+    combined_path = os.path.join(OUTPUT_FOLDER, "_METV2_COMBINED.m3u")
+    header = "#EXTM3U\n"
+    entries = []
 
-                if match:
-                    final_link = match.group(1).strip()
-                    m3u8_payload = f"#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720\n{final_link}"
+    for m3u8_file in sorted(os.listdir(OUTPUT_FOLDER)):
+        if not m3u8_file.endswith(".m3u8") or m3u8_file.startswith("_"):
+            continue
+        full = os.path.join(OUTPUT_FOLDER, m3u8_file)
+        with open(full, encoding="utf-8") as f:
+            content = f.read()
+        body = re.sub(r"^#EXTM3U\n?#EXT-X-VERSION:[0-9]\n?", "", content).strip()
+        entries.append(body)
 
-                    # DOSYA KAYIT: metv/Kanal_Adi.m3u8
-                    file_path = os.path.join(OUTPUT_FOLDER, f"{clean_name}.m3u8")
-                    with open(file_path, "w", encoding="utf-8") as f:
-                        f.write(m3u8_payload)
-                    
-                    print(f"BAŞARILI: {file_path} kaydedildi.")
-                    success = True
-                    break
-                else:
-                    print(f"Deneme {attempt}: Link bulunamadı.")
-            except Exception as e:
-                print(f"Deneme {attempt} Hata: {e}")
-            
-            time.sleep(WAIT_TIME)
+    with open(combined_path, "w", encoding="utf-8") as f:
+        f.write(header + "\n".join(entries) + "\n")
+
+    # ─── Özet ────────────────────────────────────────────
+    print("\n" + "=" * 55)
+    print(
+        "TAMAMLANDI   OK:{}   FAIL:{}   TOPLAM:{}".format(
+            success_count, fail_count, success_count + fail_count
+        )
+    )
+    if failed_names:
+        print("\nÇözülemeyen kanallar ({}):".format(len(failed_names)))
+        for n in failed_names:
+            print("  - {}".format(n))
+    print("\n[+] Birlesik IPTV Listesi -> {}".format(combined_path))
+
 
 if __name__ == "__main__":
     main()
