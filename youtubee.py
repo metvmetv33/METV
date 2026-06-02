@@ -8,7 +8,7 @@ import requests
 JSON_URL = (
     "https://raw.githubusercontent.com/metvmetv33/METV/refs/heads/main/muomube.json"
 )
-OUTPUT_FOLDER = "metv2"
+OUTPUT_FOLDER = "metv"
 MAX_RETRIES = 2
 WAIT_TIME = 3
 # ───────────────────────────────────────────────────────────
