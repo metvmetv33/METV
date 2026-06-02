@@ -11,9 +11,6 @@ JSON_URL = (
 OUTPUT_FOLDER = "metv2"
 MAX_RETRIES = 2
 WAIT_TIME = 3
-
-# Link çözücü web servis ayarları
-API_URL = "https://api.ytdlp.online/api/v1/stream"  # Örnek API endpoint (Sitenin arka plan API yapısına göre güncellenmelidir)
 # ───────────────────────────────────────────────────────────
 
 
@@ -32,40 +29,68 @@ def get_channels():
 
 def get_stream_url_from_web(channel_url):
     # type: (str) -> Optional[str]
-    """yt-dlp.online API'sini kullanarak stream URL'ini yakalar."""
+    """YouTube Canlı Yayın linkini, cookies veya yt-dlp gerekmeden
+
+    herkese açık bir proxy/çözücü API üzerinden m3u8'e dönüştürür.
+    """
+    # YouTube kanal veya canlı yayın URL'sini temizle
+    clean_url = channel_url.strip()
+
+    # Alternatif 1: Doğrudan çalışan küresel m3u8 dönüştürücü API (Cobalt altyapısı veya herkezi açık dönüştürücüler)
+    # Bu yöntem doğrudan canlı yayın video ID'sini alıp işleyen stabil bir köprü kullanır.
+    video_id = None
+    if "channel/" in clean_url:
+        # Eğer link kanal linkiyse video id'yi bulmak için önce kanala hızlıca bakmamız gerekebilir
+        # Ancak en garanti web API yöntemi cobalt instances veya pubapi kullanmaktır.
+        pass
+
+    # Canlı yayınları yerel ayar yapmadan çözen en popüler ücretsiz API entegrasyonu:
+    api_url = "https://co.wuk.sh/api/json"  # Popüler ve açık kaynaklı Cobalt API örneği
     payload = {
-        "url": channel_url,
-        "format": "best",
-        "skip_hls_dash": True,  # Sitenin desteklediği parametrelere göre ayarlanır
+        "url": clean_url,
+        "videoQuality": "720",  # Canlı yayın için ideal kalite
+        "isAudioOnly": False,
     }
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Accept": "application/json",
         "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
     }
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            # Not: Sitenin API yapısı POST veya GET kabul ediyor olabilir.
-            # Genelde bu tür servisler POST isteği ile URL alır.
+            # 1. Aşama: Cobalt API Denemesi
             response = requests.post(
-                API_URL, json=payload, headers=headers, timeout=30
+                api_url, json=payload, headers=headers, timeout=15
             )
-
             if response.status_code == 200:
                 res_data = response.json()
-                # API çıktısına göre buradaki dict anahtarı (örn: 'url', 'stream_url', 'data') değişebilir.
-                stream_url = res_data.get("url") or res_data.get("stream_url")
-                if stream_url and stream_url.startswith("http"):
-                    return stream_url
+                if res_data.get("status") == "stream" or res_data.get("url"):
+                    return res_data.get("url")
+
+            # 2. Aşama (Yedek): Eğer yukarıdaki API dönmezse, doğrudan YouTube canlının ham m3u8'ini kazımayı dene
+            # Birçok açık kaynaklı sistem YouTube canlı sayfasındaki "hlsManifestUrl" regexini yakalar.
+            html_res = requests.get(clean_url, timeout=10, headers=headers)
+            if html_res.status_code == 200:
+                match = re.search(r'"hlsManifestUrl":"([^"]+)"', html_res.text)
+                if match:
+                    manifest_url = match.group(1)
+                    # Unicode kaçış karakterlerini temizle (\u0026 -> &)
+                    manifest_url = manifest_url.encode().decode("unicode_escape")
+                    return manifest_url
 
             print(
-                "    Deneme {}/{}: Sunucu hatası kodu -> {}".format(
-                    attempt, MAX_RETRIES, response.status_code
+                "    Deneme {}/{}: Çözücü yanıt vermedi.".format(
+                    attempt, MAX_RETRIES
                 )
             )
 
         except Exception as e:
-            print("    Deneme {}/{}: Web hatasi — {}".format(attempt, MAX_RETRIES, e))
+            print(
+                "    Deneme {}/{}: Bağlantı hatası — {}".format(
+                    attempt, MAX_RETRIES, str(e)[:80]
+                )
+            )
 
         if attempt < MAX_RETRIES:
             time.sleep(WAIT_TIME)
@@ -118,7 +143,6 @@ def main():
         print("[{}/{}] {}".format(i, len(channels), name))
         print("    Yayin URL: {}".format(target_url))
 
-        # Yerel komut yerine Web API kullanılıyor
         stream_url = get_stream_url_from_web(target_url)
 
         if stream_url:
