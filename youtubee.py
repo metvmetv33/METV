@@ -28,25 +28,6 @@ def get_channels():
         return []
 
 
-def manifest_to_variant(manifest_url):
-    # type: (str) -> str
-    """
-    manifest.googlevideo.com/api/manifest/hls_playlist/.../itag/96/.../playlist/index.m3u8
-    → hls_variant URL'ye çevir (hem video hem ses içerir, tüm kaliteler)
-    """
-    url = manifest_url
-    # hls_playlist → hls_variant
-    url = url.replace("/hls_playlist/", "/hls_variant/")
-    # itag/SAYI/ kaldır (variant'ta gerek yok)
-    url = re.sub(r"/itag/\d+", "", url)
-    # playlist/index.m3u8 → index.m3u8
-    url = re.sub(r"/playlist/index\.m3u8$", "/index.m3u8", url)
-    # sgoap / sgovp parametrelerini kaldır (variant'ta anlamsız)
-    url = re.sub(r"/sgoap/[^/]+", "", url)
-    url = re.sub(r"/sgovp/[^/]+", "", url)
-    return url
-
-
 def get_stream_url(channel_url):
     # type: (str) -> Optional[str]
     channel_id_match = re.search(r"channel/(UC[a-zA-Z0-9_\-]+)", channel_url)
@@ -67,7 +48,6 @@ def get_stream_url(channel_url):
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            # ADIM 1: Session cookie al
             home_resp = session.get(
                 "https://ytdlp.online/tr/",
                 headers=shared_headers,
@@ -89,10 +69,7 @@ def get_stream_url(channel_url):
                 time.sleep(WAIT_TIME)
                 continue
 
-            # ADIM 2: ytdlp.online API komutu
-            # -f "93/94/95/96/best" → muxed HLS formatlarını tercih et
-            # itag 91=240p 92=360p 93=480p 94=720p 95=1080p (hepsi ses+video)
-            # itag 96=1080p video only → bunu KULLANMA
+            # itag 91-95 = ses+video birleşik HLS (muxed)
             command = (
                 '-f "95/94/93/92/91/best[acodec!=none]" '
                 '--get-url https://m.youtube.com/channel/{}/live'.format(channel_id)
@@ -107,12 +84,8 @@ def get_stream_url(channel_url):
                 "user-agent": shared_headers["user-agent"],
             }
 
-            # ADIM 3: Stream yanıtını al
             stream_resp = session.get(
-                api_url,
-                headers=stream_headers,
-                timeout=40,
-                verify=False
+                api_url, headers=stream_headers, timeout=40, verify=False
             )
 
             if stream_resp.status_code != 200:
@@ -121,40 +94,23 @@ def get_stream_url(channel_url):
                 time.sleep(WAIT_TIME)
                 continue
 
-            response_text = stream_resp.text
+            text = stream_resp.text
 
-            # ADIM 4: Yanıtten URL'yi çek
-            # Önce hls_variant URL ara (muxed = ses+video)
-            variant_match = re.search(
-                r"https://manifest\.googlevideo\.com/api/manifest/hls_variant/[^\s\"'<>\n]+",
-                response_text
+            # hls_playlist URL'si (itag 91-95 = muxed ses+video)
+            m = re.search(
+                r"(https://manifest\.googlevideo\.com/api/manifest/hls_playlist/[^\s\"'<>\n]+)",
+                text
             )
-            if variant_match:
-                return variant_match.group(0)
+            if m:
+                return m.group(1)
 
-            # hls_playlist URL varsa variant'a çevir
-            playlist_match = re.search(
-                r"https://manifest\.googlevideo\.com/api/manifest/hls_playlist/[^\s\"'<>\n]+",
-                response_text
+            # hls_variant (tüm kaliteler, master playlist)
+            m2 = re.search(
+                r"(https://manifest\.googlevideo\.com/api/manifest/hls_variant/[^\s\"'<>\n]+)",
+                text
             )
-            if playlist_match:
-                raw_url = playlist_match.group(0)
-                # itag 91-95 arası = muxed (ses+video) → direkt kullan
-                itag_m = re.search(r"/itag/(\d+)", raw_url)
-                if itag_m:
-                    itag = int(itag_m.group(1))
-                    if itag in (91, 92, 93, 94, 95):
-                        return raw_url   # zaten muxed, direkt kullan
-                # itag=96 veya bilinmeyen → variant URL'ye çevir
-                return manifest_to_variant(raw_url)
-
-            # Herhangi bir googlevideo URL'si
-            gv_match = re.search(
-                r"https://[a-z0-9\-]+\.googlevideo\.com/[^\s\"'<>\n]+",
-                response_text
-            )
-            if gv_match:
-                return gv_match.group(0)
+            if m2:
+                return m2.group(1)
 
             print("    Deneme {}/{}: URL bulunamadi.".format(attempt, MAX_RETRIES))
 
@@ -167,20 +123,13 @@ def get_stream_url(channel_url):
     return None
 
 
-def sanitize(name):
-    return re.sub(r"[^\w\s\-]", "", name).strip().replace(" ", "_")
-
-
-def save_m3u8(file_path, stream_url, channel_name, logo_url=""):
-    tvg_logo = ' tvg-logo="{}"'.format(logo_url) if logo_url else ""
-    content = (
-        "#EXTM3U\n"
-        "#EXT-X-VERSION:3\n"
-        '#EXTINF:-1 tvg-name="{name}"{logo},{name}\n'
-        "{url}\n"
-    ).format(name=channel_name, logo=tvg_logo, url=stream_url)
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(content)
+def sanitize_filename(name):
+    # type: (str) -> str
+    """Dosya adı için Türkçe karakterleri ASCII'ye çevir, geçersizleri kaldır."""
+    tr_map = str.maketrans("ığüşöçİĞÜŞÖÇ", "igusocIGUSOC")
+    name = name.translate(tr_map)
+    name = re.sub(r"[^\w\s\-]", "", name).strip().replace(" ", "_")
+    return name
 
 
 def main():
@@ -191,6 +140,9 @@ def main():
 
     os.makedirs(OUTPUT_FOLDER, exist_ok=True)
     print("[*] Dosyalar '{}/' klasorune kaydedilecek.\n".format(OUTPUT_FOLDER))
+
+    # Başarılı kanalları birleşik liste için tut
+    combined_entries = []
 
     success_count = 0
     fail_count    = 0
@@ -209,20 +161,24 @@ def main():
         stream_url = get_stream_url(target_url)
 
         if stream_url:
-            file_path = os.path.join(OUTPUT_FOLDER, "{}.m3u8".format(sanitize(name)))
-            save_m3u8(file_path, stream_url, name, logo_url)
-            # URL türünü logla
-            if "hls_variant" in stream_url:
-                url_type = "hls_variant (ses+video)"
-            elif "hls_playlist" in stream_url:
-                itag_m = re.search(r"/itag/(\d+)", stream_url)
-                itag = itag_m.group(1) if itag_m else "?"
-                url_type = "hls_playlist itag={} ({})".format(
-                    itag, "ses+video" if itag_m and int(itag_m.group(1)) in (91,92,93,94,95) else "sadece-video!"
-                )
-            else:
-                url_type = "googlevideo"
-            print("    [OK] {} -> {}".format(url_type, file_path))
+            safe_name = sanitize_filename(name)
+
+            # ── Bireysel .m3u8 dosyası ──────────────────────────
+            # Sadece stream URL — oynatıcılar bu formatı doğrudan açar
+            file_path = os.path.join(OUTPUT_FOLDER, "{}.m3u8".format(safe_name))
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(stream_url + "\n")
+
+            # ── Combined listeye ekle ────────────────────────────
+            logo_attr = ' tvg-logo="{}"'.format(logo_url) if logo_url else ""
+            extinf = '#EXTINF:-1 tvg-name="{name}"{logo},{name}'.format(
+                name=name, logo=logo_attr
+            )
+            combined_entries.append("{}\n{}".format(extinf, stream_url))
+
+            itag_m = re.search(r"/itag/(\d+)", stream_url)
+            itag   = itag_m.group(1) if itag_m else "?"
+            print("    [OK] itag={} -> {}".format(itag, file_path))
             success_count += 1
         else:
             print("    [FAIL] -> {}".format(name))
@@ -231,20 +187,12 @@ def main():
 
         time.sleep(1)
 
-    # ─── Birleşik liste ──────────────────────────────────
+    # ── Birleşik _METV_COMBINED.m3u ─────────────────────────────
     combined_path = os.path.join(OUTPUT_FOLDER, "_METV_COMBINED.m3u")
-    entries = []
-    for m3u8_file in sorted(os.listdir(OUTPUT_FOLDER)):
-        if not m3u8_file.endswith(".m3u8") or m3u8_file.startswith("_"):
-            continue
-        full = os.path.join(OUTPUT_FOLDER, m3u8_file)
-        with open(full, encoding="utf-8") as f:
-            content = f.read()
-        body = re.sub(r"^#EXTM3U\n?(?:#EXT-X-VERSION:[0-9]\n?)?", "", content).strip()
-        entries.append(body)
-
     with open(combined_path, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n" + "\n".join(entries) + "\n")
+        f.write("#EXTM3U\n")
+        f.write("\n".join(combined_entries))
+        f.write("\n")
 
     print("\n" + "=" * 55)
     print("TAMAMLANDI   OK:{}   FAIL:{}   TOPLAM:{}".format(
@@ -254,6 +202,9 @@ def main():
         for n in failed_names:
             print("  - {}".format(n))
     print("\n[+] Birlesik IPTV Listesi -> {}".format(combined_path))
+    print("[+] Oynatici icin kullan: https://raw.githubusercontent.com/metvmetv33/METV/refs/heads/main/{}/{}".format(
+        OUTPUT_FOLDER, "_METV_COMBINED.m3u"
+    ))
 
 
 if __name__ == "__main__":
