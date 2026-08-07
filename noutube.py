@@ -37,7 +37,7 @@ def parse_playlist(content):
 
 def save_channel_as_m3u8(channel_name, stream_url):
     safe_name = "".join(c for c in channel_name if c.isalnum() or c in ".-_").rstrip()
-    filename = f"noutube/{safe_name}.m3u8"
+    filename = f"coutubee/{safe_name}.m3u8"
     content = f"""#EXTM3U
 #EXT-X-VERSION:3
 #EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720
