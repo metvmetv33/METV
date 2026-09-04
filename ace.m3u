@@ -8,35 +8,31 @@ http://88.99.165.164:6878/ace/getstream?id=ed81c333815247536edfcdb2755147e8c4144
 #EXTINF:-1 tvg-id="sport.tr" tvg-name="TR:beIN Sport 4 HD" tvg-logo="https://r2.thesportsdb.com/images/media/channel/logo/2ktmcp1628798841.png" group-title="NexaTV",TR:beIN Sport 4 HD
 http://88.99.165.164:6878/ace/getstream?id=7683cd0cbacf55fa8b39c363219ffba1bc47cf9d&pid=9611
 #EXTINF:-1 tvg-id="104" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/bc458b63-fe9e-40c2-b8a3-d56dc7189e0a.png" group-title="Spor ",beIN Sports Haber
-http://88.99.165.164:6878/ace/getstream?id=47c1b3a68d03bd190fed521d144ad08fa0f195f3&pid=10844
+http://88.99.165.164:6878/ace/getstream?id=47c1b3a68d03bd190fed521d144ad08fa0f195f3&pid=39322
 #EXTINF:-1 tvg-id="7" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/80196fc2-f4f6-4e35-ae29-7925a5885a20.png" group-title="Ulusal",Trt 1
 https://tv-trt1.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-id="7" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/80196fc2-f4f6-4e35-ae29-7925a5885a20.png" group-title="Ulusal",Trt 1
 http://88.99.165.164:6878/ace/getstream?id=d4384fd1b8d17bb4e31e60c9edce0c4a8f3fe1fb&pid=3275
 #EXTINF:-1 tvg-id="34" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/14a65b49-958f-497f-be22-52d958ef8498.png" group-title="Ulusal",Trt 2   
 http://88.99.165.164:6878/ace/getstream?id=3687a7780ab0568b01aef47f6b538f0396dde67c&pid=40293
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT Türk >Ace
+#EXTINF:-1 tvg-id="50" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/0acb34e5-4b37-434e-b555-c7eb0271ba9d.png" group-title="Ulusal",Trt Türk
 http://88.99.165.164:6878/ace/getstream?id=141b68abaab7134755155756790b9149135a833f&pid=27893
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT Avaz_gerisar>NORMA AÇ
-https://tv-trtavaz.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT Avaz >Ace
+#EXTINF:-1 tvg-id="51" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/4a3026d6-b1be-4373-bb83-447117196e55.png" group-title="Ulusal",Trt Avaz
 http://88.99.165.164:6878/ace/getstream?id=055a15cad8cbe360a5a44f33ec637633d5a0cc20&pid=48529
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT Meclis >Ace
+#EXTINF:-1 tvg-id="52" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/aac80fcc-d1e7-41da-85b6-3037cc3f1a4b.png" group-title="Ulusal",Trt 3 - Tbmm
 http://88.99.165.164:6878/ace/getstream?id=8385188c9ae78dd8efd80ac061eb863d264d8f4f&pid=45425
 #EXTINF:-1 tvg-id="8" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/33b10329-faa9-4247-aa46-92a305ed5a92.png" group-title="Ulusal",Atv  
-http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=151
+http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=3520
 #EXTINF:-1 tvg-id="18" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/36157058-80ce-4724-a7ff-28bbad7df301.png" group-title="Ulusal",360 
-http://88.99.165.164:6878/ace/getstream?id=d098ae6527c35392739f1f6acf4a334e343ee799&pid=37306
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TABİİ TV
+http://88.99.165.164:6878/ace/getstream?id=d098ae6527c35392739f1f6acf4a334e343ee799&pid=33416
+#EXTINF:-1 tvg-name="Tabii Spor 6" tvg-language="Turkish" tvg-country="TR" tvg-id="Tabii tv" tvg-logo="https://cms-tabii-public-image.tabii.com/int/w300/45155_0-0-1919-1080.jpeg" group-title="Tabii Spor",Tabii Tv
 https://ceokzokgtd.erbvr.com/tabiitv/tabiitv.m3u8
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TBMM TV_anternatif>NORMAL AÇ
-https://meclistv-live.ercdn.net/meclistv/meclistv.m3u8
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT World >Ace
+#EXTINF:-1 tvg-id="69" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/acd68840-492b-43c5-9635-bbaf32148e2a.png" group-title="Yabancı Haber",TRT World
 http://88.99.165.164:6878/ace/getstream?id=53dfaf9cd27ca288870b138e31f77fff8629a188&pid=9637
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷HABERTURK >Ace
-http://88.99.165.164:6878/ace/getstream?id=5a90df96d912000eae438ab2b10368dc0574cc61&pid=43645
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷A HABER >Ace
-http://88.99.165.164:6878/ace/getstream?id=8cbc6863e3072ab4fca0f26b076fdc046b3c683d&pid=27818
+#EXTINF:-1 tvg-id="44" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/516aa59e-70a2-4be3-9077-02862a052fde.png" group-title="Ulusal Haber",Haber Türk
+http://88.99.165.164:6878/ace/getstream?id=5a90df96d912000eae438ab2b10368dc0574cc61&pid=17195
+#EXTINF:-1 tvg-id="39" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7f90b121-1f7f-4dc7-980f-38167b147cdb.png" group-title="Ulusal Haber",A Haber  
+http://88.99.165.164:6878/ace/getstream?id=8cbc6863e3072ab4fca0f26b076fdc046b3c683d&pid=40447
 #EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷CNN TURK >Ace
 http://88.99.165.164:6878/ace/getstream?id=dbbf25af5c60d5b5926cfd457de4336c3307efc5&pid=9539
 #EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷HABER GLOBAL >Ace
