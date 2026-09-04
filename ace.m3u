@@ -1,10 +1,9 @@
 #EXTM3U
-»⭐TRT>CANLI⭐«
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT1_gerisarizle>NORMAL AÇ
+#EXTINF:-1 tvg-id="7" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/80196fc2-f4f6-4e35-ae29-7925a5885a20.png" group-title="Ulusal",Trt 1
 https://tv-trt1.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT1 >Ace
+#EXTINF:-1 tvg-id="7" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/80196fc2-f4f6-4e35-ae29-7925a5885a20.png" group-title="Ulusal",Trt 1
 http://88.99.165.164:6878/ace/getstream?id=d4384fd1b8d17bb4e31e60c9edce0c4a8f3fe1fb&pid=3275
-#EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT2 >Ace
+#EXTINF:-1 tvg-id="34" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/14a65b49-958f-497f-be22-52d958ef8498.png" group-title="Ulusal",Trt 2   
 http://88.99.165.164:6878/ace/getstream?id=3687a7780ab0568b01aef47f6b538f0396dde67c&pid=40293
 #EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT Türk >Ace
 http://88.99.165.164:6878/ace/getstream?id=141b68abaab7134755155756790b9149135a833f&pid=27893
@@ -14,9 +13,9 @@ https://tv-trtavaz.medya.trt.com.tr/master.m3u8
 http://88.99.165.164:6878/ace/getstream?id=055a15cad8cbe360a5a44f33ec637633d5a0cc20&pid=48529
 #EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TRT Meclis >Ace
 http://88.99.165.164:6878/ace/getstream?id=8385188c9ae78dd8efd80ac061eb863d264d8f4f&pid=45425
-#EXTINF:-1 tvg-id="ATV>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3f/Atv_logo_2013.png" tvg-name="ATV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",ATV>ace
-http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=151&.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/360_logo.png" tvg-id="360>ace" tvg-name="360>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",360>ace
+#EXTINF:-1 tvg-id="8" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/33b10329-faa9-4247-aa46-92a305ed5a92.png" group-title="Ulusal",Atv  
+http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=151
+#EXTINF:-1 tvg-id="18" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/36157058-80ce-4724-a7ff-28bbad7df301.png" group-title="Ulusal",360 
 http://88.99.165.164:6878/ace/getstream?id=d098ae6527c35392739f1f6acf4a334e343ee799&pid=37306
 #EXTINF:-1 group-title="⚡TRT>CANLI",🇹🇷TABİİ TV
 https://ceokzokgtd.erbvr.com/tabiitv/tabiitv.m3u8
@@ -136,7 +135,7 @@ http://88.99.165.164:6878/ace/getstream?id=e2318b9e98ed6b6319af6740b0b4bb7ce1e13
 http://88.99.165.164:6878/ace/getstream?id=62c4aa7c552faf96168b6462c0cf7971c080b79f&pid=45966
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷FİLM SCREAN >Ace
 http://88.99.165.164:6878/ace/getstream?id=6953f835f7337fb90df577c95084636542158fdb&pid=6079
-#EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷FX >Ace
+#EXTINF:-1 tvg-id="fx" tvg-logo="https://img.dsmartgo.com.tr/content/w/Uq/16203/Thumbnail.png" tvg-name="Fx" group-title="Sinema Kanalları",Fx
 http://88.99.165.164:6878/ace/getstream?id=ba95d17dc4f2c6710a5f42837f0fbbc023f710d2&pid=46724
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷MOVİE SMART TURK >Ace
 http://88.99.165.164:6878/ace/getstream?id=2bd20ae512bd540d535fba41da249e6ce1d1febd&pid=3991
