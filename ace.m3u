@@ -233,8 +233,8 @@ http://88.99.165.164:6878/ace/getstream?id=ed81c333815247536edfcdb2755147e8c4144
 http://88.99.165.164:6878/ace/getstream?id=7683cd0cbacf55fa8b39c363219ffba1bc47cf9d&pid=9611
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷S SPORT 2 >Ace
 http://88.99.165.164:6878/ace/getstream?id=367f1bb1d5e85bbffcc14bd8b7297da7f4fa2e51&pid=49682
-#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷TİVİBU SPOR >Ace
-http://88.99.165.164:6878/ace/getstream?id=0c8d675aedb4a7e37a90df8a550a7769084ecfbb&.m3u8
+#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷TİVİBU SPOR
+http://88.99.165.164:6878/ace/getstream?id=0c8d675aedb4a7e37a90df8a550a7769084ecfbb&pid=3275
 #EXTINF:-1 tvg-id="104" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/bc458b63-fe9e-40c2-b8a3-d56dc7189e0a.png" group-title="Spor ",beIN Sports Haber
 http://88.99.165.164:6878/ace/getstream?id=47c1b3a68d03bd190fed521d144ad08fa0f195f3
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇵🇱Eurosport 1[PL] >Ace
