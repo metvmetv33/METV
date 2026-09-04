@@ -22,7 +22,7 @@ http://88.99.165.164:6878/ace/getstream?id=055a15cad8cbe360a5a44f33ec637633d5a0c
 #EXTINF:-1 tvg-id="52" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/aac80fcc-d1e7-41da-85b6-3037cc3f1a4b.png" group-title="Ulusal",Trt 3 - Tbmm
 http://88.99.165.164:6878/ace/getstream?id=8385188c9ae78dd8efd80ac061eb863d264d8f4f&pid=45425
 #EXTINF:-1 tvg-id="8" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/33b10329-faa9-4247-aa46-92a305ed5a92.png" group-title="Ulusal",Atv  
-http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=3520
+http://127.0.0.1:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=3520
 #EXTINF:-1 tvg-id="18" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/36157058-80ce-4724-a7ff-28bbad7df301.png" group-title="Ulusal",360 
 http://88.99.165.164:6878/ace/getstream?id=d098ae6527c35392739f1f6acf4a334e343ee799&pid=33416
 #EXTINF:-1 tvg-name="Tabii Spor 6" tvg-language="Turkish" tvg-country="TR" tvg-id="Tabii tv" tvg-logo="https://cms-tabii-public-image.tabii.com/int/w300/45155_0-0-1919-1080.jpeg" group-title="Tabii Spor",Tabii Tv
