@@ -223,20 +223,20 @@ http://giganet.mk/hls/macdoc.m3u8
 http://88.99.165.164:6878/ace/getstream?id=9bc4c83abc04cb94a885e9de9a88aef98285d564&pid=7561
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷SporSmart2 >Ace
 http://88.99.165.164:6878/ace/getstream?id=d634b448b68285e3fc175ac148c479d130fe4d4d&pid=14610
-#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷Bein Spors1 >Ace
+#EXTINF:-1 tvg-id="sport.tr" tvg-name="TR:beIN Sport 1 HD" tvg-logo="https://r2.thesportsdb.com/images/media/channel/logo/5rhmw31628798883.png" group-title="NexaTV",TR:beIN Sport 1 HD
 http://88.99.165.164:6878/ace/getstream?id=118416583faa3fb4f03800173429b6b844b43a52&pid=34886
-#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷Bein Spors2 >Ace
+#EXTINF:-1 tvg-id="sport.tr" tvg-name="TR:beIN Sport 2 HD" tvg-logo="https://r2.thesportsdb.com/images/media/channel/logo/7uv6x71628799003.png" group-title="NexaTV",TR:beIN Sport 2 HD
 http://88.99.165.164:6878/ace/getstream?id=48bee10b883f17c7186d60f1e8022dca0ba41a05&pid=9585
-#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷Bein Spors3 >Ace
+#EXTINF:-1 tvg-id="sport.tr" tvg-name="TR:beIN Sport 3 HD" tvg-logo="https://r2.thesportsdb.com/images/media/channel/logo/u3117i1628798857.png" group-title="NexaTV",TR:beIN Sport 3 HD
 http://88.99.165.164:6878/ace/getstream?id=ed81c333815247536edfcdb2755147e8c4144d62&pid=7012
-#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷Bein Spors4 >Ace
+#EXTINF:-1 tvg-id="sport.tr" tvg-name="TR:beIN Sport 4 HD" tvg-logo="https://r2.thesportsdb.com/images/media/channel/logo/2ktmcp1628798841.png" group-title="NexaTV",TR:beIN Sport 4 HD
 http://88.99.165.164:6878/ace/getstream?id=7683cd0cbacf55fa8b39c363219ffba1bc47cf9d&pid=9611
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷S SPORT 2 >Ace
 http://88.99.165.164:6878/ace/getstream?id=367f1bb1d5e85bbffcc14bd8b7297da7f4fa2e51&pid=49682
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷TİVİBU SPOR >Ace
-http://88.99.165.164:6878/ace/getstream?id=0c8d675aedb4a7e37a90df8a550a7769084ecfbb&pid=2104
-#EXTINF:-1 group-title="⚡Spor>CANLI",🇹🇷BEİN HABER >Ace
-http://88.99.165.164:6878/ace/getstream?id=47c1b3a68d03bd190fed521d144ad08fa0f195f3&pid=10844
+http://88.99.165.164:6878/ace/getstream?id=0c8d675aedb4a7e37a90df8a550a7769084ecfbb
+#EXTINF:-1 tvg-id="104" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/bc458b63-fe9e-40c2-b8a3-d56dc7189e0a.png" group-title="Spor ",beIN Sports Haber
+http://88.99.165.164:6878/ace/getstream?id=47c1b3a68d03bd190fed521d144ad08fa0f195f3
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇵🇱Eurosport 1[PL] >Ace
 http://88.99.165.164:6878/ace/getstream?id=314eb626864faf52e01624361bd6906b5406127f&pid=41458
 #EXTINF:-1 group-title="⚡Spor>CANLI",🇷🇺🇬🇧Eurosport 1[RU-EN] >Ace
