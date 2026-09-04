@@ -33,8 +33,8 @@ http://88.99.165.164:6878/ace/getstream?id=53dfaf9cd27ca288870b138e31f77fff8629a
 http://88.99.165.164:6878/ace/getstream?id=5a90df96d912000eae438ab2b10368dc0574cc61&pid=17195
 #EXTINF:-1 tvg-id="39" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7f90b121-1f7f-4dc7-980f-38167b147cdb.png" group-title="Ulusal Haber",A Haber  
 http://88.99.165.164:6878/ace/getstream?id=8cbc6863e3072ab4fca0f26b076fdc046b3c683d&pid=40447
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷CNN TURK >Ace
-http://88.99.165.164:6878/ace/getstream?id=dbbf25af5c60d5b5926cfd457de4336c3307efc5&pid=9539
+#EXTINF:-1 tvg-id="41" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/3686a1f5-9c4d-401f-9c7b-031ca66454a0.png" group-title="Ulusal Haber",Cnn Türk  
+http://127.0.0.1:6878/ace/getstream?id=dbbf25af5c60d5b5926cfd457de4336c3307efc5&pid=25239
 #EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷HABER GLOBAL >Ace
 http://88.99.165.164:6878/ace/getstream?id=ef09a4a6535a7f91ecf0edc60c464cea711760f0&pid=46955
 #EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷TV 100 >Ace
