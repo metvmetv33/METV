@@ -119,7 +119,7 @@ http://88.99.165.164:6878/ace/getstream?id=1de17a996f8618578035dbc4c7ecbf4b0395d
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SİNEMA>alternatif>NORMAL AÇ
 http://65.108.239.207/sinema/index.m3u8
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SİNEMA >Ace
-http://88.99.165.164:6878/ace/getstream?id=6c39acff088fd7f2fc692363b2351b52fd00c91a&pid=22858
+http://88.99.165.164:6878/ace/getstream?id=6c39acff088fd7f2fc692363b2351b52fd00c91a&pid=22858&.m3u8
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SİNEMA2 >Ace
 http://88.99.165.164:6878/ace/getstream?id=2dc3399e0a3838c8dae8d5ee6f70c3314708ae0d&pid=11022
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SineAİLE >Ace
