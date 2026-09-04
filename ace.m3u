@@ -1,0 +1,151 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="SINEMATV 1001>Ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-name="SINEMATV 1001>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SINEMATV 1001>Ace
+http://88.99.165.164:6878/ace/getstream?id=2aeead5e58ba09558a45d6b38ba0b03923aa195a&pid=48462
+#EXTINF:-1 tvg-id="SINEMATV 1002>Ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-name="SINEMATV 1002>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SINEMATV 1002>Ace
+http://88.99.165.164:6878/ace/getstream?id=e2318b9e98ed6b6319af6740b0b4bb7ce1e138c4&pid=21733
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/360_logo.png" tvg-id="360>ace" tvg-name="360>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",360>ace
+http://88.99.165.164:6878/ace/getstream?id=d098ae6527c35392739f1f6acf4a334e343ee799&pid=37306
+#EXTINF:-1 tvg-id="ATV>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3f/Atv_logo_2013.png" tvg-name="ATV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",ATV>ace
+http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=151
+#EXTINF:-1 tvg-id="BEYAZ TV>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/0/0c/Beyaz_TV_logo.png" tvg-name="BEYAZ TV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",BEYAZ TV>ace
+http://88.99.165.164:6878/ace/getstream?id=c9937167ca3994c70d307139ee3ae61b1af5a209&pid=32574
+#EXTINF:-1 tvg-id="KANAL AVRUPA>ace" tvg-name="KANAL AVRUPA>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",KANAL AVRUPA>ace
+http://88.99.165.164:6878/ace/getstream?infohash=703d3ebe2fa2e35400a47c7f0a679fec985294ce&pid=746
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/53/Kanal_D_logo.svg" tvg-id="KANAL D>ace" tvg-name="KANAL D>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",KANAL D>ace
+http://88.99.165.164:6878/ace/getstream?id=ca0335107bbfee66cdffd941d37bbb9dc7494476&pid=1918
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3f/Kanal_7_logo.png" tvg-id="KANAL7>ace" tvg-name="KANAL7>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",KANAL7>ace
+http://88.99.165.164:6878/ace/getstream?id=1df407e695c1ad8da3f6adb7e6ab877682139494&pid=38873
+#EXTINF:-1 tvg-id="SHOW TV>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/52/Show_TV_logo.svg" tvg-name="SHOW TV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",SHOW TV>ace
+http://88.99.165.164:6878/ace/getstream?id=f95c056c3b3288c99102f0b0144be7b0bf02e914&pid=27991
+#EXTINF:-1 tvg-id="STAR TV>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5d/Star_TV_logo.svg" tvg-name="STAR TV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",STAR TV>ace
+http://88.99.165.164:6878/ace/getstream?id=e43d5becfc683801478210b081d9f45f9b6066b9&pid=2832
+#EXTINF:-1 tvg-id="TRT 1>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5d/TRT_1_logo.svg" tvg-name="TRT 1>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TRT 1>ace
+http://88.99.165.164:6878/ace/getstream?id=d4384fd1b8d17bb4e31e60c9edce0c4a8f3fe1fb&pid=3275
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5e/TRT_Avaz_logo.svg" tvg-id="TRT AVAZ>ace" tvg-name="TRT AVAZ>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TRT AVAZ>ace
+http://88.99.165.164:6878/ace/getstream?id=055a15cad8cbe360a5a44f33ec637633d5a0cc20&pid=48529
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5d/TRT_1_logo.svg" tvg-id="TRT MECLİS>ace" tvg-name="TRT MECLİS>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TRT MECLİS>ace
+http://88.99.165.164:6878/ace/getstream?id=8385188c9ae78dd8efd80ac061eb863d264d8f4f&pid=45425
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/2/27/TRT_Turk_logo.svg" tvg-id="TRT TÜRK>ace" tvg-name="TRT TÜRK>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TRT TÜRK>ace
+http://88.99.165.164:6878/ace/getstream?id=141b68abaab7134755155756790b9149135a833f&pid=27893
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/70/TRT_World_logo.svg" tvg-id="TRT WORLD>ace" tvg-name="TRT WORLD>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TRT WORLD>ace
+http://88.99.165.164:6878/ace/getstream?id=53dfaf9cd27ca288870b138e31f77fff8629a188&pid=9637
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/84/TRT_2_logo.svg" tvg-id="TRT2>ace" tvg-name="TRT2ı>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TRT2>ace
+http://88.99.165.164:6878/ace/getstream?id=3687a7780ab0568b01aef47f6b538f0396dde67c&pid=40293
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/0/08/Tv2_Turkey_logo.png" tvg-id="TV2>ace" tvg-name="TV2>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TV2>ace
+http://88.99.165.164:6878/ace/getstream?id=82cbbdda640413a55e9dda3b2e9471cbeffa983a&pid=45362
+#EXTINF:-1 tvg-id="TV8>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/0/00/Tv8_logo.png" tvg-name="TV8>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Ulusal",TV8>ace
+http://88.99.165.164:6878/ace/getstream?id=4900019edaad4d975d4e258228f90b0c448b178a&pid=658
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/4/4c/24_TV_logo.png" tvg-id="24TV>ace" tvg-name="24TV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",24TV>ace
+http://88.99.165.164:6878/ace/getstream?id=f8c9e145c6be5536243e86644afd8c8bda20ca62&pid=22216
+#EXTINF:-1 tvg-id="A HABER>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5c/A_Haber_logo.png" tvg-name="A HABER>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",A HABER>ace
+http://88.99.165.164:6878/ace/getstream?id=8cbc6863e3072ab4fca0f26b076fdc046b3c683d&pid=27818
+#EXTINF:-1 tvg-id="AnnTV>Ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/NTV_logo.svg" tvg-name="AnnTV>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",AnnTV>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=f662b8a6af1f7e686d61d3b32e7b3d15355e92fd&pid=180
+#EXTINF:-1 tvg-id="BEİN SPOR HABER>Ace" tvg-name="BEİN SPOR HABER>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",BEİN SPOR HABER>Ace
+http://88.99.165.164:6878/ace/getstream?id=47c1b3a68d03bd190fed521d144ad08fa0f195f3&pid=10844
+#EXTINF:-1 tvg-id="CNN TÜRK>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/b/b0/CNN_Turk_logo.svg" tvg-name="CNN TÜRK>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",CNN TÜRK>ace
+http://88.99.165.164:6878/ace/getstream?id=dbbf25af5c60d5b5926cfd457de4336c3307efc5&pid=9539
+#EXTINF:-1 tvg-id="CNN us>ace" tvg-name="CNN us>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",CNN us>ace
+http://88.99.165.164:6878/ace/getstream?infohash=04f3e6773c11ab733be1be222e62953fb31ecb5f&pid=396
+#EXTINF:-1 tvg-id="DHA>ace" tvg-name="DHA>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",DHA>ace
+http://88.99.165.164:6878/ace/getstream?infohash=67e61513bfecb88e7fcc093947433ea0b69da11e&pid=455
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="EKO TÜRK>ace" tvg-name="EKO TÜRK>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",EKO TÜRK>ace
+http://88.99.165.164:6878/ace/getstream?id=ab3c1dd7235dae249588d6b7b7a408b3d7d381b5&pid=6233
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="EKOL TV>Ace" tvg-name="EKOL TV>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",EKOL TV>Ace
+http://88.99.165.164:6878/ace/getstream?id=62c4aa7c552faf96168b6462c0cf7971c080b79f&pid=45966
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/56/Haber_Global_logo.png" tvg-id="HABER GLOBAL>ace" tvg-name="HABER GLOBAL>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",HABER GLOBAL>ace
+http://88.99.165.164:6878/ace/getstream?id=ef09a4a6535a7f91ecf0edc60c464cea711760f0&pid=46955
+#EXTINF:-1 tvg-id="HABER TÜRK>ace" tvg-name="HABER TÜRK>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",HABER TÜRK>ace
+http://88.99.165.164:6878/ace/getstream?id=5a90df96d912000eae438ab2b10368dc0574cc61&pid=43645
+#EXTINF:-1 tvg-id="HABER61>ace" tvg-name="HABER61>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",HABER61>ace
+http://88.99.165.164:6878/ace/getstream?id=8742cd04248bcb1a953dd741826dce5569c568fe&pid=15021
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/84/Halk_TV_logo.png" tvg-id="HALK TV>ace" tvg-name="HALK TV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",HALK TV>ace
+http://88.99.165.164:6878/ace/getstream?id=d7808d4a6db17036e485e34dba4785471b04575f&pid=35028
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/57/KRT_TV_logo.png" tvg-id="KRT>ace" tvg-name="KRT>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",KRT>ace
+http://88.99.165.164:6878/ace/getstream?infohash=d76c1781b0bfd69bc1f7d4dfa66b7b454eca8bab&pid=777
+#EXTINF:-1 tvg-id="NTV>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/NTV_logo.svg" tvg-name="NTV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",NTV>ace
+http://88.99.165.164:6878/ace/getstream?id=412cae2e35e946f29ae0801323ee992cbf5e0e94&pid=4916
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/7e/Tele1_logo.png" tvg-id="TELE1>ace" tvg-name="TELE1>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",TELE1>ace
+http://88.99.165.164:6878/ace/getstream?infohash=ea31952df463f90d376806d264c954e273d0b921&pid=1405
+#EXTINF:-1 tvg-id="TRT HABER>ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/83/TRT_Haber_logo.svg" tvg-name="TRT HABER>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",TRT HABER>ace
+http://88.99.165.164:6878/ace/getstream?id=6f21947257ff458ca0cdaa51d38adf822661c40c&pid=21131
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/2/28/TV100_logo.png" tvg-id="TV100>ace" tvg-name="TV100>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",TV100>ace
+http://88.99.165.164:6878/ace/getstream?id=015ccd18da8c3c90a26c921db5e2af2eb5a6b555&pid=23490
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/0/0e/Ulke_TV_logo.png" tvg-id="ÜLKE TV>ace" tvg-name="ÜLKE TV>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Haber",ÜLKE TV>ace
+http://88.99.165.164:6878/ace/getstream?id=23da70b7e21a5ee26ef32afd947ddc7e66928bf8&pid=18338
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="BEİN MOVİE TÜRK>Ace" tvg-name="BEİN MOVİE TÜRK>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",BEİN MOVİE TÜRK>Ace
+http://88.99.165.164:6878/ace/getstream?id=1de17a996f8618578035dbc4c7ecbf4b0395d0f7&pid=24052
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="DİZİ SMARTmax>Ace" tvg-name="DİZİ SMARTmax>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",DİZİ SMARTmax>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=50716378cfd818ebae0ffb81d9a533f01fc546ae&pid=478
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="DİZİ SMARTpremium>Ace" tvg-name="DİZİ SMARTpremium>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",DİZİ SMARTpremium>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=2823072827ba892734e1ba132d1f3ba61f8463c2&pid=479
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="FX>Ace" tvg-name="FX>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",FX>Ace
+http://88.99.165.164:6878/ace/getstream?id=ba95d17dc4f2c6710a5f42837f0fbbc023f710d2&pid=46724
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="FİLM SCREAN>Ace" tvg-name="FİLM SCREAN>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",FİLM SCREAN>Ace
+http://88.99.165.164:6878/ace/getstream?id=6953f835f7337fb90df577c95084636542158fdb&pid=6079
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="MovieSmart Classic>Ace" tvg-name="MovieSmart Classic>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",MovieSmart Classic>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=115360d941218ec8e8ed303e00a20fa1d966517d&pid=898
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="MOVİE SMART TURK>Ace" tvg-name="MOVİE SMART TURK>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",MOVİE SMART TURK>Ace
+http://88.99.165.164:6878/ace/getstream?id=2bd20ae512bd540d535fba41da249e6ce1d1febd&pid=3991
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="SINEMA AKSIYON>Ace" tvg-name="SINEMA AKSIYON>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SINEMA AKSIYON>Ace
+http://88.99.165.164:6878/ace/getstream?id=2577a5ee5869ddf84d90ca20e9772a9643fd6488&pid=49773
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="SINEMA KOMEDI>Ace" tvg-name="SINEMA KOMEDI>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SINEMA KOMEDI>Ace
+http://88.99.165.164:6878/ace/getstream?id=9ae2993008d4b54d783a8bd8af35a99a7a4b09c3&pid=37501
+#EXTINF:-1 tvg-id="Spor Smart>Ace" tvg-name="Spor Smart>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Spor Smart>Ace
+http://88.99.165.164:6878/ace/getstream?id=9bc4c83abc04cb94a885e9de9a88aef98285d564&pid=7561
+#EXTINF:-1 tvg-id="SporSmart2>Ace" tvg-name="SporSmart2>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",SporSmart2>Ace
+http://88.99.165.164:6878/ace/getstream?id=d634b448b68285e3fc175ac148c479d130fe4d4d&pid=14610
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="SİNEMA AİLE>ace" tvg-name="SİNEMA AİLE>ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SİNEMA AİLE>ace
+http://88.99.165.164:6878/ace/getstream?id=a75529b440194d667d8c94d1133a920faebad8e5&pid=13808
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="SİNEMA2>Ace" tvg-name="SİNEMA2>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SİNEMA2>Ace
+http://88.99.165.164:6878/ace/getstream?id=2dc3399e0a3838c8dae8d5ee6f70c3314708ae0d&pid=11022
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/Film_reel_icon.svg" tvg-id="SİNEMA>Ace" tvg-name="SİNEMA>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Sinema",SİNEMA>Ace
+http://88.99.165.164:6878/ace/getstream?id=6c39acff088fd7f2fc692363b2351b52fd00c91a&pid=22858
+#EXTINF:-1 tvg-id="BBC EART>Ace" tvg-name="BBC EART>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",BBC EART>Ace
+http://88.99.165.164:6878/ace/getstream?id=95e8ae652b5f5fa653be611aaac2f736dcf67ba2&pid=5172
+#EXTINF:-1 tvg-id="Canel+ Document>Ace" tvg-name="Canel+ Document>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",Canel+ Document>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=e1d1deb71ac36ed0b472654738ce91d11ae8ac5d&pid=328
+#EXTINF:-1 tvg-id="CS HİSTORY>Ace" tvg-name="CS HİSTORY>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",CS HİSTORY>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=a4678bc9f68c1da37c57fec8d822f80b82cd5af6&pid=411
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3f/Discovery_Channel_logo.svg" tvg-id="DISCOVERY>Ace" tvg-name="DISCOVERY>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",DISCOVERY>Ace
+http://88.99.165.164:6878/ace/getstream?id=1534834fc65764c8eaca43cf108e0b49158d8c68&pid=28538
+#EXTINF:-1 tvg-id="DMAX[DE]>Ace" tvg-name="DMAX[DE]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",DMAX[DE]>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=46b0745f35cbc125ba35d4f363c0080164cc783b&pid=480
+#EXTINF:-1 tvg-id="H2[RU]>Ace" tvg-name="H2[RU]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",H2[RU]>Ace
+http://88.99.165.164:6878/ace/getstream?infohash=259cb14a1a9178a6b3f8228b25c057e0f1463ce7&pid=643
+#EXTINF:-1 tvg-id="HISTORY2>Ace" tvg-name="HISTORY2>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",HISTORY2>Ace
+http://88.99.165.164:6878/ace/getstream?id=74a5b047b55da353d7013f512126a21db313497b&pid=39111
+#EXTINF:-1 tvg-id="HISTORY[ukkzenru]>Ace" tvg-name="HISTORY[ukkzenru]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",HISTORY[ukkzenru]>Ace
+http://88.99.165.164:6878/ace/getstream?id=b5e4d600404702a7d50e01e64f82ea1d26b68f63&pid=6647
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/fc/National_Geographic_Channel.svg" tvg-id="NAT GEO WİLD>Ace" tvg-name="NAT GEO WİLD>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",NAT GEO WİLD>Ace
+http://88.99.165.164:6878/ace/getstream?id=cd966b57027f521c8d78251519b7cd8edc15f68a&pid=986
+#EXTINF:-1 tvg-id="National Geo>Ace" tvg-name="National Geo>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",National Geo>Ace
+http://88.99.165.164:6878/ace/getstream?id=4c6b1cfb90788850706d8eb179d4cbb84a73dc74&pid=46189
+#EXTINF:-1 tvg-id="TGRT BELGESEL>Ace" tvg-name="TGRT BELGESEL>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",TGRT BELGESEL>Ace
+http://88.99.165.164:6878/ace/getstream?id=04cbbd85e658dfea42fa8dda436ffb033643bd46&pid=14504
+#EXTINF:-1 tvg-id="TLC>Ace" tvg-name="TLC>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",TLC>Ace
+http://88.99.165.164:6878/ace/getstream?id=75d6b00042e6063ad1ecbfb4bdb6be3ceedc93c7&pid=24817
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e7/TRT_Belgesel_logo.svg" tvg-id="TRT BELGESEL>Ace" tvg-name="TRT BELGESEL>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Belgesel",TRT BELGESEL>Ace
+http://88.99.165.164:6878/ace/getstream?id=811c3c90eb249d1cf65502848d395ac9d6de3529&pid=14361
+#EXTINF:-1 tvg-id="Bein Spors1>Ace" tvg-name="Bein Spors1>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Bein Spors1>Ace
+http://88.99.165.164:6878/ace/getstream?id=118416583faa3fb4f03800173429b6b844b43a52&pid=34886
+#EXTINF:-1 tvg-id="Bein Spors2>Ace" tvg-name="Bein Spors2>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Bein Spors2>Ace
+http://88.99.165.164:6878/ace/getstream?id=48bee10b883f17c7186d60f1e8022dca0ba41a05&pid=9585
+#EXTINF:-1 tvg-id="Bein Spors3>Ace" tvg-name="Bein Spors3>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Bein Spors3>Ace
+http://88.99.165.164:6878/ace/getstream?id=ed81c333815247536edfcdb2755147e8c4144d62&pid=7012
+#EXTINF:-1 tvg-id="Bein Spors4>Ace" tvg-name="Bein Spors4>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Bein Spors4>Ace
+http://88.99.165.164:6878/ace/getstream?id=7683cd0cbacf55fa8b39c363219ffba1bc47cf9d&pid=9611
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f5/Eurosport_1_logo.svg" tvg-id="S SPORT 2>Ace" tvg-name="S SPORT 2>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",S SPORT 2>Ace
+http://88.99.165.164:6878/ace/getstream?id=367f1bb1d5e85bbffcc14bd8b7297da7f4fa2e51&pid=49682
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f5/Eurosport_1_logo.svg" tvg-id="Eurosport 1[PL]>Ace" tvg-name="Eurosport 1[PL]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Eurosport 1[PL]>Ace
+http://88.99.165.164:6878/ace/getstream?id=314eb626864faf52e01624361bd6906b5406127f&pid=41458
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f5/Eurosport_1_logo.svg" tvg-id="Eurosport 1[RU-EN]>Ace" tvg-name="Eurosport 1[RU-EN]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Eurosport 1[RU-EN]>Ace
+http://88.99.165.164:6878/ace/getstream?id=1b0bc4d4dcd609d3c092712e721392b199f50a62&pid=46923
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f5/Eurosport_1_logo.svg" tvg-id="Eurosport 2[DE]>Ace" tvg-name="Eurosport 2[DE]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Eurosport 2[DE]>Ace
+http://88.99.165.164:6878/ace/getstream?id=ac675c82d6dfd4a201532c18b42e48dacb7c32c6&pid=16422
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f5/Eurosport_1_logo.svg" tvg-id="Eurosport 2[RU]>Ace" tvg-name="Eurosport 2[RU]>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",Eurosport 2[RU]>Ace
+http://88.99.165.164:6878/ace/getstream?id=6176281b9c46a5621a0e88524f8dc621f173b8e0&pid=2763
+#EXTINF:-1 tvg-id="TRT Spor>Ace" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/53/TRT_Spor_logo.svg" tvg-name="TRT Spor>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",TRT Spor>Ace
+http://88.99.165.164:6878/ace/getstream?id=6c5e9bcc44d40423acfa5870a173c98213754af7&pid=9767
+#EXTINF:-1 tvg-id="TİVİBU SPOR>Ace" tvg-name="TİVİBU SPOR>Ace" group-title="🔴 CANLI ⭐ ACESTREAM | Spor",TİVİBU SPOR>Ace
+http://88.99.165.164:6878/ace/getstream?id=0c8d675aedb4a7e37a90df8a550a7769084ecfbb&pid=2104
