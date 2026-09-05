@@ -30,9 +30,13 @@ http://88.99.165.164:6878/ace/getstream?id=ca0335107bbfee66cdffd941d37bbb9dc7494
 #EXTINF:-1 tvg-id="9" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/04fb743d-4a72-4907-8c54-f53b72c3600a.png" group-title="Ulusal",Show TV
 http://88.99.165.164:6878/ace/getstream?id=f95c056c3b3288c99102f0b0144be7b0bf02e914&pid=7779
 #EXTINF:-1 tvg-id="12" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/f218c717-723e-49e3-a3f0-428979d2fa3e.png" group-title="Ulusal",Kanal 7
-http://127.0.0.1:6878/ace/getstream?id=1df407e695c1ad8da3f6adb7e6ab877682139494&pid=36798
+http://88.99.165.164:6878/ace/getstream?id=1df407e695c1ad8da3f6adb7e6ab877682139494&pid=38873
 #EXTINF:-1 tvg-id="18" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/36157058-80ce-4724-a7ff-28bbad7df301.png" group-title="Ulusal",360 
 http://88.99.165.164:6878/ace/getstream?id=d098ae6527c35392739f1f6acf4a334e343ee799&pid=33416
+#EXTINF:-1 tvg-id="15" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/a92329d7-3d4c-4631-ab3e-c7d36a3f1a6f.png" group-title="Ulusal",Beyaz Tv
+http://88.99.165.164:6878/ace/getstream?id=c9937167ca3994c70d307139ee3ae61b1af5a209&pid=32574
+#EXTINF:-1 tvg-id="14" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/ab41b407-70c4-4634-8ed4-bf9be8cf81e2.png" group-title="Ulusal",Tv 8  
+http://88.99.165.164:6878/ace/getstream?id=4900019edaad4d975d4e258228f90b0c448b178a&pid=658
 #EXTINF:-1 tvg-name="Tabii Spor 6" tvg-language="Turkish" tvg-country="TR" tvg-id="Tabii tv" tvg-logo="https://cms-tabii-public-image.tabii.com/int/w300/45155_0-0-1919-1080.jpeg" group-title="Tabii Spor",Tabii Tv
 https://ceokzokgtd.erbvr.com/tabiitv/tabiitv.m3u8
 #EXTINF:-1 tvg-id="69" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/acd68840-492b-43c5-9635-bbaf32148e2a.png" group-title="Yabancı Haber",TRT World
@@ -61,64 +65,25 @@ http://88.99.165.164:6878/ace/getstream?id=d7808d4a6db17036e485e34dba4785471b045
 http://88.99.165.164:6878/ace/getstream?infohash=d76c1781b0bfd69bc1f7d4dfa66b7b454eca8bab&pid=777
 #EXTINF:-1 tvg-id="24" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/5f895c30-fa0a-4f74-b4b6-ee562fb27e26.png" group-title="Ulusal",Ulusal Kanal
 http://88.99.165.164:6878/ace/getstream?id=17160597797e97dac3699eefd5b5c928538087e2&pid=9218
+#EXTINF:-1 tvg-id="65" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/50921da2-0f81-40cf-971b-1b3db26245d7.png" group-title="Ulusal Haber",Tele 1
+http://88.99.165.164:6878/ace/getstream?infohash=ea31952df463f90d376806d264c954e273d0b921&pid=1405
 #EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷DHA
 http://88.99.165.164:6878/ace/getstream?infohash=67e61513bfecb88e7fcc093947433ea0b69da11e&pid=455
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇹🇷EKO TURK >Ace
-http://88.99.165.164:6878/ace/getstream?id=ab3c1dd7235dae249588d6b7b7a408b3d7d381b5&pid=6233
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇶🇦AJAZARA TV_github>NORMAL AÇ
-https://live-hls-apps-aja-v3-fa.getaj.net/AJA/index.m3u8
-H#EXTINF:-1 group-title="⚡Haber>CANLI",🇶🇦AJAZARA EN TV_github>NORMAL AÇ
-https://live-hls-web-aje-gcp.thehlive.com/AJE/index.m3u8
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇸🇦AL ARABİA TV_github>NORMAL AÇ
-https://live.alarabiya.net/alarabiapublish/alarabiya.smil/alarabiapublish/alarabiya_1080p/chunks.m3u8
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇬🇧REUTERS_github>NORMAL AÇ
-https://shr.pn/YZ1I
-#EXTINF:-1 group-title="⚡Haber>CANLI",🇺🇸CNN [us]>Ace
-http://127.0.0.1:6878/ace/getstream?infohash=04f3e6773c11ab733be1be222e62953fb31ecb5f&pid=396
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷ATV >Ace
-http://88.99.165.164:6878/ace/getstream?id=5a92f2385120a631f0d9f08e5629a4d9c3be2e10&pid=151
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷KANAL7 >Ace
-http://88.99.165.164:6878/ace/getstream?id=1df407e695c1ad8da3f6adb7e6ab877682139494&pid=38873
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷Kanal7_alternatif>NORMAL AÇ
-https://kanal7-live.daioncdn.net/kanal7/kanal7.m3u8
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷BEYAZ TV >Ace
-http://88.99.165.164:6878/ace/getstream?id=c9937167ca3994c70d307139ee3ae61b1af5a209&pid=32574
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷TV8 >Ace
-http://88.99.165.164:6878/ace/getstream?id=4900019edaad4d975d4e258228f90b0c448b178a&pid=658
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷STAR TV >Ace
-http://88.99.165.164:6878/ace/getstream?id=e43d5becfc683801478210b081d9f45f9b6066b9&pid=2832
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷KANAL D >Ace
-http://88.99.165.164:6878/ace/getstream?id=ca0335107bbfee66cdffd941d37bbb9dc7494476&pid=1918
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷SHOW TV >Ace
-http://88.99.165.164:6878/ace/getstream?id=f95c056c3b3288c99102f0b0144be7b0bf02e914&pid=27991
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷TV2 >Ace
-http://88.99.165.164:6878/ace/getstream?id=82cbbdda640413a55e9dda3b2e9471cbeffa983a&pid=45362
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷Now>NORMAL AÇ
-https://uycyyuuzyh.turknet.ercdn.net/nphindgytw/nowtv/nowtv.m3u8
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷360 >Ace
-http://88.99.165.164:6878/ace/getstream?id=82cbbdda640413a55e9dda3b2e9471cbeffa983a&pid=39011
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷TELE1>Ace
-http://127.0.0.1:6878/ace/getstream?infohash=ea31952df463f90d376806d264c954e273d0b921&pid=1405
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷TYT>NORMAL AÇ
-https://tytturk-live.ercdn.net/tytturk/tytturk_1080p.m3u8
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷360>NORMAL AÇ
-https://turkmedya-live.ercdn.net/tv360/tv360.m3u8
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷TV4>NORMAL AÇ
-https://turkmedya-live.ercdn.net/tv4/tv4.m3u8
-#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷KANAL AVRUPA>Ace
+#EXTINF:-1 group-title="⚡Ulusal>CANLI",🇹🇷KANAL AVRUPA
 http://127.0.0.1:6878/ace/getstream?infohash=703d3ebe2fa2e35400a47c7f0a679fec985294ce&pid=746
-#EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷BEİN MOVİE >Ace
+#EXTINF:-1 tvg-id="sinemakomedi2" tvg-logo="https://mediacms01.digiturkplay.com/channel_logo/Bein_Movies_Turk_HD_yeni.png"" tvg-name="Sinema Komedi 2" group-title="Sinema Kanalları",Bein Movies Turk HD
 http://88.99.165.164:6878/ace/getstream?id=1de17a996f8618578035dbc4c7ecbf4b0395d0f7&pid=24052
-#EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SİNEMA>alternatif>NORMAL AÇ
-http://65.108.239.207/sinema/index.m3u8
-#EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SİNEMA >Ace
-http://88.99.165.164:6878/ace/getstream?id=6c39acff088fd7f2fc692363b2351b52fd00c91a&pid=22858&.m3u8
-#EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SİNEMA2 >Ace
-http://88.99.165.164:6878/ace/getstream?id=2dc3399e0a3838c8dae8d5ee6f70c3314708ae0d&pid=11022
+#EXTINF:-1 tvg-id="fx" tvg-logo="https://img.dsmartgo.com.tr/content/w/Uq/16203/Thumbnail.png" tvg-name="Fx" group-title="Sinema Kanalları",Fx
+http://88.99.165.164:6878/ace/getstream?id=ba95d17dc4f2c6710a5f42837f0fbbc023f710d2&pid=29103
+#EXTINF:-1 tvg-id="1" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/22c5fe05-d70b-4c68-98fb-03bae4870e81.png" group-title="Sinema ve Dizi",Sinema Tv
+http://88.99.165.164:6878/ace/getstream?id=6c39acff088fd7f2fc692363b2351b52fd00c91a&pid=29465
+#EXTINF:-1 tvg-id="1" tvg-logo="https://itv224226.tmp.tivibu.com.tr:6430/images/poster/20250801839032.png" group-title="Sinema ve Dizi",Sinema Tv 2
+http://88.99.165.164:6878/ace/getstream?id=2dc3399e0a3838c8dae8d5ee6f70c3314708ae0d&pid=23918
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SineAİLE >Ace
 http://88.99.165.164:6878/ace/getstream?id=a75529b440194d667d8c94d1133a920faebad8e5&pid=13808
-#EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SINEMA AKSIYON >Ace
+#EXTINF:-1 tvg-id="2" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/bd434731-0e47-4a37-997e-49f71340fcc6.png" group-title="Sinema ve Dizi",Sinema Aksiyon
 http://88.99.165.164:6878/ace/getstream?id=2577a5ee5869ddf84d90ca20e9772a9643fd6488&pid=49773
+http://127.0.0.1:6878/ace/getstream?id=2577a5ee5869ddf84d90ca20e9772a9643fd6488&pid=46088
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SINEMA KOMEDI >Ace
 http://88.99.165.164:6878/ace/getstream?id=9ae2993008d4b54d783a8bd8af35a99a7a4b09c3&pid=37501
 #EXTINF:-1 group-title="⚡Sinema>CANLI",🇹🇷SINEMATV 1001 >Ace
