@@ -1,4 +1,4 @@
-name: YouTube Canlı Yayın Güncelle
+name: YouTube Video Listesi Güncelle
 
 on:
   schedule:
@@ -11,31 +11,37 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
     steps:
       - name: 📥 Repo'yu klonla
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Tüm geçmişi al
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🐍 Python kur
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 📺 YouTube canlı yayınları güncelle
+      - name: 📺 Listeyi güncelle
         run: python update_youtube.py
 
-      # ⚠️ Hem youtube2.txt hem youtube.json commit edilir
-      - name: 💾 Değişiklikleri kaydet
+      # ⚠️ PUSH'TAN ÖNCE PULL YAP
+      - name: 🔄 Uzak değişiklikleri çek
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add youtube2.txt youtube.json
+          git pull --rebase origin main
+
+      - name: 💾 Değişiklikleri kaydet
+        run: |
+          git add youtube2.txt
           git diff --quiet && git diff --staged --quiet || (
-            git commit -m "🔄 YouTube canlı yayınlar güncellendi [$(date +'%Y-%m-%d %H:%M')]"
-            git push
+            git commit -m "🔄 YouTube listesi güncellendi [$(date +'%Y-%m-%d %H:%M')]"
+            git push origin main
           )
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
