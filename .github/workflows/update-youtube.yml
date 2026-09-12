@@ -30,7 +30,7 @@ jobs:
           python-version: '3.11'
 
       - name: 📺 YouTube canlı yayınları güncelle
-        run: python scripts/update_youtube.py
+        run: python update_youtube.py
 
       - name: 💾 Değişiklikleri kaydet
         run: |
