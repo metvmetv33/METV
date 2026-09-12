@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-YouTube Canlı Yayın Güncelleyici (youtube2.txt Çıktılı)
-- youtube.json'daki channel ID'lerini kullanır
-- Her kanal için canlı yayın video ID'sini bulur
-- youtube2.txt'ye embed URL formatında yazar
-- Android uygulaması youtube2.txt'yi okur (kod değişmez)
+YouTube Video Listesi Güncelleyici → youtube2.txt
+
+Ne yapar?
+1. youtube.json'dan kanal ID'lerini okur (canlı yayınlar)
+2. youtube_videos.txt'den sabit video ID'lerini okur (normal videolar)
+3. İkisini birleştirip youtube2.txt'ye yazar
+
+Çıktı: youtube2.txt (Android bunu okur)
 """
 
 import json
@@ -17,10 +20,11 @@ from pathlib import Path
 # ── Sabitler ────────────────────────────────────────────
 WORKSPACE = os.environ.get("GITHUB_WORKSPACE", ".")
 
-# Girdi: channel ID listesi (JSON)
-JSON_FILE = Path(WORKSPACE) / "youtube.json"
+# Girdi dosyaları
+JSON_FILE = Path(WORKSPACE) / "youtube.json"           # Canlı yayın kanalları
+VIDEOS_FILE = Path(WORKSPACE) / "youtube_videos.txt"   # Sabit videolar
 
-# Çıktı: Android'in okuduğu txt dosyası
+# Çıktı
 OUTPUT_FILE = Path(WORKSPACE) / "youtube2.txt"
 
 USER_AGENT = (
@@ -51,84 +55,111 @@ def fetch_live_video_id(channel_id):
             r'<link rel="canonical" href="https://www\.youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})"',
             r'<meta property="og:url" content="https://www\.youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})"',
             r'"videoId":"([a-zA-Z0-9_-]{11})"',
-            r'watch\?v=([a-zA-Z0-9_-]{11})',
         ]
 
         for pattern in patterns:
             match = re.search(pattern, html)
             if match:
                 return match.group(1)
-
         return None
     except Exception as e:
-        print(f"  ⚠️  Kanal hatası: {e}")
+        print(f"  ⚠️  {e}")
         return None
 
 
 def main():
     print("=" * 70)
-    print("📺 YouTube Canlı Yayın Güncelleyici → youtube2.txt")
+    print("📺 YouTube Video Listesi Güncelleyici → youtube2.txt")
     print("=" * 70)
     print(f"📁 Workspace: {WORKSPACE}")
-    print(f"📄 Girdi (JSON): {JSON_FILE}")
-    print(f"📄 Çıktı (TXT):  {OUTPUT_FILE}")
+    print(f"📄 JSON (canlı): {JSON_FILE} (var: {JSON_FILE.exists()})")
+    print(f"📄 TXT (sabit): {VIDEOS_FILE} (var: {VIDEOS_FILE.exists()})")
+    print(f"📄 Çıktı: {OUTPUT_FILE}")
     print()
 
-    # 1. JSON'u oku
-    if not JSON_FILE.exists():
-        print(f"❌ HATA: {JSON_FILE} bulunamadı!")
-        return
+    embed_urls = []
+    live_count = 0
+    fixed_count = 0
 
-    with open(JSON_FILE, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    # ── 1. Canlı yayınlar (youtube.json)
+    if JSON_FILE.exists():
+        print("📡 Canlı yayınlar okunuyor...")
+        with open(JSON_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
-    channels = data.get("channels", [])
-    print(f"📋 Toplam kanal: {len(channels)}\n")
+        channels = data.get("channels", [])
+        print(f"  📋 {len(channels)} kanal\n")
 
-    # 2. Her kanal için video ID bul
-    video_urls = []
-    success_count = 0
+        for i, channel in enumerate(channels, 1):
+            channel_id = channel.get("channelId", "")
+            name = channel.get("name", "?")
 
-    for i, channel in enumerate(channels, 1):
-        channel_id = channel.get("channelId", "")
-        name = channel.get("name", "?")
+            print(f"[Canlı {i}/{len(channels)}] {name}")
 
-        print(f"[{i}/{len(channels)}] {name}")
-        print(f"  🔗 Channel ID: {channel_id}")
+            if not channel_id:
+                print(f"  ⏭️  Atlandı")
+                continue
 
-        if not channel_id:
-            print(f"  ⏭️  Atlandı (Channel ID yok)")
-            continue
+            video_id = fetch_live_video_id(channel_id)
 
-        video_id = fetch_live_video_id(channel_id)
+            if video_id:
+                embed_url = f"https://www.youtube-nocookie.com/embed/{video_id}"
+                embed_urls.append(embed_url)
+                live_count += 1
+                print(f"  ✅ {embed_url}")
+            else:
+                print(f"  ❌ Canlı yayın bulunamadı")
+    else:
+        print(f"⚠️  {JSON_FILE} bulunamadı, canlı yayınlar atlanıyor")
 
-        if not video_id:
-            print(f"  ❌ Canlı yayın bulunamadı")
-            continue
+    print()
 
-        embed_url = f"https://www.youtube-nocookie.com/embed/{video_id}"
-        video_urls.append(embed_url)
-        success_count += 1
-        print(f"  ✅ {embed_url}")
+    # ── 2. Sabit videolar (youtube_videos.txt)
+    if VIDEOS_FILE.exists():
+        print("📡 Sabit videolar okunuyor...")
+        with open(VIDEOS_FILE, "r", encoding="utf-8") as f:
+            video_ids = [
+                line.strip() for line in f
+                if line.strip() and not line.startswith("#")
+            ]
 
-    # 3. youtube2.txt'ye yaz (Android bunu okur)
+        print(f"  📋 {len(video_ids)} video ID\n")
+
+        for i, video_id in enumerate(video_ids, 1):
+            # Zaten embed URL mi kontrol et
+            if video_id.startswith("http"):
+                if "/embed/" in video_id:
+                    video_id = video_id.split("/embed/")[-1].split("?")[0].strip()
+                else:
+                    continue
+
+            embed_url = f"https://www.youtube-nocookie.com/embed/{video_id}"
+
+            # Tekrar kontrolü
+            if embed_url not in embed_urls:
+                embed_urls.append(embed_url)
+                fixed_count += 1
+                print(f"  ✅ [{i}] {embed_url}")
+            else:
+                print(f"  ⏭️  [{i}] Tekrar, atlandı: {video_id}")
+    else:
+        print(f"⚠️  {VIDEOS_FILE} bulunamadı, sabit videolar atlanıyor")
+
+    # ── 3. youtube2.txt'ye yaz
+    print()
+    print(f"💾 {len(embed_urls)} URL youtube2.txt'ye yazılıyor...")
+
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        for url in video_urls:
+        for url in embed_urls:
             f.write(f"{url}\n")
-
-    # 4. JSON'a meta bilgileri de ekle (isteğe bağlı)
-    data["success"] = True
-    data["count"] = success_count
-    data["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    data["source"] = "github-actions"
-
-    with open(JSON_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
 
     print()
     print("=" * 70)
-    print(f"✅ {success_count}/{len(channels)} kanal canlı yayında")
+    print(f"✅ Canlı yayınlar: {live_count}")
+    print(f"✅ Sabit videolar: {fixed_count}")
+    print(f"📊 TOPLAM: {len(embed_urls)}")
     print(f"💾 Kaydedildi: {OUTPUT_FILE}")
+    print(f"📅 Tarih: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}")
     print("=" * 70)
 
 
