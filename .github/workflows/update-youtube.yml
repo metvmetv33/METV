@@ -1,14 +1,9 @@
 name: YouTube Canlı Yayın Güncelle
 
 on:
-  # Her 30 dakikada bir çalış
   schedule:
     - cron: '*/30 * * * *'
-
-  # Manuel tetikleme
   workflow_dispatch:
-
-  # youtube.json değiştiğinde
   push:
     paths:
       - 'youtube.json'
@@ -32,11 +27,12 @@ jobs:
       - name: 📺 YouTube canlı yayınları güncelle
         run: python update_youtube.py
 
+      # ⚠️ Hem youtube2.txt hem youtube.json commit edilir
       - name: 💾 Değişiklikleri kaydet
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add youtube.json
+          git add youtube2.txt youtube.json
           git diff --quiet && git diff --staged --quiet || (
             git commit -m "🔄 YouTube canlı yayınlar güncellendi [$(date +'%Y-%m-%d %H:%M')]"
             git push
