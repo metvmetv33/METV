@@ -18,7 +18,7 @@ jobs:
       - name: 📥 Repo'yu klonla
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Tüm geçmişi al
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🐍 Python kur
@@ -29,19 +29,32 @@ jobs:
       - name: 📺 Listeyi güncelle
         run: python update_youtube.py
 
-      # ⚠️ PUSH'TAN ÖNCE PULL YAP
-      - name: 🔄 Uzak değişiklikleri çek
+      # ⚠️ SIRA ÖNEMLİ: Önce commit, sonra pull, sonra push
+      - name: 💾 Değişiklikleri kaydet ve gönder
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
 
-      - name: 💾 Değişiklikleri kaydet
-        run: |
+          # 1. Değişiklikleri stage'e ekle
           git add youtube2.txt
-          git diff --quiet && git diff --staged --quiet || (
-            git commit -m "🔄 YouTube listesi güncellendi [$(date +'%Y-%m-%d %H:%M')]"
-            git push origin main
-          )
+
+          # 2. Değişiklik yoksa çık
+          if git diff --staged --quiet; then
+            echo "Değişiklik yok, çıkılıyor."
+            exit 0
+          fi
+
+          # 3. Commit et
+          git commit -m "🔄 YouTube listesi güncellendi [$(date +'%Y-%m-%d %H:%M')]"
+
+          # 4. Uzak değişiklikleri çek (rebase ile)
+          git pull --rebase origin main || {
+            echo "Pull başarısız, çakışma çözülüyor..."
+            git rebase --abort || true
+            git pull origin main --no-rebase || true
+          }
+
+          # 5. Push et
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
