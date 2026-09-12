@@ -1,17 +1,54 @@
 {
   "success": true,
   "count": 9,
-  "updated_at": "2026-09-12T00:00:00Z",
+  "updated_at": "2026-09-12T01:49:37Z",
   "channels": [
-    { "channelId": "UCV6zcRug6Hqp1UX_FdyUeBg", "name": "CNN Türk",     "order": 1 },
-    { "channelId": "UCn6dNfiRE_Xunu7iMyvD7AA", "name": "Habertürk TV", "order": 2 },
-    { "channelId": "UCtc-a9ZUIg0_5HpsPxEO7Qg", "name": "Haber Global", "order": 3 },
-    { "channelId": "UCf_ResXZzE-o18zACUEmyvQ", "name": "Halk TV",      "order": 4 },
-    { "channelId": "UC37WTuXZpKmNBgOnaTVql2w", "name": "Ülke TV",      "order": 5 },
-    { "channelId": "UC6T0L26KS1NHMPbTwI1L4Eg", "name": "Ulusal Kanal", "order": 6 },
-    { "channelId": "UC9TDTjbOjFB9jADmPhSAPsw", "name": "NTV",          "order": 7 },
-    { "channelId": "UCvFudBDDILdDljN4VIZ4Msw", "name": "TRT 1",        "order": 8 },
-    { "channelId": "UCnowC2m_NjWexnSRvMMYxSg", "name": "Star TV",      "order": 9 }
+    {
+      "channelId": "UCV6zcRug6Hqp1UX_FdyUeBg",
+      "name": "CNN Türk",
+      "order": 1
+    },
+    {
+      "channelId": "UCn6dNfiRE_Xunu7iMyvD7AA",
+      "name": "Habertürk TV",
+      "order": 2
+    },
+    {
+      "channelId": "UCtc-a9ZUIg0_5HpsPxEO7Qg",
+      "name": "Haber Global",
+      "order": 3
+    },
+    {
+      "channelId": "UCf_ResXZzE-o18zACUEmyvQ",
+      "name": "Halk TV",
+      "order": 4
+    },
+    {
+      "channelId": "UC37WTuXZpKmNBgOnaTVql2w",
+      "name": "Ülke TV",
+      "order": 5
+    },
+    {
+      "channelId": "UC6T0L26KS1NHMPbTwI1L4Eg",
+      "name": "Ulusal Kanal",
+      "order": 6
+    },
+    {
+      "channelId": "UC9TDTjbOjFB9jADmPhSAPsw",
+      "name": "NTV",
+      "order": 7
+    },
+    {
+      "channelId": "UCvFudBDDILdDljN4VIZ4Msw",
+      "name": "TRT 1",
+      "order": 8
+    },
+    {
+      "channelId": "UCnowC2m_NjWexnSRvMMYxSg",
+      "name": "Star TV",
+      "order": 9
+    }
   ],
-  "videos": []
+  "videos": [],
+  "source": "github-actions"
 }
