@@ -1,79 +1,364 @@
 {
   "success": true,
-  "count": 67,
-  "updated_at": "2026-09-12T00:00:00Z",
+  "count": 70,
+  "updated_at": "2026-09-12T02:25:47Z",
   "channels": [
-    { "channelId": "UCV6zcRug6Hqp1UX_FdyUeBg", "name": "CNN Türk", "order": 1 },
-    { "channelId": "UCn6dNfiRE_Xunu7iMyvD7AA", "name": "Habertürk TV", "order": 2 },
-    { "channelId": "UCtc-a9ZUIg0_5HpsPxEO7Qg", "name": "Haber Global", "order": 3 },
-    { "channelId": "UCf_ResXZzE-o18zACUEmyvQ", "name": "Halk TV", "order": 4 },
-    { "channelId": "UC37WTuXZpKmNBgOnaTVql2w", "name": "Ülke TV", "order": 5 },
-    { "channelId": "UC6T0L26KS1NHMPbTwI1L4Eg", "name": "Ulusal Kanal", "order": 6 },
-    { "channelId": "UC9TDTjbOjFB9jADmPhSAPsw", "name": "NTV", "order": 7 },
-    { "channelId": "UCvFudBDDILdDljN4VIZ4Msw", "name": "TRT 1", "order": 8 },
-    { "channelId": "UCnowC2m_NjWexnSRvMMYxSg", "name": "Star TV", "order": 9 },
-    { "channelId": "UCOulx_rep5O4i9y6AyDqVvw", "name": "Sözcü TV", "order": 10 },
-    { "channelId": "UCKQhfw-lzz0uKnE1fY1PsAA", "name": "A Haber", "order": 11 },
-    { "channelId": "UCJElRTCNEmLemgirqvsW63Q", "name": "A Spor", "order": 12 },
-    { "channelId": "UCNcexIxh3KbJUQYeh9FeSUA", "name": "A2 TV", "order": 13 },
-    { "channelId": "UCi65FGbYYj-OzJm2luB_fNQ", "name": "Ülke TV (2)", "order": 14 },
-    { "channelId": "UCaO-M1dXacMwtyg0Pvovk4w", "name": "CBC-e TV", "order": 15 },
-    { "channelId": "UC8rh34IlJTN0lDZlTwzWzjg", "name": "TV Net", "order": 16 },
-    { "channelId": "UCVKWwHoLwUMMa80cu_1uapA", "name": "KRT TV", "order": 17 },
-    { "channelId": "UCNcjCb2RnA3eMMhTZSxZu3A", "name": "Flash Haber", "order": 18 },
-    { "channelId": "UCN7VYCsI4Lx1-J4_BtjoWUA", "name": "24 TV", "order": 19 },
-    { "channelId": "UCApLxl6oYQafxvykuoC2uxQ", "name": "Bloomberg HT", "order": 20 },
-    { "channelId": "UCBgTP2LOFVPmq15W-RH-WXA", "name": "TRT Haber", "order": 21 },
-    { "channelId": "UC3d1AdmvAP6Jq16-WpD086g", "name": "Diyanet TV", "order": 22 },
-    { "channelId": "UCJ5bBXls09z7Cjwg-qBzAZQ", "name": "Aşk-ı Neva", "order": 23 },
-    { "channelId": "UCmMPdW0rtbEI_XyIsMlMnqg", "name": "Vav TV", "order": 24 },
-    { "channelId": "UCy4NY-cswicIclx2XKqe5Kg", "name": "Semerkand TV", "order": 25 },
-    { "channelId": "UCPe9vNjHF1kEExT5kHwc7aw", "name": "beIN Sports Haber", "order": 26 },
-    { "channelId": "UCK3mI2lsk3LSo8PBUc8JTSw", "name": "HT Spor", "order": 27 },
-    { "channelId": "UCNLO4lpteIloZ4IKb9L2DoA", "name": "TJK TV", "order": 28 },
-    { "channelId": "UCjkRA7KEdp7PDKDUs396XHg", "name": "TAY TV", "order": 29 },
-    { "channelId": "UCndsdUW_oPLqpQJY9J8oIRg", "name": "TV100", "order": 30 },
-    { "channelId": "UCzgrZ-CndOoylh2_e72nSBQ", "name": "TGRT Haber", "order": 31 },
-    { "channelId": "UCbaLyHJp6S9Lsj6oT9aJsQw", "name": "Akit TV", "order": 32 },
-    { "channelId": "UC9iNphB47yGrxMgFd2uVHXQ", "name": "Medya Haber", "order": 33 },
-    { "channelId": "UChNgvcVZ_ggDdZ0zCcuuzFw", "name": "Bengü Türk", "order": 34 },
-    { "channelId": "UCIHMK8qtjB_GNuXmeex6i8g", "name": "Bizimev TV", "order": 35 },
-    { "channelId": "UCUALYmnkEmx8vlxIbpr2gmw", "name": "Yeşilçam Arzu Film", "order": 36 },
-    { "channelId": "UCHumSHRFQ8skiHTY75sxytQ", "name": "Kemal Sunal Gülşah Film", "order": 37 },
-    { "channelId": "UCoIUysIrvGxoDw-GkdOGjRw", "name": "Yeşilçam Eski Türk Filmleri", "order": 38 },
-    { "channelId": "UCmw7e_6j2TSWCKeaZALjyuA", "name": "Zeki & Metin Filmleri", "order": 39 },
-    { "channelId": "UC0LzwfdVoZSQDtauDjJS8_A", "name": "Aksiyon Filmleri", "order": 40 },
-    { "channelId": "UCUd3o920A_ijCRaTRRg8LSg", "name": "İbrahim Tatlıses Filmleri", "order": 41 },
-    { "channelId": "UCCfTktnzWK__FUN4gj0zIpA", "name": "Diyanet Çocuk", "order": 42 },
-    { "channelId": "UCrFf5dtMe6M1XJHqbKJ4X6Q", "name": "TRT Çocuk", "order": 43 },
-    { "channelId": "UC0GKelxahF1nHwKyGhfJVYA", "name": "Kanal 1", "order": 44 },
-    { "channelId": "UCYWwhdgFmZR0uWwaS-GURyg", "name": "Kanal 2", "order": 45 },
-    { "channelId": "UC7X6WuvzdVTFtAAAly9ldcw", "name": "Kanal 3", "order": 46 },
-    { "channelId": "UCHFxijaEOik8V6iH4rWoAYg", "name": "Kanal 4", "order": 47 },
-    { "channelId": "UCT-esPYdSgROctgOKnJ0AjA", "name": "Kanal 5", "order": 48 },
-    { "channelId": "UCiT-eroqDoA3zct3OkzhEPA", "name": "Kanal 6", "order": 49 },
-    { "channelId": "UCYRPB4TbD2RYHlIQdLgEeYA", "name": "Kanal 7", "order": 50 },
-    { "channelId": "UCPUpDCqAbk0F7_occqwOBTA", "name": "Kanal 8", "order": 51 },
-    { "channelId": "UCABzirZ6FyebIf8YSptKMwQ", "name": "Kanal 9", "order": 52 },
-    { "channelId": "UCz1UfNp9VFp9R1HEFn5PY5A", "name": "Kanal 10", "order": 53 },
-    { "channelId": "UCrr2fV8yd6r8k-FZKGxDr9Q", "name": "Kanal 11", "order": 54 },
-    { "channelId": "UCoHnRpOS5rL62jTmSDO5Npw", "name": "Tele1", "order": 55 },
-    { "channelId": "UCxUf5m7XNQCjlbxr-FSPIeA", "name": "Kanal 12", "order": 56 },
-    { "channelId": "UCccxXUKSuqOrlWQxweZBAQw", "name": "Ekol TV", "order": 57 },
-    { "channelId": "UCNopxUNUMinlK3ybMGlpbGQ", "name": "Kanal 13", "order": 58 },
-    { "channelId": "UChb7kIKlWiDCfwXg4LSMCjg", "name": "Kanal 14", "order": 59 },
-    { "channelId": "UCulg-mlXf314L1pemPqCVng", "name": "Kemal Sunal Film Atölyesi", "order": 60 },
-    { "channelId": "UCAJcU9SesgVqsJ8M0l7zYrA", "name": "Kanal 15", "order": 61 },
-    { "channelId": "UCGCCfusnBQgISBBYyB56Fkw", "name": "Kanal 16", "order": 62 },
-    { "channelId": "UC2Zgju5LSmKlDjjVwE3EhAA", "name": "Kanal 17", "order": 63 },
-    { "channelId": "UCsbpTjR1Vh0L3gvBg9d0Dbg", "name": "Korku Film 7/24", "order": 64 },
-    { "channelId": "UCEAW_kmPVjxTC50vuLyKOQA", "name": "Kral Pop TV", "order": 65 },
-    { "channelId": "UC9JMe_We017gYrRc7kZHgmg", "name": "Showmax", "order": 66 },
-    { "channelId": "UC9X88P0O8YaX1nWwIFPoamw", "name": "Minika GO", "order": 67 },
-    { "channelId": "UCKFIi1uWM9BCMb7O_GyvBsQ", "name": "Niloya TV", "order": 68 },
-    { "channelId": "UCszsA51c09o4B1mZ7kBjcMg", "name": "Enstrümantal Fon Müzikleri", "order": 69 },
-    { "channelId": "UCzrGg6iyRDuUSnO0cQ5oLcA", "name": "A Para", "order": 70 },
-    { "channelId": "UCYZXUIM5dPrCCZVZ8-OEmfg", "name": "Radyo Gol 7/24", "order": 71 }
+    {
+      "channelId": "UCV6zcRug6Hqp1UX_FdyUeBg",
+      "name": "CNN Türk",
+      "order": 1
+    },
+    {
+      "channelId": "UCn6dNfiRE_Xunu7iMyvD7AA",
+      "name": "Habertürk TV",
+      "order": 2
+    },
+    {
+      "channelId": "UCtc-a9ZUIg0_5HpsPxEO7Qg",
+      "name": "Haber Global",
+      "order": 3
+    },
+    {
+      "channelId": "UCf_ResXZzE-o18zACUEmyvQ",
+      "name": "Halk TV",
+      "order": 4
+    },
+    {
+      "channelId": "UC37WTuXZpKmNBgOnaTVql2w",
+      "name": "Ülke TV",
+      "order": 5
+    },
+    {
+      "channelId": "UC6T0L26KS1NHMPbTwI1L4Eg",
+      "name": "Ulusal Kanal",
+      "order": 6
+    },
+    {
+      "channelId": "UC9TDTjbOjFB9jADmPhSAPsw",
+      "name": "NTV",
+      "order": 7
+    },
+    {
+      "channelId": "UCvFudBDDILdDljN4VIZ4Msw",
+      "name": "TRT 1",
+      "order": 8
+    },
+    {
+      "channelId": "UCnowC2m_NjWexnSRvMMYxSg",
+      "name": "Star TV",
+      "order": 9
+    },
+    {
+      "channelId": "UCOulx_rep5O4i9y6AyDqVvw",
+      "name": "Sözcü TV",
+      "order": 10
+    },
+    {
+      "channelId": "UCKQhfw-lzz0uKnE1fY1PsAA",
+      "name": "A Haber",
+      "order": 11
+    },
+    {
+      "channelId": "UCJElRTCNEmLemgirqvsW63Q",
+      "name": "A Spor",
+      "order": 12
+    },
+    {
+      "channelId": "UCNcexIxh3KbJUQYeh9FeSUA",
+      "name": "A2 TV",
+      "order": 13
+    },
+    {
+      "channelId": "UCi65FGbYYj-OzJm2luB_fNQ",
+      "name": "Ülke TV (2)",
+      "order": 14
+    },
+    {
+      "channelId": "UCaO-M1dXacMwtyg0Pvovk4w",
+      "name": "CBC-e TV",
+      "order": 15
+    },
+    {
+      "channelId": "UC8rh34IlJTN0lDZlTwzWzjg",
+      "name": "TV Net",
+      "order": 16
+    },
+    {
+      "channelId": "UCVKWwHoLwUMMa80cu_1uapA",
+      "name": "KRT TV",
+      "order": 17
+    },
+    {
+      "channelId": "UCNcjCb2RnA3eMMhTZSxZu3A",
+      "name": "Flash Haber",
+      "order": 18
+    },
+    {
+      "channelId": "UCN7VYCsI4Lx1-J4_BtjoWUA",
+      "name": "24 TV",
+      "order": 19
+    },
+    {
+      "channelId": "UCApLxl6oYQafxvykuoC2uxQ",
+      "name": "Bloomberg HT",
+      "order": 20
+    },
+    {
+      "channelId": "UCBgTP2LOFVPmq15W-RH-WXA",
+      "name": "TRT Haber",
+      "order": 21
+    },
+    {
+      "channelId": "UC3d1AdmvAP6Jq16-WpD086g",
+      "name": "Diyanet TV",
+      "order": 22
+    },
+    {
+      "channelId": "UCJ5bBXls09z7Cjwg-qBzAZQ",
+      "name": "Aşk-ı Neva",
+      "order": 23
+    },
+    {
+      "channelId": "UCmMPdW0rtbEI_XyIsMlMnqg",
+      "name": "Vav TV",
+      "order": 24
+    },
+    {
+      "channelId": "UCy4NY-cswicIclx2XKqe5Kg",
+      "name": "Semerkand TV",
+      "order": 25
+    },
+    {
+      "channelId": "UCPe9vNjHF1kEExT5kHwc7aw",
+      "name": "beIN Sports Haber",
+      "order": 26
+    },
+    {
+      "channelId": "UCK3mI2lsk3LSo8PBUc8JTSw",
+      "name": "HT Spor",
+      "order": 27
+    },
+    {
+      "channelId": "UCNLO4lpteIloZ4IKb9L2DoA",
+      "name": "TJK TV",
+      "order": 28
+    },
+    {
+      "channelId": "UCjkRA7KEdp7PDKDUs396XHg",
+      "name": "TAY TV",
+      "order": 29
+    },
+    {
+      "channelId": "UCndsdUW_oPLqpQJY9J8oIRg",
+      "name": "TV100",
+      "order": 30
+    },
+    {
+      "channelId": "UCzgrZ-CndOoylh2_e72nSBQ",
+      "name": "TGRT Haber",
+      "order": 31
+    },
+    {
+      "channelId": "UCbaLyHJp6S9Lsj6oT9aJsQw",
+      "name": "Akit TV",
+      "order": 32
+    },
+    {
+      "channelId": "UC9iNphB47yGrxMgFd2uVHXQ",
+      "name": "Medya Haber",
+      "order": 33
+    },
+    {
+      "channelId": "UChNgvcVZ_ggDdZ0zCcuuzFw",
+      "name": "Bengü Türk",
+      "order": 34
+    },
+    {
+      "channelId": "UCIHMK8qtjB_GNuXmeex6i8g",
+      "name": "Bizimev TV",
+      "order": 35
+    },
+    {
+      "channelId": "UCUALYmnkEmx8vlxIbpr2gmw",
+      "name": "Yeşilçam Arzu Film",
+      "order": 36
+    },
+    {
+      "channelId": "UCHumSHRFQ8skiHTY75sxytQ",
+      "name": "Kemal Sunal Gülşah Film",
+      "order": 37
+    },
+    {
+      "channelId": "UCoIUysIrvGxoDw-GkdOGjRw",
+      "name": "Yeşilçam Eski Türk Filmleri",
+      "order": 38
+    },
+    {
+      "channelId": "UCmw7e_6j2TSWCKeaZALjyuA",
+      "name": "Zeki & Metin Filmleri",
+      "order": 39
+    },
+    {
+      "channelId": "UC0LzwfdVoZSQDtauDjJS8_A",
+      "name": "Aksiyon Filmleri",
+      "order": 40
+    },
+    {
+      "channelId": "UCUd3o920A_ijCRaTRRg8LSg",
+      "name": "İbrahim Tatlıses Filmleri",
+      "order": 41
+    },
+    {
+      "channelId": "UCCfTktnzWK__FUN4gj0zIpA",
+      "name": "Diyanet Çocuk",
+      "order": 42
+    },
+    {
+      "channelId": "UCrFf5dtMe6M1XJHqbKJ4X6Q",
+      "name": "TRT Çocuk",
+      "order": 43
+    },
+    {
+      "channelId": "UC0GKelxahF1nHwKyGhfJVYA",
+      "name": "Kanal 1",
+      "order": 44
+    },
+    {
+      "channelId": "UCYWwhdgFmZR0uWwaS-GURyg",
+      "name": "Kanal 2",
+      "order": 45
+    },
+    {
+      "channelId": "UC7X6WuvzdVTFtAAAly9ldcw",
+      "name": "Kanal 3",
+      "order": 46
+    },
+    {
+      "channelId": "UCHFxijaEOik8V6iH4rWoAYg",
+      "name": "Kanal 4",
+      "order": 47
+    },
+    {
+      "channelId": "UCT-esPYdSgROctgOKnJ0AjA",
+      "name": "Kanal 5",
+      "order": 48
+    },
+    {
+      "channelId": "UCiT-eroqDoA3zct3OkzhEPA",
+      "name": "Kanal 6",
+      "order": 49
+    },
+    {
+      "channelId": "UCYRPB4TbD2RYHlIQdLgEeYA",
+      "name": "Kanal 7",
+      "order": 50
+    },
+    {
+      "channelId": "UCPUpDCqAbk0F7_occqwOBTA",
+      "name": "Kanal 8",
+      "order": 51
+    },
+    {
+      "channelId": "UCABzirZ6FyebIf8YSptKMwQ",
+      "name": "Kanal 9",
+      "order": 52
+    },
+    {
+      "channelId": "UCz1UfNp9VFp9R1HEFn5PY5A",
+      "name": "Kanal 10",
+      "order": 53
+    },
+    {
+      "channelId": "UCrr2fV8yd6r8k-FZKGxDr9Q",
+      "name": "Kanal 11",
+      "order": 54
+    },
+    {
+      "channelId": "UCoHnRpOS5rL62jTmSDO5Npw",
+      "name": "Tele1",
+      "order": 55
+    },
+    {
+      "channelId": "UCxUf5m7XNQCjlbxr-FSPIeA",
+      "name": "Kanal 12",
+      "order": 56
+    },
+    {
+      "channelId": "UCccxXUKSuqOrlWQxweZBAQw",
+      "name": "Ekol TV",
+      "order": 57
+    },
+    {
+      "channelId": "UCNopxUNUMinlK3ybMGlpbGQ",
+      "name": "Kanal 13",
+      "order": 58
+    },
+    {
+      "channelId": "UChb7kIKlWiDCfwXg4LSMCjg",
+      "name": "Kanal 14",
+      "order": 59
+    },
+    {
+      "channelId": "UCulg-mlXf314L1pemPqCVng",
+      "name": "Kemal Sunal Film Atölyesi",
+      "order": 60
+    },
+    {
+      "channelId": "UCAJcU9SesgVqsJ8M0l7zYrA",
+      "name": "Kanal 15",
+      "order": 61
+    },
+    {
+      "channelId": "UCGCCfusnBQgISBBYyB56Fkw",
+      "name": "Kanal 16",
+      "order": 62
+    },
+    {
+      "channelId": "UC2Zgju5LSmKlDjjVwE3EhAA",
+      "name": "Kanal 17",
+      "order": 63
+    },
+    {
+      "channelId": "UCsbpTjR1Vh0L3gvBg9d0Dbg",
+      "name": "Korku Film 7/24",
+      "order": 64
+    },
+    {
+      "channelId": "UCEAW_kmPVjxTC50vuLyKOQA",
+      "name": "Kral Pop TV",
+      "order": 65
+    },
+    {
+      "channelId": "UC9JMe_We017gYrRc7kZHgmg",
+      "name": "Showmax",
+      "order": 66
+    },
+    {
+      "channelId": "UC9X88P0O8YaX1nWwIFPoamw",
+      "name": "Minika GO",
+      "order": 67
+    },
+    {
+      "channelId": "UCKFIi1uWM9BCMb7O_GyvBsQ",
+      "name": "Niloya TV",
+      "order": 68
+    },
+    {
+      "channelId": "UCszsA51c09o4B1mZ7kBjcMg",
+      "name": "Enstrümantal Fon Müzikleri",
+      "order": 69
+    },
+    {
+      "channelId": "UCzrGg6iyRDuUSnO0cQ5oLcA",
+      "name": "A Para",
+      "order": 70
+    },
+    {
+      "channelId": "UCYZXUIM5dPrCCZVZ8-OEmfg",
+      "name": "Radyo Gol 7/24",
+      "order": 71
+    }
   ],
-  "videos": []
+  "videos": [],
+  "source": "github-actions"
 }
