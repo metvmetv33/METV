@@ -1,54 +1,71 @@
-{
-  "success": true,
-  "count": 9,
-  "updated_at": "2026-09-12T01:49:37Z",
-  "channels": [
-    {
-      "channelId": "UCV6zcRug6Hqp1UX_FdyUeBg",
-      "name": "CNN Türk",
-      "order": 1
-    },
-    {
-      "channelId": "UCn6dNfiRE_Xunu7iMyvD7AA",
-      "name": "Habertürk TV",
-      "order": 2
-    },
-    {
-      "channelId": "UCtc-a9ZUIg0_5HpsPxEO7Qg",
-      "name": "Haber Global",
-      "order": 3
-    },
-    {
-      "channelId": "UCf_ResXZzE-o18zACUEmyvQ",
-      "name": "Halk TV",
-      "order": 4
-    },
-    {
-      "channelId": "UC37WTuXZpKmNBgOnaTVql2w",
-      "name": "Ülke TV",
-      "order": 5
-    },
-    {
-      "channelId": "UC6T0L26KS1NHMPbTwI1L4Eg",
-      "name": "Ulusal Kanal",
-      "order": 6
-    },
-    {
-      "channelId": "UC9TDTjbOjFB9jADmPhSAPsw",
-      "name": "NTV",
-      "order": 7
-    },
-    {
-      "channelId": "UCvFudBDDILdDljN4VIZ4Msw",
-      "name": "TRT 1",
-      "order": 8
-    },
-    {
-      "channelId": "UCnowC2m_NjWexnSRvMMYxSg",
-      "name": "Star TV",
-      "order": 9
-    }
-  ],
-  "videos": [],
-  "source": "github-actions"
-}
+UCV6zcRug6Hqp1UX_FdyUeBg
+UCn6dNfiRE_Xunu7iMyvD7AA
+UCtc-a9ZUIg0_5HpsPxEO7Qg
+UCf_ResXZzE-o18zACUEmyvQ
+UC37WTuXZpKmNBgOnaTVql2w
+UC6T0L26KS1NHMPbTwI1L4Eg
+UC9TDTjbOjFB9jADmPhSAPsw
+UCvFudBDDILdDljN4VIZ4Msw
+UCnowC2m_NjWexnSRvMMYxSg
+UCOulx_rep5O4i9y6AyDqVvw
+UCKQhfw-lzz0uKnE1fY1PsAA
+UCJElRTCNEmLemgirqvsW63Q
+UCNcexIxh3KbJUQYeh9FeSUA
+UCi65FGbYYj-OzJm2luB_fNQ
+UCaO-M1dXacMwtyg0Pvovk4w
+UC8rh34IlJTN0lDZlTwzWzjg
+UCVKWwHoLwUMMa80cu_1uapA
+UCNcjCb2RnA3eMMhTZSxZu3A
+UCN7VYCsI4Lx1-J4_BtjoWUA
+UCApLxl6oYQafxvykuoC2uxQ
+UCBgTP2LOFVPmq15W-RH-WXA
+UC3d1AdmvAP6Jq16-WpD086g
+UCJ5bBXls09z7Cjwg-qBzAZQ
+UCmMPdW0rtbEI_XyIsMlMnqg
+UCy4NY-cswicIclx2XKqe5Kg
+UCPe9vNjHF1kEExT5kHwc7aw
+UCK3mI2lsk3LSo8PBUc8JTSw
+UCNLO4lpteIloZ4IKb9L2DoA
+UCjkRA7KEdp7PDKDUs396XHg
+UCndsdUW_oPLqpQJY9J8oIRg
+UCzgrZ-CndOoylh2_e72nSBQ
+UCbaLyHJp6S9Lsj6oT9aJsQw
+UC9iNphB47yGrxMgFd2uVHXQ
+UChNgvcVZ_ggDdZ0zCcuuzFw
+UCIHMK8qtjB_GNuXmeex6i8g
+UCUALYmnkEmx8vlxIbpr2gmw
+UCHumSHRFQ8skiHTY75sxytQ
+UCoIUysIrvGxoDw-GkdOGjRw
+UCmw7e_6j2TSWCKeaZALjyuA
+UC0LzwfdVoZSQDtauDjJS8_A
+UCUd3o920A_ijCRaTRRg8LSg
+UCCfTktnzWK__FUN4gj0zIpA
+UCrFf5dtMe6M1XJHqbKJ4X6Q
+UC0GKelxahF1nHwKyGhfJVYA
+UCYWwhdgFmZR0uWwaS-GURyg
+UC7X6WuvzdVTFtAAAly9ldcw
+UCHFxijaEOik8V6iH4rWoAYg
+UCT-esPYdSgROctgOKnJ0AjA
+UCiT-eroqDoA3zct3OkzhEPA
+UCYRPB4TbD2RYHlIQdLgEeYA
+UCPUpDCqAbk0F7_occqwOBTA
+UCABzirZ6FyebIf8YSptKMwQ
+UCz1UfNp9VFp9R1HEFn5PY5A
+UCrr2fV8yd6r8k-FZKGxDr9Q
+UCoHnRpOS5rL62jTmSDO5Npw
+UCxUf5m7XNQCjlbxr-FSPIeA
+UCccxXUKSuqOrlWQxweZBAQw
+UCNopxUNUMinlK3ybMGlpbGQ
+UChb7kIKlWiDCfwXg4LSMCjg
+UCulg-mlXf314L1pemPqCVng
+UCAJcU9SesgVqsJ8M0l7zYrA
+UCGCCfusnBQgISBBYyB56Fkw
+UC2Zgju5LSmKlDjjVwE3EhAA
+UCsbpTjR1Vh0L3gvBg9d0Dbg
+UCEAW_kmPVjxTC50vuLyKOQA
+UC9JMe_We017gYrRc7kZHgmg
+UC9X88P0O8YaX1nWwIFPoamw
+UCKFIi1uWM9BCMb7O_GyvBsQ
+UCszsA51c09o4B1mZ7kBjcMg
+UCzrGg6iyRDuUSnO0cQ5oLcA
+UCYZXUIM5dPrCCZVZ8-OEmfg
