@@ -1,9 +1,9 @@
 #EXTM3U
-#EXTINF:-1, CA Independiente - San Lorenzo
+#EXTINF:-1, CA Huracan - Racing Club
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
-#EXTINF:-1, CA Huracan - Racing Club
+#EXTINF:-1, Neftchi Fargona - Al Quwa Al Jawiya
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
@@ -11,18 +11,30 @@ https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuktivibuspor1/playlist.m3u8
+#EXTINF:-1, Al Ahli Dubai - Tractor Sazi
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor2/playlist.m3u8
 #EXTINF:-1, Torino - Roma
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukssport2/playlist.m3u8
-#EXTINF:-1, Gaziantep FK - Fenerbahçe
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukbeinsports1/playlist.m3u8
 #EXTINF:-1, Kayserispor - İstanbulspor
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuktrtspor/playlist.m3u8
+#EXTINF:-1, Gaziantep FK - Fenerbahçe
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukbeinsports1/playlist.m3u8
+#EXTINF:-1, Al Ahli - Pakhtakor
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
+#EXTINF:-1, Al Qadsiah - Al Wasl
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor2/playlist.m3u8
 #EXTINF:-1, Inter - Udinese
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
@@ -39,107 +51,87 @@ https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukbeinsports3/playlist.m3u
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukssport/playlist.m3u8
-#EXTINF:-1, Parrillas One - Pumas Honduras
+#EXTINF:-1, PR Surf - Taurinos
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/HfIqfwYHHGbVYcY3v8NymSI8TMgHHElFkIxIKrytwEI/playlist.m3u8
-#EXTINF:-1, Moca - Cibao
+https://dga1op10s1u3lea.82250d06d39d38.click/live/AiDelZJFh_0GZbQFdsMiqSukjP4KcxEF8XE73j2emBI/playlist.m3u8
+#EXTINF:-1, Step (2x2) - Arcada (2x2)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/c6ZLB9SYuNHh_c24XTDLsTn_i3C6Aed9da8Hxl17aBY/playlist.m3u8
-#EXTINF:-1, Dominguez Osos - CDC Olimpo
+https://dga1op10s1u3lea.82250d06d39d38.click/live/zA9Js7IKryFRIVXLSPa2i3LrojNM-1L7y4NF5MPS1h8/playlist.m3u8
+#EXTINF:-1, Ottimo (3x3) - Marte (3x3)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/Vpc4hV26h_WDpEXBflyO03pVTcpH2oyKDvH81sgJFqw/playlist.m3u8
-#EXTINF:-1, Guerreros de Autlan - La Tribu de Ciudad Juarez
+https://dga1op10s1u3lea.82250d06d39d38.click/live/WmE7s1jrP-_dJlw4dXM5m0QlGEqQX1g3bz-Bw0PCyWs/playlist.m3u8
+#EXTINF:-1, Whitecaps + - Sounders +
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/l81njtKFtzxPiHGLC15MXrSwBlV3QD2_Vvl312nQGAw/playlist.m3u8
-#EXTINF:-1, Hannover (Amatör) - Koln (Amatör)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/cvd8FILTPr8SLnIoOUTxwZ9NMoedg7wKHWUHKwAV6ns/playlist.m3u8
+#EXTINF:-1, Crunch - Wings
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/1714lBjKwbY4IueAIVpHN81z8xsznFQy5VigdIbxJDE/playlist.m3u8
-#EXTINF:-1, Darmstadt (Amatör) - Paderborn (Amatör)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/dCmdm586yIc2twsuFqUB7YpE2y3wmQcxL_7RAPrBkto/playlist.m3u8
+#EXTINF:-1, Haikou - Rizhao
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/pxncga1iVQojgii3CG3ubjIAmN3XLk4lhDbEjIt7wWw/playlist.m3u8
-#EXTINF:-1, Atletico San Luis (Kadınlar) - Santos Laguna (Kadınlar)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/Z9EYmw1JGjLnGmZN0qJGHZy49iZx9Zq4CWMAF_0qQ7c/playlist.m3u8
+#EXTINF:-1, Hannover (Amatör) - Mainz (Amatör)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/81KoaUefb4vDBearUyArRmdTcT18zEWzka-QjdW6-U0/playlist.m3u8
-#EXTINF:-1, Club America (Kadınlar) - Tigres de la UANL (Kadınlar)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/kUoz3syFi12llti5s0IqYv15_M7y7U7Vtko1tKHRCkk/playlist.m3u8
+#EXTINF:-1, Darmstadt (Amatör) - Hansa (Amatör)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/KBQ8ZJhe4c1qCUgIbPF-6K1yh_ubl3VWkiScW4t7E4U/playlist.m3u8
-#EXTINF:-1, Presto (2x2) - Elite (2x2)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/suV0oOBJ1LFX02PBMuh-rf9BFpbcxTgi7RoKJ7smETs/playlist.m3u8
+#EXTINF:-1, CA Independiente Siguatepeque - Juticalpa
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/iuknKXxzV2QWXBqr7qxoDAl8stDKRmyBeoXBO_o-CSY/playlist.m3u8
-#EXTINF:-1, Revolution + - United +
+https://dga1op10s1u3lea.82250d06d39d38.click/live/Jo1zcttfAoNjjBzZfGc4_j2bYdolD-TNi48jOD6rsn4/playlist.m3u8
+#EXTINF:-1, Indy + - Tulsa +
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/P87F2eyf5uATIPIjZydKtIPabJnZawA1fXDFYn-oNgk/playlist.m3u8
-#EXTINF:-1, Marathon - Club Deportivo Olimpia
+https://dga1op10s1u3lea.82250d06d39d38.click/live/sVXtsmIoOXbS-ZGMT7hFVcuyeK7C7q6o1Nt8KI3yrhs/playlist.m3u8
+#EXTINF:-1, Nazca - Cumbrecita
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/0n6XzPy16UOhWvM0BnFezpIfQ0YzLGiOa0s2DDiry2Q/playlist.m3u8
-#EXTINF:-1, Veraguas United - Alianza de Panama
+https://dga1op10s1u3lea.82250d06d39d38.click/live/Rjo386uNn-ARh037ntmFcejHJcVBfhifFK0_RL66Pu8/playlist.m3u8
+#EXTINF:-1, Denver Nuggets (Sanal) - Minnesota Timberwolves (Sanal)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/Nw8WZ3aBLzFF5HjPmsyN6SIGGbttYXvdcp5xDRWFfmE/playlist.m3u8
-#EXTINF:-1, Barracudas - Outlaws
+https://dga1op10s1u3lea.82250d06d39d38.click/live/6zU1IuWWMZ0Qh_MoQdMynbMq3HwydzAlR8hnQUvZhTXE61ESEG7L/playlist.m3u8
+#EXTINF:-1, Hapoel Tel Aviv (Sanal) - Maccabi Tel Aviv (Sanal)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/rh5BlRRc2UuMC40TVmAhk2KQuHzKKCYn-wcw2WzGpTo/playlist.m3u8
-#EXTINF:-1, Benxi - Haidong
+https://dga1op10s1u3lea.82250d06d39d38.click/live/ZnQX2e3IgVAGaVKAzPyrB1-F9d6WVMRAG5kYHsK194WoHxsGlTO_/playlist.m3u8
+#EXTINF:-1, Boston Celtics (Sanal) - Atlanta Hawks (Sanal)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/LLxenumH1FKj1IA8Ez5V3sA7iOlQIF3sEFVSNxCU5hU/playlist.m3u8
-#EXTINF:-1, Indy + - Rowdies +
+https://dga1op10s1u3lea.82250d06d39d38.click/live/kr4g9XPSaNfZxWmkMAk8UB_P44CzysfnaCGZI-qeeuJ51gKAiCQn/playlist.m3u8
+#EXTINF:-1, Nizhny Novgorod - Rostov-on-Don
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/sPRs95Dx0e5tzlffniNlTUFkRkFvobK_jIMiDxsdQR8/playlist.m3u8
-#EXTINF:-1, Stelsoff - Maras
+https://dga1op10s1u3lea.82250d06d39d38.click/live/0wP2w5rYOb8TZHLbBwEM_JWkDKkTi1wDMDLBHooseOg/playlist.m3u8
+#EXTINF:-1, Netherlands (TBL) - Portugal (TBL)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/SkCdbQC_Fr4XTOTc8k7iYBu7wSwxN8MLVzMXsr2K6gw/playlist.m3u8
-#EXTINF:-1, Los Angeles Clippers (Sanal) - Minnesota Timberwolves (Sanal)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/KgpWOqoZL3LLz-AUbAmK69EBG83Y-7QIFfY3G9XVYCE/playlist.m3u8
+#EXTINF:-1, Singapore (TBL) - Thailand (TBL)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/__WUgwmpNyKqwsbBNQ2RYEUg6zPgAIWYsdxDvpVWG22k-VV1qiEN/playlist.m3u8
-#EXTINF:-1, Dubai (Sanal) - Virtus Bologna (Sanal)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/zW655BzY02op4-_sL3-y78kzeM1EZyyySWN8J55dpeY/playlist.m3u8
+#EXTINF:-1, Virtus Bologna (Sanal) - Paris (Sanal)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/I3yEqfqaVFiFTCh25sEk7NXPgAv6V5yxpoMYcGedXRm_4L5afYvE/playlist.m3u8
-#EXTINF:-1, Krasnoyarsk - Rostov-on-Don
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/yGYUQov6pqQwdsENvl_RIz9bWgqhRQa0pSnVbonlTFQ/playlist.m3u8
-#EXTINF:-1, Detroit Pistons (Sanal) - Atlanta Hawks (Sanal)
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/fScfdBH2GIzZlLtjoqsx1jSQb-Oc9gNnAAu-RMu70_aaBQV8HInM/playlist.m3u8
-#EXTINF:-1, Italy (TBL) - Mexico (TBL)
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/HQmtRK53sSOzjvQ5l7nchOVbGm2Iv4JLhDpKKKMnpd0/playlist.m3u8
-#EXTINF:-1, Peru (TBL) - Malaysia (TBL)
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/cmoXCP321Csu5-UlO_qI8Qw4qj2pUaOO4UZy1uPgCOs/playlist.m3u8
-#EXTINF:-1, ASVEL Lyon-Villeurbanne (Sanal) - Bayern Munich (Sanal)
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/Ts3JGQjtG0hvdpF__ZP4ul7mMuiYGKRgpKgzEptmL-K-t5fVbxdJ/playlist.m3u8
+https://dga1op10s1u3lea.82250d06d39d38.click/live/LTjSZ1Ge42q9Eo1HrtOwWgXZHMCO75rgPbWXO4EF4w4YSy8OiiJg/playlist.m3u8
 #EXTINF:-1, Ilya Borisov - Alexey Strashevskiy
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/-hOzadGMkaEGFzvTTf5ftptLUO6KTqfm661KbbMwWEs/playlist.m3u8
-#EXTINF:-1, CA Independiente - San Lorenzo
+#EXTINF:-1, CA Huracan - Racing Club
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
-#EXTINF:-1, CA Huracan - Racing Club
+#EXTINF:-1, Neftchi Fargona - Al Quwa Al Jawiya
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
@@ -147,18 +139,30 @@ https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuktivibuspor1/playlist.m3u8
+#EXTINF:-1, Al Ahli Dubai - Tractor Sazi
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor2/playlist.m3u8
 #EXTINF:-1, Torino - Roma
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukssport2/playlist.m3u8
-#EXTINF:-1, Gaziantep FK - Fenerbahçe
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukbeinsports1/playlist.m3u8
 #EXTINF:-1, Kayserispor - İstanbulspor
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuktrtspor/playlist.m3u8
+#EXTINF:-1, Gaziantep FK - Fenerbahçe
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukbeinsports1/playlist.m3u8
+#EXTINF:-1, Al Ahli - Pakhtakor
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor/playlist.m3u8
+#EXTINF:-1, Al Qadsiah - Al Wasl
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3lea.82250d06d39d38.click/live/selcuksmartspor2/playlist.m3u8
 #EXTINF:-1, Inter - Udinese
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
@@ -175,70 +179,50 @@ https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukbeinsports3/playlist.m3u
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3lea.82250d06d39d38.click/live/selcukssport/playlist.m3u8
-#EXTINF:-1, Parrillas One - Pumas Honduras
+#EXTINF:-1, PR Surf - Taurinos
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/HfIqfwYHHGbVYcY3v8NymSI8TMgHHElFkIxIKrytwEI/playlist.m3u8
-#EXTINF:-1, Moca - Cibao
+https://dga1op10s1u3lea.82250d06d39d38.click/live/AiDelZJFh_0GZbQFdsMiqSukjP4KcxEF8XE73j2emBI/playlist.m3u8
+#EXTINF:-1, Step (2x2) - Arcada (2x2)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/c6ZLB9SYuNHh_c24XTDLsTn_i3C6Aed9da8Hxl17aBY/playlist.m3u8
-#EXTINF:-1, Dominguez Osos - CDC Olimpo
+https://dga1op10s1u3lea.82250d06d39d38.click/live/zA9Js7IKryFRIVXLSPa2i3LrojNM-1L7y4NF5MPS1h8/playlist.m3u8
+#EXTINF:-1, Ottimo (3x3) - Marte (3x3)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/Vpc4hV26h_WDpEXBflyO03pVTcpH2oyKDvH81sgJFqw/playlist.m3u8
-#EXTINF:-1, Guerreros de Autlan - La Tribu de Ciudad Juarez
+https://dga1op10s1u3lea.82250d06d39d38.click/live/WmE7s1jrP-_dJlw4dXM5m0QlGEqQX1g3bz-Bw0PCyWs/playlist.m3u8
+#EXTINF:-1, Whitecaps + - Sounders +
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/l81njtKFtzxPiHGLC15MXrSwBlV3QD2_Vvl312nQGAw/playlist.m3u8
-#EXTINF:-1, Hannover (Amatör) - Koln (Amatör)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/cvd8FILTPr8SLnIoOUTxwZ9NMoedg7wKHWUHKwAV6ns/playlist.m3u8
+#EXTINF:-1, Crunch - Wings
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/1714lBjKwbY4IueAIVpHN81z8xsznFQy5VigdIbxJDE/playlist.m3u8
-#EXTINF:-1, Darmstadt (Amatör) - Paderborn (Amatör)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/dCmdm586yIc2twsuFqUB7YpE2y3wmQcxL_7RAPrBkto/playlist.m3u8
+#EXTINF:-1, Haikou - Rizhao
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/pxncga1iVQojgii3CG3ubjIAmN3XLk4lhDbEjIt7wWw/playlist.m3u8
-#EXTINF:-1, Atletico San Luis (Kadınlar) - Santos Laguna (Kadınlar)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/Z9EYmw1JGjLnGmZN0qJGHZy49iZx9Zq4CWMAF_0qQ7c/playlist.m3u8
+#EXTINF:-1, Hannover (Amatör) - Mainz (Amatör)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/81KoaUefb4vDBearUyArRmdTcT18zEWzka-QjdW6-U0/playlist.m3u8
-#EXTINF:-1, Club America (Kadınlar) - Tigres de la UANL (Kadınlar)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/kUoz3syFi12llti5s0IqYv15_M7y7U7Vtko1tKHRCkk/playlist.m3u8
+#EXTINF:-1, Darmstadt (Amatör) - Hansa (Amatör)
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/KBQ8ZJhe4c1qCUgIbPF-6K1yh_ubl3VWkiScW4t7E4U/playlist.m3u8
-#EXTINF:-1, Presto (2x2) - Elite (2x2)
+https://dga1op10s1u3lea.82250d06d39d38.click/live/suV0oOBJ1LFX02PBMuh-rf9BFpbcxTgi7RoKJ7smETs/playlist.m3u8
+#EXTINF:-1, CA Independiente Siguatepeque - Juticalpa
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/iuknKXxzV2QWXBqr7qxoDAl8stDKRmyBeoXBO_o-CSY/playlist.m3u8
-#EXTINF:-1, Revolution + - United +
+https://dga1op10s1u3lea.82250d06d39d38.click/live/Jo1zcttfAoNjjBzZfGc4_j2bYdolD-TNi48jOD6rsn4/playlist.m3u8
+#EXTINF:-1, Indy + - Tulsa +
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/P87F2eyf5uATIPIjZydKtIPabJnZawA1fXDFYn-oNgk/playlist.m3u8
-#EXTINF:-1, Marathon - Club Deportivo Olimpia
+https://dga1op10s1u3lea.82250d06d39d38.click/live/sVXtsmIoOXbS-ZGMT7hFVcuyeK7C7q6o1Nt8KI3yrhs/playlist.m3u8
+#EXTINF:-1, Nazca - Cumbrecita
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/0n6XzPy16UOhWvM0BnFezpIfQ0YzLGiOa0s2DDiry2Q/playlist.m3u8
-#EXTINF:-1, Veraguas United - Alianza de Panama
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/Nw8WZ3aBLzFF5HjPmsyN6SIGGbttYXvdcp5xDRWFfmE/playlist.m3u8
-#EXTINF:-1, Barracudas - Outlaws
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/rh5BlRRc2UuMC40TVmAhk2KQuHzKKCYn-wcw2WzGpTo/playlist.m3u8
-#EXTINF:-1, Benxi - Haidong
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/LLxenumH1FKj1IA8Ez5V3sA7iOlQIF3sEFVSNxCU5hU/playlist.m3u8
-#EXTINF:-1, Indy + - Rowdies +
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/sPRs95Dx0e5tzlffniNlTUFkRkFvobK_jIMiDxsdQR8/playlist.m3u8
-#EXTINF:-1, Stelsoff - Maras
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3lea.82250d06d39d38.click/live/SkCdbQC_Fr4XTOTc8k7iYBu7wSwxN8MLVzMXsr2K6gw/playlist.m3u8
+https://dga1op10s1u3lea.82250d06d39d38.click/live/Rjo386uNn-ARh037ntmFcejHJcVBfhifFK0_RL66Pu8/playlist.m3u8
 #EXTINF:-1, Bein Sports 1
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd688829a7bd.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
