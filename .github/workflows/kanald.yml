@@ -1,0 +1,57 @@
+name: KanalD Scraper
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 9 * * *' # Her gün saat 09:00 UTC (TSİ 12:00)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Repo'yu checkout et
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Paketleri yükle
+        run: |
+          pip install requests beautifulsoup4 cloudscraper
+
+      - name: Scripti çalıştır
+        run: python kanald.py
+
+      - name: Git yapılandırması
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name  "GitHub Actions"
+
+      # --- ÇÖZÜM BÖLÜMÜ (Çakışma Önleyici) ---
+      - name: Çakışmayı önlemek için değişiklikleri stash'e al
+        run: |
+          git add -A
+          git stash
+
+      - name: Uzaktaki (remote) son değişiklikleri çek
+        run: |
+          git pull --rebase
+
+      - name: Stash'teki değişiklikleri geri yükle
+        run: |
+          git stash pop || true
+      # --- ÇÖZÜM BİTİŞ ---
+
+      - name: M3U Çıktısını Commit Et
+        run: |
+          git add kanald.m3u
+          # Eğer değişiklik varsa commit at, yoksa hata verme
+          git diff --staged --quiet || git commit -m "Kanal D playlist güncellendi [$(date +"%Y-%m-%d %H:%M:%S")]"
+          git push
