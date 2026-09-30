@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Repo'yu checkout et
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Tüm geçmişi çeker, rebase işlemleri için gereklidir
 
       - name: Python kur
         uses: actions/setup-python@v5
@@ -34,24 +36,23 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "GitHub Actions"
 
-      # --- ÇÖZÜM BÖLÜMÜ (Çakışma Önleyici) ---
-      - name: Çakışmayı önlemek için değişiklikleri stash'e al
+      - name: M3U Çıktısını Commit Et ve Çakışmayı Çöz
         run: |
-          git add -A
-          git stash
-
-      - name: Uzaktaki (remote) son değişiklikleri çek
-        run: |
-          git pull --rebase
-
-      - name: Stash'teki değişiklikleri geri yükle
-        run: |
-          git stash pop || true
-      # --- ÇÖZÜM BİTİŞ ---
-
-      - name: M3U Çıktısını Commit Et
-        run: |
+          # 1. Oluşan yeni dosyayı sahneye al (stage)
           git add kanald.m3u
-          # Eğer değişiklik varsa commit at, yoksa hata verme
-          git diff --staged --quiet || git commit -m "Kanal D playlist güncellendi [$(date +"%Y-%m-%d %H:%M:%S")]"
-          git push
+          
+          # 2. Değişiklik yoksa işlemi bitir
+          if git diff --staged --quiet; then
+            echo "Değişiklik yok, commit atılmadı."
+            exit 0
+          fi
+          
+          # 3. Yerel commit'i oluştur
+          git commit -m "Kanal D playlist güncellendi [$(date +"%Y-%m-%d %H:%M:%S")]"
+          
+          # 4. Uzaktaki (remote) en son değişiklikleri çek ve rebase yap
+          #    (Böylece senin commit'in en son commit'in üzerine eklenir)
+          git pull --rebase origin main
+          
+          # 5. Push işlemini gerçekleştir
+          git push origin main
