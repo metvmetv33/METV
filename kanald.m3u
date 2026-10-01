@@ -168,7 +168,7 @@ https://kanaldvod.duhnet.tv/hls/w/jb/ks_18blm/ks_18blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kuralsız Sokaklar" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/685414d9b85953a3a6d9df99.jpg",Kuralsız Sokaklar - Kuralsız Sokaklar 17. Bölüm
 https://kanaldvod.duhnet.tv/hls/H/nZ/ks_17_bolum/ks_17_bolum.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1918. Bölüm / 30 Eylül 2026
-https://kanaldvod.duhnet.tv/hls/y/6t/gm_1918/gm_1918.smil/playlist.m3u8
+https://kanaldvod.duhnet.tv/hls/h/B8/gm_1919blm/gm_1919blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1917. Bölüm / 29 Eylül 2026
 https://kanaldvod.duhnet.tv/hls/c/Tg/gm_1917blm/gm_1917blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1916. Bölüm / 28 Eylül 2026
@@ -187,6 +187,8 @@ https://kanaldvod.duhnet.tv/hls/E/I5/gm_1911/gm_1911.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/Q/5t/gm_1910blm/gm_1910blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1909. Bölüm / 17 Eylül 2026
 https://kanaldvod.duhnet.tv/hls/w/hs/gm_1909blm/gm_1909blm.smil/playlist.m3u8
+#EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 01.10.2026
+https://kanaldvod.duhnet.tv/hls/9/Uz/noh_1596/noh_1596.smil/playlist.m3u8
 #EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 30.09.2026
 https://kanaldvod.duhnet.tv/hls/U/ow/noh_1595/noh_1595.smil/playlist.m3u8
 #EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 29.09.2026
@@ -205,8 +207,6 @@ https://kanaldvod.duhnet.tv/hls/6/iE/noh1589/noh1589.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/G/pU/noh_1588blm/noh_1588blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 26.06.2026 - Sezon Finali
 https://kanaldvod.duhnet.tv/hls/X/Ti/noh_1587/noh_1587.smil/playlist.m3u8
-#EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 25.06.2026
-https://kanaldvod.duhnet.tv/hls/N/OT/noh_1586/noh_1586.smil/playlist.m3u8
 #EXTINF:-1 group-title="Arda'nın Mutfağı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/61535cfe4453951504a95c64.jpg",Arda'nın Mutfağı - Arda'nın Mutfağı 290. Bölüm
 https://kanaldvod.duhnet.tv/hls/Y/tF/mutfak_290_bolum/mutfak_290_bolum.smil/playlist.m3u8
 #EXTINF:-1 group-title="Arda'nın Mutfağı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/61535cfe4453951504a95c64.jpg",Arda'nın Mutfağı - Arda'nın Mutfağı 289. Bölüm
@@ -449,8 +449,6 @@ http://kanaldvod.duhnet.tv/hls/S/um/yln_27_blmss/yln_27_blmss.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/u/Bm/yalan_26blm/yalan_26blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Yalan" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/672a085fe661a4be48baa0d0.jpg",Yalan - Yalan 25. Bölüm
 https://kanaldvod.duhnet.tv/hls/-/tW/yln25blm/yln25blm.smil/playlist.m3u8
-#EXTINF:-1 group-title="Yalan" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/672a085fe661a4be48baa0d0.jpg",Yalan - Yalan 24. Bölüm
-https://kanaldvod.duhnet.tv/hls/f/9m/yalan_24_bolum/yalan_24_bolum.smil/playlist.m3u8
 #EXTINF:-1 group-title="Yalan" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/672a085fe661a4be48baa0d0.jpg",Yalan - Yalan 23. Bölüm
 https://kanaldvod.duhnet.tv/hls/k/ZS/yalan_23_blms/yalan_23_blms.smil/playlist.m3u8
 #EXTINF:-1 group-title="Yalan" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/672a085fe661a4be48baa0d0.jpg",Yalan - Yalan 22. Bölüm
@@ -473,8 +471,6 @@ https://kanaldvod.duhnet.tv/hls/p/Lk/gad1blmyd/gad1blmyd.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/H/rB/tkm19_blmss/tkm19_blmss.smil/playlist.m3u8
 #EXTINF:-1 group-title="Taş Kağıt Makas" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/66e1c5849171043b026067b5.jpg",Taş Kağıt Makas - Taş Kağıt Makas 18. Bölüm
 https://kanaldvod.duhnet.tv/hls/Z/au/tkm_18_blm/tkm_18_blm.smil/playlist.m3u8
-#EXTINF:-1 group-title="Taş Kağıt Makas" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/66e1c5849171043b026067b5.jpg",Taş Kağıt Makas - Taş Kağıt Makas 17. Bölüm
-https://kanaldvod.duhnet.tv/hls/J/e_/tkm_17_blm/tkm_17_blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Taş Kağıt Makas" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/66e1c5849171043b026067b5.jpg",Taş Kağıt Makas - Taş Kağıt Makas 16. Bölüm
 https://kanaldvod.duhnet.tv/hls/a/Mh/tkm16blm/tkm16blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Taş Kağıt Makas" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/66e1c5849171043b026067b5.jpg",Taş Kağıt Makas - Taş Kağıt Makas 15. Bölüm - YENİ SEZON
@@ -757,6 +753,10 @@ https://kanaldvod.duhnet.tv/S12/HLS_VODY/331461_24bb/index.m3u8
 https://kanaldvod.duhnet.tv/S12/HLS_VODY/330667_1e87/index.m3u8
 #EXTINF:-1 group-title="Güneşi Beklerken" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/5eeb7755ebc8302cd4ece153.jpg",Güneşi Beklerken - 4. Bölüm
 https://kanaldvod.duhnet.tv/S12/HLS_VOD/383491_336d/index.m3u8
+#EXTINF:-1 group-title="Ulan İstanbul" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/54f49cc6e50aa93944109d86.jpg",Ulan İstanbul - Ulan İstanbul 36. Bölüm
+http://media.netd.com.tr/S2/HLS_VOD/67956_ed29/index.m3u8
+#EXTINF:-1 group-title="Ulan İstanbul" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/54f49cc6e50aa93944109d86.jpg",Ulan İstanbul - Ulan İstanbul 35. Bölüm - Aile Versiyonu
+http://media.netd.com.tr/S2/HLS_VOD/67295_b997/index.m3u8
 #EXTINF:-1 group-title="Geniş Aile" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6834d7b484687ed42a4b7f1b.jpg",Geniş Aile - 26. Bölüm
 https://kanaldvod.duhnet.tv/hls/U/_L/genis_aile_26_bolum/genis_aile_26_bolum.smil/playlist.m3u8
 #EXTINF:-1 group-title="Geniş Aile" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6834d7b484687ed42a4b7f1b.jpg",Geniş Aile - 25. Bölüm
