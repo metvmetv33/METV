@@ -151,8 +151,10 @@ https://kanaldvod.duhnet.tv/hls/S/V3/bj_22blm/bj_22blm.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/O/48/bj_bolum21/bj_bolum21.smil/playlist.m3u8
 #EXTINF:-1 group-title="Beyaz'la Joker" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a8da9f9b91dc8a83ebb616d.jpg",Beyaz'la Joker - Beyaz'la Joker 20. Bölüm
 https://kanaldvod.duhnet.tv/hls/m/Mo/bj_bol20/bj_bol20.smil/playlist.m3u8
-#EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1928. Bölüm / 14 Ekim 2026
+#EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1929. Bölüm / 15 Ekim 2026
 https://kanaldvod.duhnet.tv/hls/j/Y_/gm_bol1929/gm_bol1929.smil/playlist.m3u8
+#EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1928. Bölüm / 14 Ekim 2026
+https://kanaldvod.duhnet.tv/hls/e/F2/gm_1928blm/gm_1928blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1927. Bölüm / 13 Ekim 2026
 https://kanaldvod.duhnet.tv/hls/Z/Pc/gm_1927blm/gm_1927blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1926. Bölüm / 12 Ekim 2026
@@ -169,10 +171,10 @@ https://kanaldvod.duhnet.tv/hls/j/SG/gm_1922/gm_1922.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/K/SY/gm_1921blm/gm_1921blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1920. Bölüm / 2 Ekim 2026
 https://kanaldvod.duhnet.tv/hls/Y/bi/gm_1920blm/gm_1920blm.smil/playlist.m3u8
-#EXTINF:-1 group-title="Gelinim Mutfakta" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a731ac1800655e3162c7b5d.jpg",Gelinim Mutfakta - Gelinim Mutfakta 1919. Bölüm / 1 Ekim 2026
-https://kanaldvod.duhnet.tv/hls/h/B8/gm_1919blm/gm_1919blm.smil/playlist.m3u8
-#EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 14.10.2026
+#EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 15.10.2026
 https://kanaldvod.duhnet.tv/hls/V/iA/noh_1606/noh_1606.smil/playlist.m3u8
+#EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 14.10.2026
+https://kanaldvod.duhnet.tv/hls/u/MP/noh_1605/noh_1605.smil/playlist.m3u8
 #EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 13.10.2026
 https://kanaldvod.duhnet.tv/hls/m/zl/noh_1604/noh_1604.smil/playlist.m3u8
 #EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 12.10.2026
@@ -189,8 +191,6 @@ https://kanaldvod.duhnet.tv/hls/s/oP/noh_1599/noh_1599.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/s/pm/noh_1598/noh_1598.smil/playlist.m3u8
 #EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 02.10.2026
 https://kanaldvod.duhnet.tv/hls/S/YZ/noh_1597/noh_1597.smil/playlist.m3u8
-#EXTINF:-1 group-title="Neler Oluyor Hayatta?" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/68c18fc88b0ee3a869cbf026.jpg",Neler Oluyor Hayatta? - Neler Oluyor Hayatta? / 01.10.2026
-https://kanaldvod.duhnet.tv/hls/9/Uz/noh_1596/noh_1596.smil/playlist.m3u8
 #EXTINF:-1 group-title="Arda'nın Mutfağı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/61535cfe4453951504a95c64.jpg",Arda'nın Mutfağı - Arda'nın Mutfağı 292. Bölüm
 https://kanaldvod.duhnet.tv/hls/A/0c/arda_mut292blm/arda_mut292blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Arda'nın Mutfağı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/61535cfe4453951504a95c64.jpg",Arda'nın Mutfağı - Arda'nın Mutfağı 291. Bölüm
@@ -231,6 +231,8 @@ https://kanaldvod.duhnet.tv/hls/G/eb/omuz_omuza_256_bolum/omuz_omuza_256_bolum.s
 https://kanaldvod.duhnet.tv/hls/e/zi/omuz_omuza_17_mayis/omuz_omuza_17_mayis.smil/playlist.m3u8
 #EXTINF:-1 group-title="Arda ile Omuz Omuza" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/61535c5f4453951504a95c4b.jpg",Arda ile Omuz Omuza - Arda ile Omuz Omuza 254. Bölüm - Burç Kümbetlioğlu
 https://kanaldvod.duhnet.tv/hls/l/AU/omuz_omuza_254_bolum/omuz_omuza_254_bolum.smil/playlist.m3u8
+#EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a439d449b15a3cbd4002aba.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 15.10.2026
+https://kanaldvod.duhnet.tv/hls/E/tH/anahaber_151026/anahaber_151026.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a439d449b15a3cbd4002aba.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 14.10.2026
 https://kanaldvod.duhnet.tv/hls/B/fL/anahaber_141026/anahaber_141026.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a439d449b15a3cbd4002aba.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 13.10.2026
@@ -249,8 +251,6 @@ https://kanaldvod.duhnet.tv/hls/X/cO/anahaber_06102026/anahaber_06102026.smil/pl
 https://kanaldvod.duhnet.tv/hls/P/Bn/anahaber_05102026/anahaber_05102026.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a439d449b15a3cbd4002aba.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 02.10.2026
 https://kanaldvod.duhnet.tv/hls/N/H9/anahaber_021026/anahaber_021026.smil/playlist.m3u8
-#EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a439d449b15a3cbd4002aba.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 01.10.2026
-https://kanaldvod.duhnet.tv/hls/i/HZ/anahaber_011026/anahaber_011026.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Haber Hafta Sonu" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a43c7b29b15a3cbd4002bd0.jpg",Kanal D Haber Hafta Sonu - Kanal D Haber Hafta Sonu - 11.10.2026
 https://kanaldvod.duhnet.tv/hls/O/KM/11102026anahaber/11102026anahaber.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Haber Hafta Sonu" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6a43c7b29b15a3cbd4002bd0.jpg",Kanal D Haber Hafta Sonu - Kanal D Haber Hafta Sonu - 10.10.2026
@@ -429,8 +429,6 @@ https://kanaldvod.duhnet.tv/hls/v/hg/aa_9_blm/aa_9_blm.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/7/Eq/aa_8blm/aa_8blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Annem Ankara" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/672ccda7066a80612a9e616f.jpg",Annem Ankara - Annem Ankara 7. Bölüm
 https://kanaldvod.duhnet.tv/hls/t/Km/aa_7_bolumm/aa_7_bolumm.smil/playlist.m3u8
-#EXTINF:-1 group-title="Annem Ankara" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/672ccda7066a80612a9e616f.jpg",Annem Ankara - Annem Ankara 6. Bölüm
-https://kanaldvod.duhnet.tv/hls/K/ri/aa_6blmrev/aa_6blmrev.smil/playlist.m3u8
 #EXTINF:-1 group-title="Piyasa" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/67b6efa8f82d125d3be1fcb3.jpg",Piyasa - Piyasa 6. Bölüm - FİNAL
 https://kanaldvod.duhnet.tv/hls/R/s6/piyasa6finalbol/piyasa6finalbol.smil/playlist.m3u8
 #EXTINF:-1 group-title="Piyasa" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/67b6efa8f82d125d3be1fcb3.jpg",Piyasa - Piyasa 5. Bölüm
@@ -547,6 +545,8 @@ https://kanaldvod.duhnet.tv/hls/O/04/bdv2_blm/bdv2_blm.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/_/Uj/bdv1_blm/bdv1_blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Dilek Taşı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/64ec9de53ab16614341fc3b1.jpg",Dilek Taşı - Dilek Taşı 20. Bölüm - Final
 https://kanaldvod.duhnet.tv/hls/a/7S/dt20blmfnl/dt20blmfnl.smil/playlist.m3u8
+#EXTINF:-1 group-title="Dilek Taşı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/64ec9de53ab16614341fc3b1.jpg",Dilek Taşı - Dilek Taşı 19. Bölüm
+https://kanaldvod.duhnet.tv/hls/y/uj/dt19blm/dt19blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Dilek Taşı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/64ec9de53ab16614341fc3b1.jpg",Dilek Taşı - Dilek Taşı 18. Bölüm
 https://kanaldvod.duhnet.tv/hls/Q/R4/dt18blmrev/dt18blmrev.smil/playlist.m3u8
 #EXTINF:-1 group-title="Dilek Taşı" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/64ec9de53ab16614341fc3b1.jpg",Dilek Taşı - Dilek Taşı 17. Bölüm
@@ -565,6 +565,8 @@ https://kanaldvod.duhnet.tv/hls/Y/m2/dt12blm/dt12blm.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/1/ZI/dt11_blm/dt11_blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Üç Kız Kardeş" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/651becf1933ccb1740938ac8.jpg",Üç Kız Kardeş - Üç Kız Kardeş 84. Bölüm - FİNAL
 https://kanaldvod.duhnet.tv/hls/6/Wy/ukk84blmfnl/ukk84blmfnl.smil/playlist.m3u8
+#EXTINF:-1 group-title="Üç Kız Kardeş" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/651becf1933ccb1740938ac8.jpg",Üç Kız Kardeş - Üç Kız Kardeş 83. Bölüm
+https://kanaldvod.duhnet.tv/hls/B/LS/ukk83blm/ukk83blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Üç Kız Kardeş" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/651becf1933ccb1740938ac8.jpg",Üç Kız Kardeş - Üç Kız Kardeş 82. Bölüm
 https://kanaldvod.duhnet.tv/hls/D/Dm/ukk_82_blm/ukk_82_blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Üç Kız Kardeş" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/651becf1933ccb1740938ac8.jpg",Üç Kız Kardeş - Üç Kız Kardeş 81. Bölüm
@@ -579,6 +581,8 @@ https://kanaldvod.duhnet.tv/hls/A/s2/ukk78blm/ukk78blm.smil/playlist.m3u8
 https://kanaldvod.duhnet.tv/hls/V/95/ukk_77blm/ukk_77blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Üç Kız Kardeş" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/651becf1933ccb1740938ac8.jpg",Üç Kız Kardeş - Üç Kız Kardeş 76. Bölüm
 https://kanaldvod.duhnet.tv/hls/X/kj/ukk76blm/ukk76blm.smil/playlist.m3u8
+#EXTINF:-1 group-title="Üç Kız Kardeş" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/651becf1933ccb1740938ac8.jpg",Üç Kız Kardeş - Üç Kız Kardeş 75. Bölüm
+https://kanaldvod.duhnet.tv/hls/n/RT/ukk_75_blm/ukk_75_blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Ya Çok Seversen" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6491bef8ebc8303b7ca9ad9e.jpg",Ya Çok Seversen - Ya Çok Seversen 13. Bölüm - Final
 http://kanaldvod.duhnet.tv/hls/s/hU/ycs13_fnl_blm/ycs13_fnl_blm.smil/playlist.m3u8
 #EXTINF:-1 group-title="Ya Çok Seversen" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6491bef8ebc8303b7ca9ad9e.jpg",Ya Çok Seversen - Ya Çok Seversen 12. Bölüm
