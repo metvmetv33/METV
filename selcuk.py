@@ -11,7 +11,7 @@ HEADERS = {
 
 def find_active_domain():
     # Güncel giriş adresleri buraya eklenebilir
-    test_urls = ["https://www.selcuksportshd688829a7bd.xyz/", "https://www.selcuksportshd.is/"]
+    test_urls = ["https://www.selcuksportshd14e17ba2ad.xyz/", "https://www.selcuksportshd.is/"]
     for url in test_urls:
         try:
             res = requests.get(url, headers=HEADERS, timeout=10, verify=False)
