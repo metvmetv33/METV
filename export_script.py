@@ -12,7 +12,7 @@ def main():
     })
     
     try:
-        group_res = session.get("https://www2.vavoo.to/live2/index?output=json", timeout=20).json()
+        group_res = session.get("https://www2.vavoo.to/live2/index?countries=all&output=json", timeout=20).json()
         countries = sorted(list(set([c.get("group") for c in group_res if c.get("group")])))
     except Exception as e:
         print(f"Fehler beim Laden der Gruppen: {e}")
