@@ -109,7 +109,7 @@ async def main():
         else:
             print(f"[✗] {name} (Link yok)")
 
-    with open("selcuksports.m3u", "w", encoding="utf-8") as f:
+    with open("selcukk.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_lines))
 
     print(f"\n[✓] {basarili} kanal kaydedildi. Dosya: selcukk.m3u")
