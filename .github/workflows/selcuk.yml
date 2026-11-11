@@ -20,7 +20,9 @@ jobs:
           python-version: '3.11'
 
       - name: Install Libs
-        run: pip install requests beautifulsoup4 urllib3
+        run: |
+          pip install requests beautifulsoup4 urllib3 playwright
+          python -m playwright install --with-deps chromium
 
       - name: Run Script
         run: python selcuk.py
@@ -29,8 +31,7 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add selcukk.m3u
-          # Sadece değişiklik varsa devam et
+          git add selcuksports.m3u
           if ! git diff --cached --quiet; then
             git commit -m "🔄 Liste Guncellendi"
             git pull --rebase origin main
