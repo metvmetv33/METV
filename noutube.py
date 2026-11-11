@@ -7,7 +7,7 @@ import urllib3
 # SSL uyarılarını bastır
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-ENCRYPTED_URL = "aHR0cHM6Ly95dHViZS13YXJzLm15d2lyZS5vcmcvbm91dHViZS9wbGF5bGlzdC5tM3U="
+ENCRYPTED_URL = "aHR0cHM6Ly95dHubeC13YXJzLm15d2lyZS5vcmcvbm91dHViZS9wbGF5bGlzdC5tM3U="
 
 def create_noutube_folder():
     if not os.path.exists("noutube"):
@@ -37,7 +37,8 @@ def parse_playlist(content):
 
 def save_channel_as_m3u8(channel_name, stream_url):
     safe_name = "".join(c for c in channel_name if c.isalnum() or c in ".-_").rstrip()
-    filename = f"coutubee/{safe_name}.m3u8"
+    # Düzeltildi: coutubee yerine noutube klasörü kullanılıyor
+    filename = f"noutube/{safe_name}.m3u8"
     content = f"""#EXTM3U
 #EXT-X-VERSION:3
 #EXT-X-STREAM-INF:BANDWIDTH=1280000,RESOLUTION=1280x720
