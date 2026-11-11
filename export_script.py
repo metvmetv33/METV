@@ -27,35 +27,42 @@ def main():
     m3u_lines = ["#EXTM3U"]
     full_json_data = {}
     
-    # Gelen verileri gruplarına göre düzenleme
     for item in items:
         group = item.get("group", "Uncategorized")
         name = item.get("name", "Unknown")
         tvg_id = item.get("tvg_id", "")
         logo = item.get("logo", "")
-        url = item.get("url", "")
         
-        if not url:
+        # Orijinal URL'den veya tvg_id / ID kısmından istenen formatı oluşturalım
+        # Örn: https://vavoo.to/vavoo-iptv/play/17029379329ed4b84db05f
+        original_url = item.get("url", "")
+        if not original_url:
             continue
+            
+        # URL'in son kısmındaki dosya adını/ID'yi alıyoruz (örn: 51258455.m3u8 -> 51258455)
+        # Eğer doğrudan API'den gelen URL yapısı kullanılsın isterseniz aşağıdaki dönüşüm yapılır:
+        # Örnek: https://vavoo.to/live2/play3/51258455.m3u8 -> 51258455
+        file_part = original_url.split('/')[-1].replace('.m3u8', '')
+        
+        # İstediğiniz özel format
+        custom_url = f"https://vavoo.to/vavoo-iptv/play/{file_part}"
             
         if group not in full_json_data:
             full_json_data[group] = []
             
-        # JSON verisine ekle
         full_json_data[group].append({
             "name": name,
             "tvg_id": tvg_id,
             "logo": logo,
-            "url": url,
+            "url": custom_url,
             "group": group
         })
         
-        # M3U satırlarına ekle (Doğrudan orijinal .m3u8 linkleri)
         extinf_line = f'#EXTINF:-1 tvg-id="{tvg_id}" tvg-logo="{logo}" group-title="{group}",{name}'
         m3u_lines.append(extinf_line)
-        m3u_lines.append(url)
+        m3u_lines.append(custom_url)
 
-    # Dosyaları orijinal adlarıyla kaydediyoruz (vavoo_all.m3u ve vavoo_full.json)
+    # Dosyaları kaydediyoruz
     with open("vavoo_all.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_lines))
     
