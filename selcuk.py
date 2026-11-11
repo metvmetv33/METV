@@ -1,113 +1,142 @@
 import re
-import asyncio
-import requests
-from playwright.async_api import async_playwright
+from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
-import urllib3
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+headers = {"User-Agent": "Mozilla/5.0"}
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
-}
-
-def find_active_domain():
-    test_urls = [
-        "https://www.selcuksportshd14e17ba2ad.xyz/",
-        "https://www.selcuksportshd.is/",
-        "https://www.selcuksportshd0.xyz/"
-    ]
-    for url in test_urls:
+def find_active_domain(start=1825, end=1880):
+    for i in range(start, end+1):
+        url = f"https://www.selcuksportshd{i}.xyz/"
         try:
-            res = requests.get(url, headers=HEADERS, timeout=10, verify=False)
-            if res.status_code == 200 and "data-url" in res.text:
-                print(f"[+] Aktif Domain: {url}")
-                return url, res.text
+            req = Request(url, headers=headers)
+            html = urlopen(req, timeout=5).read().decode()
+
+            if "uxsyplayer" in html:
+                print(f"✅ Aktif domain bulundu: {url}")
+                return url, html
         except:
             continue
     return None, None
 
-async def main():
+def get_player_links(html):
+    soup = BeautifulSoup(html, "html.parser")
+    links = []
+
+    for a in soup.find_all("a", attrs={"data-url": True}):
+        data_url = a["data-url"].strip()
+
+        # relative URL ise düzelt
+        if data_url.startswith("/"):
+            data_url = "https://" + data_url.lstrip("/")
+
+        name = a.text.strip()
+        if not name:
+            # fallback
+            if "id=" in data_url:
+                name = data_url.split("id=")[-1]
+            else:
+                name = "Kanal"
+
+        links.append({"url": data_url, "name": name})
+
+    return links
+
+def get_m3u8_url(player_url, referer):
+    try:
+        req = Request(player_url, headers={"User-Agent": headers["User-Agent"], "Referer": referer})
+        html = urlopen(req, timeout=10).read().decode()
+
+        # baseStreamUrl bul
+        patterns = [
+            r'this\.baseStreamUrl\s*=\s*"([^"]+)"',
+            r"this\.baseStreamUrl\s*=\s*'([^']+)'",
+            r'baseStreamUrl\s*:\s*"([^"]+)"',
+            r"baseStreamUrl\s*:\s*'([^']+)'"
+        ]
+
+        base_url = None
+        for p in patterns:
+            m = re.search(p, html)
+            if m:
+                base_url = m.group(1)
+                break
+
+        if not base_url:
+            print(f"❌ baseStreamUrl bulunamadı: {player_url}")
+            return None
+
+        # ID'yi çek
+        m_id = re.search(r"id=([a-zA-Z0-9]+)", player_url)
+        if not m_id:
+            print(f"❌ stream ID bulunamadı: {player_url}")
+            return None
+
+        stream_id = m_id.group(1)
+
+        # sonunda / yoksa ekle
+        if not base_url.endswith("/"):
+            base_url += "/"
+
+        final_m3u8 = f"{base_url}{stream_id}/playlist.m3u8"
+        print(f"🎯 M3U8 bulundu: {final_m3u8}")
+        return final_m3u8
+
+    except Exception as e:
+        print(f"❌ Player okunamadı: {e}")
+        return None
+
+def normalize_tvg_id(name):
+    rep = {
+        'ç':'c','Ç':'C','ş':'s','Ş':'S','ı':'i','İ':'I','ğ':'g','Ğ':'G',
+        'ü':'u','Ü':'U','ö':'o','Ö':'O'
+    }
+    for k,v in rep.items():
+        name = name.replace(k, v)
+    name = name.replace(" ", "-").replace(":", "-")
+    name = re.sub(r"[^a-zA-Z0-9\-]", "", name)
+    return name.lower()
+
+def create_m3u(filename="selcukk.m3u"):
+    print("🔍 Domain aranıyor...")
     domain, html = find_active_domain()
-    if not domain:
-        print("[-] Domain bulunamadı.")
+
+    if not html:
+        print("❌ Çalışan domain bulunamadı!")
         return
 
-    soup = BeautifulSoup(html, "html.parser")
-    items = soup.find_all("a", attrs={"data-url": True})
+    referer = domain
+    players = get_player_links(html)
 
-    m3u_lines = ["#EXTM3U"]
-    basarili = 0
-    benzersiz_kanallar = set() # Aynı kanalı tekrar denememek için
+    if not players:
+        print("❌ Player link yok!")
+        return
 
-    print(f"[*] Toplam {len(items)} kanal bulundu. Hızlandırılmış modda test ediliyor...\n")
+    print(f"📺 {len(players)} kanal bulundu")
 
-    # Tek bir tarayıcı açıyoruz
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        context = await browser.new_context(user_agent=HEADERS["User-Agent"])
+    m3u = ["#EXTM3U"]
+    ok = 0
 
-        for item in items:
-            raw_url = item["data-url"]
-            
-            # Geçersizleri atla
-            if "gecersiz" in raw_url or not raw_url.startswith("http") or "Undefined" in raw_url: 
-                continue
+    for ch in players:
+        print(f"⏳ İşleniyor: {ch['name']}")
 
-            # Kanal ID'sini çek
-            id_match = re.search(r'id=([a-zA-Z0-9_-]+)', raw_url)
-            if not id_match:
-                continue
-            channel_id = id_match.group(1)
+        m3u8 = get_m3u8_url(ch["url"], referer)
+        if not m3u8:
+            continue
 
-            # Aynı kanal ID'si daha önce eklendiyse atla (örneğin Tivibu Spor 1 ve Tivibu Spor aynı ID'ye sahip olabilir)
-            if channel_id in benzersiz_kanallar:
-                continue
+        tvg_id = normalize_tvg_id(ch["name"])
 
-            name_div = item.find("div", class_="name")
-            name = name_div.get_text(strip=True) if name_div else "Bilinmeyen"
+        m3u.append(f'#EXTINF:-1 tvg-id="{tvg_id}" group-title="Sell spor+sec izle",{ch["name"]}')
+        m3u.append(f"#EXTVLCOPT:http-referrer={referer}")
+        m3u.append(f"#EXTVLCOPT:http-user-agent={headers['User-Agent']}")
+        m3u.append(m3u8)
 
-            # Her kanal için yeni bir sekme açıyoruz
-            page = await context.new_page()
-            captured_urls = []
+        ok += 1
 
-            # Ağ isteklerini dinle
-            def handle_request(request):
-                url = request.url
-                if ".m3u8" in url and "cloudflare" not in url and "beacon" not in url:
-                    captured_urls.append(url)
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write("\n".join(m3u))
 
-            page.on("request", handle_request)
-
-            try:
-                # Sayfaya git ve ağın durulmasını bekle (timeout süresini kısa tuttuk)
-                await page.goto(raw_url, wait_until="networkidle", timeout=15000)
-                # Video oynatıcının m3u8 isteğini atması için çok kısa bir süre bekle
-                await page.wait_for_timeout(1500) 
-
-                if captured_urls:
-                    link = captured_urls[0]
-                    print(f"[✓] {name} -> {link}")
-                    m3u_lines.append(f'#EXTINF:-1, {name}')
-                    m3u_lines.append(f'#EXTVLCOPT:http-referrer={domain}')
-                    m3u_lines.append(f'#EXTVLCOPT:http-user-agent={HEADERS["User-Agent"]}')
-                    m3u_lines.append(link)
-                    basarili += 1
-                    benzersiz_kanallar.add(channel_id)
-                else:
-                    print(f"[✗] {name} (Link bulunamadı)")
-            except Exception as e:
-                print(f"[✗] {name} (Zaman aşımı veya hata)")
-            finally:
-                await page.close() # Sekmeyi kapat, tarayıcıyı açık tut
-
-        await browser.close()
-
-    # Çıktıyı kaydet
-    with open("selcuksports.m3u", "w", encoding="utf-8") as f:
-        f.write("\n".join(m3u_lines))
-
-    print(f"\n[✓] {basarili} kanal kaydedildi. Dosya: selcuksports.m3u")
+    print(f"\n✅ M3U oluşturuldu: {filename}")
+    print(f"📊 Başarılı: {ok}/{len(players)}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    create_m3u()
