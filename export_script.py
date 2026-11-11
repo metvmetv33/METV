@@ -13,9 +13,6 @@ def main():
         'Referer': 'http://geil.to/'
     })
     
-    # 1. Önce grupları/ülkeleri dinamik olarak almayı deneyelim veya standart listeyi kullanalım
-    # PHP kodundaki mantığa göre temel grupları belirleyebiliriz.
-    # Alternatif olarak grupları test etmek için bilinen popüler grupları listeleyebiliriz:
     search_groups = [
         'Turkey', 'Germany', 'United Kingdom', 'France', 'Spain', 
         'Italy', 'Netherlands', 'Poland', 'Portugal', 'Romania', 
@@ -50,13 +47,14 @@ def main():
                     items = data.get("items", [])
                     
                     if not items:
-                        break  # Bu cursor'dan sonra veri yoksa döngüyü kır
+                        break  
                         
                     for item in items:
                         channel_id = item.get('id')
                         name = item.get('name', '')
+                        stream_url = item.get('url', '') # Doğrudan API'den gelen gerçek akış linki
                         
-                        if not channel_id or not name:
+                        if not channel_id or not name or not stream_url:
                             continue
                             
                         channel_id = str(channel_id)
@@ -65,25 +63,24 @@ def main():
                         if not name:
                             name = channel_id
                             
-                        channels[channel_id] = name
+                        channels[channel_id] = {
+                            "name": name,
+                            "url": stream_url
+                        }
                 else:
                     break
             except Exception as e:
                 break
 
-        # Bulunan kanalları listeye ve m3u formatına ekleme
-        for channel_id, name in channels.items():
-            # M3U satırları
-            m3u_lines.append(f'#EXTINF:-1 group-title="{group}",{name}')
-            # PHP kodundaki proxy/oynatıcı yapısına benzer link yapısı
-            stream_url = f'http://sultanios.alwaysdata.net/vavo.php?ID={urllib.parse.quote(channel_id)}'
-            m3u_lines.append(stream_url)
+        # Doğrudan gerçek URL'leri ekleme
+        for channel_id, info in channels.items():
+            m3u_lines.append(f'#EXTINF:-1 group-title="{group}",{info["name"]}')
+            m3u_lines.append(info["url"])  # Proxy linki yerine doğrudan asıl kaynak linki
             
-            # JSON verisi
             full_json_data[group].append({
                 "id": channel_id,
-                "name": name,
-                "url": stream_url,
+                "name": info["name"],
+                "url": info["url"],
                 "group": group
             })
 
@@ -97,7 +94,7 @@ def main():
     with open("vavoo_full.json", "w", encoding="utf-8") as f:
         json.dump(full_json_data, f, ensure_ascii=False, indent=4)
         
-    print("\nUpdate abgeschlossen. Alle Kanäle wurden exportiert.")
+    print("\nİşlem tamamlandı. Tüm kanallar doğrudan kaynak linkleriyle kaydedildi.")
 
 if __name__ == "__main__":
     main()
