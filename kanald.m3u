@@ -237,6 +237,8 @@ https://kanaldvod.duhnet.tv/hls/Z/AT/arda_omuz_260_blm/arda_omuz_260_blm.smil/pl
 https://kanaldvod.duhnet.tv/hls/2/cG/omuz_omuza_259_bolum/omuz_omuza_259_bolum.smil/playlist.m3u8
 #EXTINF:-1 group-title="Arda ile Omuz Omuza" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/61535c5f4453951504a95c4b.jpg",Arda ile Omuz Omuza - Arda ile Omuz Omuza 258. Bölüm - Ahmet Saraçoğlu
 https://kanaldvod.duhnet.tv/hls/l/U1/omuz_omuza_258_bolum/omuz_omuza_258_bolum.smil/playlist.m3u8
+#EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6ae8258f8e6adc761812d08c.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 11.11.2026
+https://kanaldvod.duhnet.tv/hls/0/7O/anahaber_111126/anahaber_111126.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6ae8258f8e6adc761812d08c.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 10.11.2026
 https://kanaldvod.duhnet.tv/hls/W/4f/anahaber_101126/anahaber_101126.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6ae8258f8e6adc761812d08c.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 09.11.2026
@@ -255,8 +257,6 @@ https://kanaldvod.duhnet.tv/hls/8/vx/anahaber_02112026/anahaber_02112026.smil/pl
 https://kanaldvod.duhnet.tv/hls/Q/zh/anahaber_301026/anahaber_301026.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6ae8258f8e6adc761812d08c.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 29.10.2026
 https://kanaldvod.duhnet.tv/hls/f/gW/anahaber_291026/anahaber_291026.smil/playlist.m3u8
-#EXTINF:-1 group-title="Kanal D Ana Haber" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6ae8258f8e6adc761812d08c.jpg",Kanal D Ana Haber - Kanal D Ana Haber - 28.10.2026
-https://kanaldvod.duhnet.tv/hls/C/ad/anahaber_28102026/anahaber_28102026.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Haber Hafta Sonu" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6aedad02c25ae5c7a303ef95.jpg",Kanal D Haber Hafta Sonu - Kanal D Haber Hafta Sonu - 08.11.2026
 https://kanaldvod.duhnet.tv/hls/S/UL/08112026anahaber/08112026anahaber.smil/playlist.m3u8
 #EXTINF:-1 group-title="Kanal D Haber Hafta Sonu" tvg-logo="https://image.kanald.com.tr/i/kanald/100/264x365/6aedad02c25ae5c7a303ef95.jpg",Kanal D Haber Hafta Sonu - Kanal D Haber Hafta Sonu - 07.11.2026
