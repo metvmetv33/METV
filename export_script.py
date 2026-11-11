@@ -1,167 +1,103 @@
 # -*- coding: utf-8 -*-
-
 import requests
-
 import json
-
 import time
-
-
+import urllib.parse
 
 def main():
-
     session = requests.Session()
-
     session.headers.update({
-
-        'User-Agent': 'MediaHubMX/2',
-
+        'User-Agent': 'AirTV-STB/1.0.0',
         'Accept': 'application/json',
-
-        'Content-Type': 'application/json; charset=utf-8'
-
+        'Accept-Language': 'tr-TR,tr;q=0.8',
+        'Referer': 'http://geil.to/'
     })
-
     
-
-    try:
-
-        group_res = session.get("https://withered-shape-3305.vadimkantorov.workers.dev/?https://www2.vavoo.to/live2/index?output=json", timeout=20).json()
-
-        countries = sorted(list(set([c.get("group") for c in group_res if c.get("group")])))
-
-    except Exception as e:
-
-        print(f"Fehler beim Laden der Gruppen: {e}")
-
-        return
-
-
+    # 1. Önce grupları/ülkeleri dinamik olarak almayı deneyelim veya standart listeyi kullanalım
+    # PHP kodundaki mantığa göre temel grupları belirleyebiliriz.
+    # Alternatif olarak grupları test etmek için bilinen popüler grupları listeleyebiliriz:
+    search_groups = [
+        'Turkey', 'Germany', 'United Kingdom', 'France', 'Spain', 
+        'Italy', 'Netherlands', 'Poland', 'Portugal', 'Romania', 
+        'Russia', 'Balkans', 'Albania', 'Bulgaria', 'Croatia', 'Arabia'
+    ]
 
     m3u_lines = ["#EXTM3U"]
-
     full_json_data = {}
+    cursors = [0, 300, 600, 900]
 
+    for group in search_groups:
+        full_json_data[group] = []
+        channels = {}
+        print(f"Lade Gruppe: {group}...", end="", flush=True)
 
-
-    # Wir fügen "Balkans" explizit zur Liste hinzu, falls Germany dabei ist, 
-
-    # um die versteckten deutschen Kanäle zu finden.
-
-    search_groups = countries
-
-    
-
-    for country in search_groups:
-
-        full_json_data[country] = []
-
-        cursor = 0
-
-        print(f"Lade Gruppe: {country}...", end="", flush=True)
-
-        
-
-        while True: # Endlosschleife für Pagination
-
-            payload = {
-
-                "language": "de", "region": "AT", "catalogId": "vto-iptv", "id": "vto-iptv",
-
-                "adult": False, "search": "", "sort": "name", "filter": {"group": country},
-
-                "cursor": cursor, "clientVersion": "3.0.2"
-
+        for cursor in cursors:
+            params = {
+                'region': 'TR',
+                'language': 'tr',
+                'sort': 'name',
+                'filter[group]': group,
+                'cursor': cursor
             }
 
-
+            url = 'http://geil.to/live/catalog/live/channels.json?' + urllib.parse.urlencode(params, safe='')
 
             try:
-
-                r = session.post("https://vavoo.to/vto-cluster/mediahubmx-catalog.json", 
-
-                                 data=json.dumps(payload), timeout=30)
-
+                r = session.get(url, timeout=25)
                 
-
                 if r.status_code == 200:
-
                     data = r.json()
-
                     items = data.get("items", [])
-
                     
-
-                    for item in items:
-
-                        name = item.get("name", "Unknown")
-
-                        # Optionale Filterung für deutsche Kanäle in fremden Gruppen
-
-                        if country == "Balkans" and not any(x in name for x in ["DE :", " |D"]):
-
-                            continue
-
-                            
-
-                        clean_name = name.split(".")[0].strip()
-
-                        url = item.get("url", "")
-
+                    if not items:
+                        break  # Bu cursor'dan sonra veri yoksa döngüyü kır
                         
-
-                        if url:
-
-                            m3u_lines.append(f'#EXTINF:-1 group-title="{country}",{clean_name}')
-
-                            m3u_lines.append(url)
-
-                            full_json_data[country].append({"name": clean_name, "url": url, "group": country})
-
-                    
-
-                    # Prüfen, ob es eine weitere Seite gibt
-
-                    cursor = data.get("nextCursor")
-
-                    if not cursor:
-
-                        break # Keine weiteren Seiten mehr
-
+                    for item in items:
+                        channel_id = item.get('id')
+                        name = item.get('name', '')
+                        
+                        if not channel_id or not name:
+                            continue
+                            
+                        channel_id = str(channel_id)
+                        name = name.replace("\r", " ").replace("\n", " ").strip()
+                        
+                        if not name:
+                            name = channel_id
+                            
+                        channels[channel_id] = name
                 else:
-
                     break
-
-            except Exception:
-
+            except Exception as e:
                 break
 
-        
+        # Bulunan kanalları listeye ve m3u formatına ekleme
+        for channel_id, name in channels.items():
+            # M3U satırları
+            m3u_lines.append(f'#EXTINF:-1 group-title="{group}",{name}')
+            # PHP kodundaki proxy/oynatıcı yapısına benzer link yapısı
+            stream_url = f'http://sultanios.alwaysdata.net/vavo.php?ID={urllib.parse.quote(channel_id)}'
+            m3u_lines.append(stream_url)
+            
+            # JSON verisi
+            full_json_data[group].append({
+                "id": channel_id,
+                "name": name,
+                "url": stream_url,
+                "group": group
+            })
 
-        print(f" Fertig ({len(full_json_data[country])} Kanäle)")
-
+        print(f" Fertig ({len(channels)} Kanäle)")
         time.sleep(0.05)
 
-
-
-    # Speichern
-
+    # Dosyalara kaydetme
     with open("vavoo_all.m3u", "w", encoding="utf-8") as f:
-
         f.write("\n".join(m3u_lines))
-
     
-
     with open("vavoo_full.json", "w", encoding="utf-8") as f:
-
         json.dump(full_json_data, f, ensure_ascii=False, indent=4)
-
         
-
-    print("\nUpdate abgeschlossen. Alle Seiten wurden geladen.")
-
-
+    print("\nUpdate abgeschlossen. Alle Kanäle wurden exportiert.")
 
 if __name__ == "__main__":
-
     main()
