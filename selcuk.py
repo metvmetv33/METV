@@ -12,7 +12,6 @@ HEADERS = {
 }
 
 def find_active_domain():
-    # Bilinen çalışan adresler. Eğer site yine domain değiştirirse buraya ekleyebilirsin.
     test_urls = [
         "https://www.selcuksportshd14e17ba2ad.xyz/",
         "https://www.selcuksportshd.is/",
@@ -22,7 +21,7 @@ def find_active_domain():
         try:
             res = requests.get(url, headers=HEADERS, timeout=10, verify=False)
             if res.status_code == 200 and "uxsyplayer" in res.text:
-                print(f"✅ Aktif domain bulundu: {url}")
+                print(f"✅ Aktif domain: {url}")
                 return url, res.text
         except:
             continue
@@ -31,23 +30,16 @@ def find_active_domain():
 def get_player_links(html):
     soup = BeautifulSoup(html, "html.parser")
     links = []
-
     for a in soup.find_all("a", attrs={"data-url": True}):
         data_url = a["data-url"].strip()
-
         if "gecersiz" in data_url or not data_url.startswith("http") or "Undefined" in data_url:
             continue
-
         name_div = a.find("div", class_="name")
-        name = name_div.get_text(strip=True) if name_div else "Bilinmeyen Kanal"
-
+        name = name_div.get_text(strip=True) if name_div else "Bilinmeyen"
         id_match = re.search(r'id=([a-zA-Z0-9_-]+)', data_url)
         if not id_match:
             continue
-        channel_id = id_match.group(1)
-
-        links.append({"url": data_url, "name": name, "id": channel_id})
-
+        links.append({"url": data_url, "name": name, "id": id_match.group(1)})
     return links
 
 def normalize_tvg_id(name):
@@ -59,70 +51,62 @@ def normalize_tvg_id(name):
     return name.lower()
 
 async def create_m3u(filename="selcukk.m3u"):
-    print("🔍 Domain aranıyor...")
     domain, html = find_active_domain()
-
     if not html:
-        print("❌ Çalışan domain bulunamadı!")
+        print("❌ Domain bulunamadı!")
         return
 
-    referer = domain
     players = get_player_links(html)
-
     if not players:
-        print("❌ Player link yok!")
+        print("❌ Kanal yok!")
         return
 
-    print(f"📺 {len(players)} kanal bulundu. Hızlı modda test ediliyor...\n")
+    print(f"📺 {len(players)} kanal test ediliyor (yavaş mod)...\n")
 
     m3u = ["#EXTM3U"]
     ok = 0
     benzersiz = set()
 
     async with async_playwright() as p:
-        # Tarayıcıyı bir kez başlatıyoruz
         browser = await p.chromium.launch(headless=True)
+        # Reklam engelleme YOK, her şeyin yüklenmesine izin ver
         context = await browser.new_context(
             user_agent=HEADERS["User-Agent"],
-            extra_http_headers={"Referer": referer}
+            extra_http_headers={"Referer": domain}
         )
-
-        # Reklam ve gereksiz resimleri engelle (İşlemi çok hızlandırır)
-        await context.route("**/*", lambda route: route.abort() if route.request.resource_type in ["image", "media", "font"] else route.continue_())
 
         for ch in players:
             if ch["id"] in benzersiz:
                 continue
 
-            print(f"⏳ İşleniyor: {ch['name']}")
-            captured_urls = []
-            
+            print(f"⏳ {ch['name']}")
+            captured = []
+
             page = await context.new_page()
-            
-            # Sadece .m3u8 isteklerini dinle
-            page.on("request", lambda req: captured_urls.append(req.url) if ".m3u8" in req.url and "cloudflare" not in req.url else None)
+            # Tüm m3u8 içeren istekleri yakala, cloudflare olmasın yeter
+            page.on("request", lambda req: captured.append(req.url) if ".m3u8" in req.url and "cloudflare" not in req.url else None)
 
             try:
-                # DOM yüklendiğinde devam et, arkadaki reklamları bekleme
-                await page.goto(ch["url"], wait_until="domcontentloaded", timeout=8000)
-                # Oynatıcının m3u8 isteğini atması için 1 saniye bekle
-                await page.wait_for_timeout(1000) 
+                # Ağın tamamen durulmasını bekle (timeout 20 sn)
+                await page.goto(ch["url"], wait_until="networkidle", timeout=20000)
+                # Ekstra bekleme: oynatıcı geç başlatabilir
+                await page.wait_for_timeout(4000)
 
-                m3u8 = captured_urls[0] if captured_urls else None
-
-                if m3u8:
+                if captured:
+                    # İlk yakalanan m3u8'i al
+                    m3u8 = captured[0]
                     tvg_id = normalize_tvg_id(ch["name"])
                     m3u.append(f'#EXTINF:-1 tvg-id="{tvg_id}" group-title="Sell spor+sec izle",{ch["name"]}')
-                    m3u.append(f"#EXTVLCOPT:http-referrer={referer}")
+                    m3u.append(f"#EXTVLCOPT:http-referrer={domain}")
                     m3u.append(f"#EXTVLCOPT:http-user-agent={HEADERS['User-Agent']}")
                     m3u.append(m3u8)
                     ok += 1
                     benzersiz.add(ch["id"])
-                    print(f"🎯 M3U8 bulundu: {m3u8}")
+                    print(f"🎯 {m3u8}")
                 else:
-                    print(f"❌ Link bulunamadı: {ch['name']}")
+                    print(f"❌ Link yok")
             except Exception as e:
-                print(f"❌ Hata/Timeout: {ch['name']}")
+                print(f"❌ Hata: {ch['name']}")
             finally:
                 await page.close()
 
@@ -131,8 +115,7 @@ async def create_m3u(filename="selcukk.m3u"):
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(m3u))
 
-    print(f"\n✅ M3U oluşturuldu: {filename}")
-    print(f"📊 Başarılı: {ok}/{len(players)}")
+    print(f"\n✅ {ok}/{len(players)} kanal kaydedildi: {filename}")
 
 if __name__ == "__main__":
     asyncio.run(create_m3u())
