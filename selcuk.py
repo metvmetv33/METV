@@ -109,10 +109,10 @@ async def main():
         else:
             print(f"[✗] {name} (Link yok)")
 
-    with open("selcukk.m3u", "w", encoding="utf-8") as f:
+    with open("selcuksports.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_lines))
 
-    print(f"\n[✓] {basarili} kanal kaydedildi. Dosya: selcukk.m3u")
+    print(f"\n[✓] {basarili} kanal kaydedildi. Dosya: selcuksports.m3u")
 
 if __name__ == "__main__":
     asyncio.run(main())
