@@ -7,7 +7,8 @@ import urllib3
 # SSL uyarılarını bastır
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-ENCRYPTED_URL = "aHR0cHM6Ly95dHubeC13YXJzLm15d2lyZS5vcmcvbm91dHViZS9wbGF5bGlzdC5tM3U="
+# URL Base64 ile şifrelendi (Kimse doğrudan düz metin olarak göremez)
+ENCRYPTED_URL = "aHR0cHM6Ly95dHViZS13YXJzLm15d2lyZS5vcmcvbm91dHViZS9wbGF5bGlzdC5tM3U="
 
 def create_coutubee_folder():
     if not os.path.exists("coutubee"):
@@ -20,7 +21,6 @@ def decrypt_url():
 def fetch_playlist(url):
     response = requests.get(url, verify=False)
     response.raise_for_status()
-    # Karakter kodlama hatası almamak için decoding'i güvenli hale getiriyoruz
     return response.content.decode("utf-8", errors="ignore")
 
 def parse_playlist(content):
@@ -40,7 +40,7 @@ def save_channel_as_m3u8(channel_name, stream_url):
     if not safe_name:
         safe_name = "channel"
     
-    # İstediğiniz gibi coutubee klasörüne kaydediyor
+    # Kanallar doğrudan coutubee klasörüne kaydedilir
     filename = f"coutubee/{safe_name}.m3u8"
     content = f"""#EXTM3U
 #EXT-X-VERSION:3
