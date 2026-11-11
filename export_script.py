@@ -50,21 +50,21 @@ def main():
             "group": group
         })
         
-        # M3U satırlarına ekle (logo ve tvg_id bilgileriyle beraber)
+        # M3U satırlarına ekle (Doğrudan orijinal .m3u8 linkleri)
         extinf_line = f'#EXTINF:-1 tvg-id="{tvg_id}" tvg-logo="{logo}" group-title="{group}",{name}'
         m3u_lines.append(extinf_line)
         m3u_lines.append(url)
 
-    # Dosyalara kaydetme
-    with open("vavoo_direct.m3u", "w", encoding="utf-8") as f:
+    # Dosyaları orijinal adlarıyla kaydediyoruz (vavoo_all.m3u ve vavoo_full.json)
+    with open("vavoo_all.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_lines))
     
-    with open("vavoo_direct.json", "w", encoding="utf-8") as f:
+    with open("vavoo_full.json", "w", encoding="utf-8") as f:
         json.dump(full_json_data, f, ensure_ascii=False, indent=4)
         
     print("\nİşlem başarılı!")
     print(f"Toplam {len(items)} kanal işlendi.")
-    print("Dosyalar kaydedildi: vavoo_direct.m3u ve vavoo_direct.json")
+    print("Dosyalar güncellendi: vavoo_all.m3u ve vavoo_full.json")
 
 if __name__ == "__main__":
     main()
