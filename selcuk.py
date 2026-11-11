@@ -13,6 +13,7 @@ HEADERS = {
 }
 
 def find_active_domain():
+    """Sitenin güncel çalışan domainini bulur."""
     test_urls = [
         "https://www.selcuksportshd14e17ba2ad.xyz/", 
         "https://www.selcuksportshd.is/",
@@ -31,62 +32,58 @@ def find_active_domain():
 def get_m3u8(iframe_url, referer, channel_id):
     """
     Iframe URL'sine gidip içindeki JavaScript kodundan gerçek m3u8 linkini ayıklar.
-    Örnek hedef: https://dga1op10s1u3lea.aae77b66b9d557.click/live/selcukbeinsports1/playlist.m3u8
+    Hedef format: https://dga1op10s1u3lea.aae77b66b9d557.click/live/selcukbeinsports1/playlist.m3u8
     """
     try:
         res = requests.get(iframe_url, headers={**HEADERS, "Referer": referer}, timeout=10, verify=False)
         html = res.text
 
-        # 1. Yöntem: Doğrudan .m3u8 linki var mı?
-        match = re.search(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', html)
-        if match:
-            return match.group(1)
+        # 1. Yöntem: Doğrudan .m3u8 linki var mı? (Cloudflare analiz scriptlerini filtrele)
+        for m in re.finditer(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', html):
+            url = m.group(1)
+            if 'cloudflareinsights' not in url and 'beacon.min.js' not in url:
+                return url
 
-        # 2. Yöntem: Player script'inde base64 ile şifrelenmiş mi?
-        # Genellikle atob('...') veya benzeri bir yapıda saklanır
+        # 2. Yöntem: Base64 ile şifrelenmiş link var mı?
         b64_matches = re.findall(r'atob\([\'"]([^\'"]+)[\'"]\)', html)
         for b64 in b64_matches:
             try:
                 decoded = base64.b64decode(b64).decode('utf-8')
-                m3u8_match = re.search(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', decoded)
-                if m3u8_match:
-                    return m3u8_match.group(1)
+                for m in re.finditer(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', decoded):
+                    url = m.group(1)
+                    if 'cloudflareinsights' not in url and 'beacon.min.js' not in url:
+                        return url
             except:
                 pass
 
-        # 3. Yöntem: Değişken adlarından URL parçalarını birleştirme (En yaygın yöntem)
-        # Örnek: var domain = "https://..."; var path = "/live/"; ... + channel_id + "/playlist.m3u8"
+        # 3. Yöntem: Iframe içindeki .click uzantılı domainleri bul (Cloudflare hariç)
+        # Örnek: https://dga1op10s1u3lea.aae77b66b9d557.click
+        click_domains = re.findall(r'["\'\(](https?://([a-z0-9]+\.)?[a-z0-9]+\.click)(?:[/"\')])', html, re.IGNORECASE)
         
-        # Önce olası tüm domainleri bul
-        domains = re.findall(r'["\'](https?://[^"\']+\.click)["\']', html)
-        if not domains:
-            domains = re.findall(r'["\'](https?://[^"\']+)["\']', html) # Daha geniş arama
-        
-        # Kanal ID'sini (örn: selcukbeinsports1) kullanarak linki oluştur
-        if domains:
-            # Genellikle ilk bulunan domain doğru olandır, ama emin olmak için kontrol edilebilir
-            for domain in set(domains):
-                # Domain'in sonunda / varsa temizle
-                base = domain.rstrip('/')
-                # Hedef format: base/live/channel_id/playlist.m3u8
-                candidate = f"{base}/live/{channel_id}/playlist.m3u8"
-                
-                # Bu adayın geçerli olup olmadığını test et (isteğe bağlı, hız için kapatılabilir)
-                # try:
-                #     test_res = requests.head(candidate, headers=HEADERS, timeout=5, verify=False)
-                #     if test_res.status_code == 200:
-                #         return candidate
-                # except:
-                #     pass
-                
-                # Test etmeden döndür (genellikle çalışır)
-                return candidate
+        adaylar = []
+        for full, _ in click_domains:
+            if 'cloudflare' in full.lower():
+                continue
+            adaylar.append(full.rstrip('/'))
 
-        # 4. Yöntem: Eğer iframe içinde başka bir iframe veya script varsa (derin arama)
-        # Bu kısım isteğe bağlıdır, çoğu durumda yukarıdaki yöntemler yeterlidir.
+        # Benzersiz yap ve uzun olanları (rastgele hex içerenleri) öne al
+        benzersiz = sorted(set(adaylar), key=len, reverse=True)
+
+        for base in benzersiz:
+            candidate = f"{base}/live/{channel_id}/playlist.m3u8"
+            # Linkin gerçekten var olup olmadığını test et
+            try:
+                test = requests.head(candidate, headers=HEADERS, timeout=5, verify=False, allow_redirects=True)
+                if test.status_code in (200, 206):
+                    return candidate
+            except:
+                pass
+
+        # Test başarısız olsa bile en olası adayı döndür (çoğu zaman çalışır)
+        if benzersiz:
+            return f"{benzersiz[0]}/live/{channel_id}/playlist.m3u8"
 
     except Exception as e:
-        # print(f"  [Hata: {e}]") # Hata ayıklama için açılabilir
         pass
     return None
 
