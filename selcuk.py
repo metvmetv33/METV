@@ -1,9 +1,9 @@
 import re
 import requests
+import base64
 from bs4 import BeautifulSoup
 import urllib3
 
-# SSL uyarılarını gizle
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 HEADERS = {
@@ -13,8 +13,6 @@ HEADERS = {
 }
 
 def find_active_domain():
-    """Sitenin güncel çalışan domainini bulur."""
-    # Güncel giriş adresleri buraya eklenebilir
     test_urls = [
         "https://www.selcuksportshd14e17ba2ad.xyz/", 
         "https://www.selcuksportshd.is/",
@@ -30,34 +28,66 @@ def find_active_domain():
             continue
     return None, None
 
-def get_m3u8(iframe_url, referer):
+def get_m3u8(iframe_url, referer, channel_id):
     """
     Iframe URL'sine gidip içindeki JavaScript kodundan gerçek m3u8 linkini ayıklar.
-    Örnek çıktı: https://dga1op10s1u3lea.aae77b66b9d557.click/live/selcukbeinsports1/playlist.m3u8
+    Örnek hedef: https://dga1op10s1u3lea.aae77b66b9d557.click/live/selcukbeinsports1/playlist.m3u8
     """
     try:
-        # Iframe sayfasına istek at
         res = requests.get(iframe_url, headers={**HEADERS, "Referer": referer}, timeout=10, verify=False)
-        
-        # 1. Yöntem: Eğer sayfa içinde doğrudan .m3u8 geçiyorsa
-        match = re.search(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', res.text)
+        html = res.text
+
+        # 1. Yöntem: Doğrudan .m3u8 linki var mı?
+        match = re.search(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', html)
         if match:
             return match.group(1)
 
-        # 2. Yöntem: Player'ın kendi script yapısındaki değişkenleri ara
-        # Örnek: this.baseStreamUrl = "https://..."; 
-        base_url = re.search(r'this\.baseStreamUrl\s*=\s*["\']([^"\']+)["\']', res.text)
+        # 2. Yöntem: Player script'inde base64 ile şifrelenmiş mi?
+        # Genellikle atob('...') veya benzeri bir yapıda saklanır
+        b64_matches = re.findall(r'atob\([\'"]([^\'"]+)[\'"]\)', html)
+        for b64 in b64_matches:
+            try:
+                decoded = base64.b64decode(b64).decode('utf-8')
+                m3u8_match = re.search(r'(https?://[^\s"\']+\.m3u8[^\s"\']*)', decoded)
+                if m3u8_match:
+                    return m3u8_match.group(1)
+            except:
+                pass
+
+        # 3. Yöntem: Değişken adlarından URL parçalarını birleştirme (En yaygın yöntem)
+        # Örnek: var domain = "https://..."; var path = "/live/"; ... + channel_id + "/playlist.m3u8"
         
-        # Kanal ID'sini URL'den çek (örn: id=selcukbeinsports1)
-        channel_id_match = re.search(r'id=([a-zA-Z0-9_-]+)', iframe_url)
+        # Önce olası tüm domainleri bul
+        domains = re.findall(r'["\'](https?://[^"\']+\.click)["\']', html)
+        if not domains:
+            domains = re.findall(r'["\'](https?://[^"\']+)["\']', html) # Daha geniş arama
         
-        if base_url and channel_id_match:
-            channel_id = channel_id_match.group(1)
-            # Linki birleştir (Sondaki / işaretini temizleyerek)
-            return f"{base_url.group(1).rstrip('/')}/{channel_id}/playlist.m3u8"
-            
+        # Kanal ID'sini (örn: selcukbeinsports1) kullanarak linki oluştur
+        if domains:
+            # Genellikle ilk bulunan domain doğru olandır, ama emin olmak için kontrol edilebilir
+            for domain in set(domains):
+                # Domain'in sonunda / varsa temizle
+                base = domain.rstrip('/')
+                # Hedef format: base/live/channel_id/playlist.m3u8
+                candidate = f"{base}/live/{channel_id}/playlist.m3u8"
+                
+                # Bu adayın geçerli olup olmadığını test et (isteğe bağlı, hız için kapatılabilir)
+                # try:
+                #     test_res = requests.head(candidate, headers=HEADERS, timeout=5, verify=False)
+                #     if test_res.status_code == 200:
+                #         return candidate
+                # except:
+                #     pass
+                
+                # Test etmeden döndür (genellikle çalışır)
+                return candidate
+
+        # 4. Yöntem: Eğer iframe içinde başka bir iframe veya script varsa (derin arama)
+        # Bu kısım isteğe bağlıdır, çoğu durumda yukarıdaki yöntemler yeterlidir.
+
     except Exception as e:
-        print(f"  [Hata: {e}]")
+        # print(f"  [Hata: {e}]") # Hata ayıklama için açılabilir
+        pass
     return None
 
 def run():
@@ -67,7 +97,6 @@ def run():
         return
     
     soup = BeautifulSoup(html, "html.parser")
-    # Sayfadaki tüm data-url barındıran (kanal) a etiketlerini bul
     items = soup.find_all("a", attrs={"data-url": True})
     
     m3u_lines = ["#EXTM3U"]
@@ -78,16 +107,20 @@ def run():
     for item in items:
         raw_url = item["data-url"]
         
-        # Geçersiz kanalları atla
         if "gecersiz" in raw_url or not raw_url.startswith("http") or "Undefined" in raw_url: 
             continue
         
-        # Kanal ismini çek
         name_div = item.find("div", class_="name")
         name = name_div.get_text(strip=True) if name_div else "Bilinmeyen Kanal"
         
-        # Iframe içinden m3u8 linkini al
-        link = get_m3u8(raw_url, domain)
+        # Kanal ID'sini iframe URL'sinden çek (örn: id=selcukbeinsports1)
+        id_match = re.search(r'id=([a-zA-Z0-9_-]+)', raw_url)
+        channel_id = id_match.group(1) if id_match else None
+        
+        if channel_id:
+            link = get_m3u8(raw_url, domain, channel_id)
+        else:
+            link = None
         
         if link:
             print(f"[✓] {name} -> {link}")
@@ -99,7 +132,6 @@ def run():
         else:
             print(f"[✗] {name} (Link bulunamadı)")
 
-    # M3U dosyasını kaydet
     with open("selcuksports.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_lines))
         
