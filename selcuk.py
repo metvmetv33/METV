@@ -61,7 +61,7 @@ async def create_m3u(filename="selcukk.m3u"):
         print("❌ Kanal yok!")
         return
 
-    print(f"📺 {len(players)} kanal test ediliyor (yavaş mod)...\n")
+    print(f"📺 {len(players)} kanal test ediliyor (optimize mod)...\n")
 
     m3u = ["#EXTM3U"]
     ok = 0
@@ -69,11 +69,13 @@ async def create_m3u(filename="selcukk.m3u"):
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
-        # Reklam engelleme YOK, her şeyin yüklenmesine izin ver
         context = await browser.new_context(
             user_agent=HEADERS["User-Agent"],
             extra_http_headers={"Referer": domain}
         )
+        
+        # Resim ve fontları engelle (hız için), ama medyayı engelleme!
+        await context.route("**/*", lambda route: route.abort() if route.request.resource_type in ["image", "font"] else route.continue_())
 
         for ch in players:
             if ch["id"] in benzersiz:
@@ -83,18 +85,42 @@ async def create_m3u(filename="selcukk.m3u"):
             captured = []
 
             page = await context.new_page()
-            # Tüm m3u8 içeren istekleri yakala, cloudflare olmasın yeter
             page.on("request", lambda req: captured.append(req.url) if ".m3u8" in req.url and "cloudflare" not in req.url else None)
 
             try:
-                # Ağın tamamen durulmasını bekle (timeout 20 sn)
-                await page.goto(ch["url"], wait_until="networkidle", timeout=20000)
-                # Ekstra bekleme: oynatıcı geç başlatabilir
-                await page.wait_for_timeout(4000)
+                # Sadece DOM yüklenmesini bekle (reklamları bekleme)
+                await page.goto(ch["url"], wait_until="domcontentloaded", timeout=8000)
+                
+                # 3 saniye bekle (oynatıcının başlaması için)
+                await page.wait_for_timeout(3000)
 
+                m3u8 = None
+
+                # 1. Ağdan yakalanan var mı?
                 if captured:
-                    # İlk yakalanan m3u8'i al
                     m3u8 = captured[0]
+                else:
+                    # 2. Sayfa içindeki JS değişkenlerini sorgula
+                    js_result = await page.evaluate('''() => {
+                        // Oynatıcı objelerinde m3u8 arayan bir fonksiyon
+                        for (let key in window) {
+                            if (typeof window[key] === 'string' && window[key].includes('.m3u8')) {
+                                return window[key];
+                            }
+                            if (typeof window[key] === 'object' && window[key] !== null) {
+                                for (let subkey in window[key]) {
+                                    if (typeof window[key][subkey] === 'string' && window[key][subkey].includes('.m3u8')) {
+                                        return window[key][subkey];
+                                    }
+                                }
+                            }
+                        }
+                        return null;
+                    }''')
+                    if js_result:
+                        m3u8 = js_result
+                    
+                if m3u8:
                     tvg_id = normalize_tvg_id(ch["name"])
                     m3u.append(f'#EXTINF:-1 tvg-id="{tvg_id}" group-title="Sell spor+sec izle",{ch["name"]}')
                     m3u.append(f"#EXTVLCOPT:http-referrer={domain}")
@@ -106,7 +132,7 @@ async def create_m3u(filename="selcukk.m3u"):
                 else:
                     print(f"❌ Link yok")
             except Exception as e:
-                print(f"❌ Hata: {ch['name']}")
+                print(f"❌ Hata/Timeout")
             finally:
                 await page.close()
 
